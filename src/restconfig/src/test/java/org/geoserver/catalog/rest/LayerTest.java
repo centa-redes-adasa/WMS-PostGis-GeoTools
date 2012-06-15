@@ -7,13 +7,17 @@ package org.geoserver.catalog.rest;
 import static org.custommonkey.xmlunit.XMLAssert.*;
 
 import org.geoserver.catalog.Catalog;
+import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
+import static org.junit.Assert.*;
 import org.geoserver.catalog.LayerInfo;
+import org.junit.Test;
 import org.w3c.dom.Document;
 
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
 public class LayerTest extends CatalogRESTTestSupport {
 
+    @Test
     public void testGetAsXML() throws Exception {
         Document dom = getAsDOM( "/rest/layers/cite:Buildings.xml");
         assertEquals( "layer", dom.getDocumentElement().getNodeName() );
@@ -25,19 +29,23 @@ public class LayerTest extends CatalogRESTTestSupport {
                 "/layer/defaultStyle/atom:link/attribute::href", dom);
     }
     
+    @Test
     public void testGetAsHTML() throws Exception {
         getAsDOM("/rest/layers/cite:Buildings.html" );
     }
     
+    @Test
     public void testGetAllAsXML() throws Exception {
         Document dom = getAsDOM( "/rest/layers.xml");
         assertXpathEvaluatesTo(catalog.getLayers().size()+"", "count(//layer)", dom );
     }
     
+    @Test
     public void testGetAllAsHTML() throws Exception {
         getAsDOM( "/rest/layers.html");
     }
     
+    @Test
     public void testPut() throws Exception {
         LayerInfo l = catalog.getLayerByName( "cite:Buildings" );
         assertEquals( "Buildings", l.getDefaultStyle().getName() );
@@ -56,12 +64,14 @@ public class LayerTest extends CatalogRESTTestSupport {
         assertEquals( "Forests", l.getDefaultStyle().getName() );
     }
     
+    @Test
     public void testDelete() throws Exception {
         assertNotNull(catalog.getLayerByName( "cite:Buildings" ));
         
         assertEquals(200, deleteAsServletResponse("/layers/cite:Buildings").getStatusCode());
     }
     
+    @Test
     public void testDeleteRecursive() throws Exception {
         assertNotNull(catalog.getLayerByName( "cite:Buildings" ));
         assertNotNull(catalog.getFeatureTypeByName( "cite", "Buildings" ));

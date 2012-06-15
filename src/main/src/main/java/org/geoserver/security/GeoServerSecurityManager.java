@@ -1762,7 +1762,7 @@ public class GeoServerSecurityManager extends ProviderManager implements Applica
     /*
      * converts an old security configuration to the new
      */
-    void migrateIfNecessary() throws Exception{
+    public void migrateIfNecessary() throws Exception{
         
         if (getRoleRoot(false) != null) {
             File oldUserFile = new File(getSecurityRoot(), "users.properties.old");
