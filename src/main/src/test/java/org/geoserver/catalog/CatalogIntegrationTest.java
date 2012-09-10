@@ -9,7 +9,7 @@ import org.geoserver.data.test.TestData;
 import org.geoserver.test.GeoServerIntegrationTestSupport;
 import org.junit.Test;
 
-public class CatalogIntegrationTest extends GeoServerIntegrationTestSupport<TestData> {
+public class CatalogIntegrationTest extends GeoServerIntegrationTestSupport {
 
     @Test
     public void testWorkspaceRemoveAndReadd() {

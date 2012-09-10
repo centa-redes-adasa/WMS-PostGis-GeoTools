@@ -1,5 +1,8 @@
 package org.geoserver.test;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -17,7 +20,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.ServletContext;
@@ -56,7 +58,6 @@ import org.geoserver.config.GeoServer;
 import org.geoserver.config.GeoServerDataDirectory;
 import org.geoserver.config.GeoServerLoaderProxy;
 import org.geoserver.data.test.DefaultTestData;
-import org.geoserver.data.test.TestData;
 import org.geoserver.logging.LoggingUtils;
 import org.geoserver.ows.util.KvpUtils;
 import org.geoserver.ows.util.ResponseUtils;
@@ -74,21 +75,13 @@ import org.geoserver.security.impl.DataAccessRuleDAO;
 import org.geoserver.security.impl.GeoServerRole;
 import org.geoserver.security.impl.GeoServerUser;
 import org.geoserver.security.impl.GeoServerUserGroup;
-import org.geoserver.security.validation.PasswordPolicyException;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureSource;
-import org.geotools.factory.Hints;
-import org.geotools.referencing.CRS;
 import org.geotools.util.logging.Log4JLoggerFactory;
 import org.geotools.util.logging.Logging;
 import org.geotools.xml.XSD;
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.rules.TestWatcher;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
@@ -114,25 +107,8 @@ import com.mockrunner.mock.web.MockServletConfig;
 import com.mockrunner.mock.web.MockServletContext;
 import com.mockrunner.mock.web.MockServletOutputStream;
 
-import static junit.framework.Assert.*;
-
-public class GeoServerIntegrationTestSupport<T extends TestData> {
-
-    /**
-     * Common logger for test cases
-     */
-    protected static final Logger LOGGER = 
-        org.geotools.util.logging.Logging.getLogger("org.geoserver.test"); 
-
-    /**
-     * test data
-     */
-    protected static TestData testData;
-
-    /**
-     * test instance, used to give subclass hooks for one time setup/teardown
-     */
-    protected static GeoServerIntegrationTestSupport test;
+@TestSetup(run=TestSetupPolicy.ONCE)
+public class GeoServerIntegrationTestSupport extends GeoServerBaseTestSupport<DefaultTestData> {
 
     /**
      * spring application context containing the integrated geoserver
@@ -144,47 +120,11 @@ public class GeoServerIntegrationTestSupport<T extends TestData> {
      */
     protected String username, password; 
 
-//    @Rule
-//    public TestWatcher watcher = new TestWatcher() {
-//        protected void finished(org.junit.runner.Description description) {
-//            System.out.println(description);
-//        };
-//    };
-
-    protected T getTestData() {
-        return (T) testData;
+    protected void setUpTestData(DefaultTestData testData) throws Exception {
+        testData.setUpDefaultLayers();
     }
 
-    @BeforeClass
-    public static void setUpReferencing() throws Exception {
-        // do we need to reset the referencing subsystem and reorient it with lon/lat order?
-        if (System.getProperty("org.geotools.referencing.forceXY") == null
-                || !"http".equals(Hints.getSystemDefault(Hints.FORCE_AXIS_ORDER_HONORING))) {
-            System.setProperty("org.geotools.referencing.forceXY", "true");
-            Hints.putSystemDefault(Hints.FORCE_AXIS_ORDER_HONORING, "http");
-            CRS.reset("all");
-        }
-    }
-    
-    @Before
-    public final void setUpTestData() throws Exception {
-        if (testData == null) {
-            test = this;
-            testData = createTestData();
-            testData.setUp();
-            
-            setUpTestData((T) testData);
-            setUp((T) testData);
-        }
-    }
-
-    protected void setUpTestData(T testData) throws Exception {
-        if (testData instanceof DefaultTestData) {
-            ((DefaultTestData)testData).setUpDefaultLayers();
-        }
-    }
-
-    final void setUp(T testData) throws Exception {
+    final protected void setUp(DefaultTestData testData) throws Exception {
         // setup quiet logging (we need to to this here because Data
         // is loaded before GoeServer has a chance to setup logging for good)
         try {
@@ -230,11 +170,11 @@ public class GeoServerIntegrationTestSupport<T extends TestData> {
         }
     }
 
-    protected void onSetUp(T testData) throws Exception {
+    protected void onSetUp(DefaultTestData testData) throws Exception {
     }
 
-    protected T createTestData() throws Exception {
-        return (T) new DefaultTestData();
+    protected DefaultTestData createTestData() throws Exception {
+        return new DefaultTestData();
     }
 
     @After
@@ -242,15 +182,7 @@ public class GeoServerIntegrationTestSupport<T extends TestData> {
         logout();
     }
 
-    @AfterClass
-    public static void tearDownTestData() throws Exception {
-        test.tearDown(testData);
-        testData.tearDown();
-        testData = null;
-        test = null;
-    }
-
-    void tearDown(T testData) throws Exception {
+    protected void tearDown(DefaultTestData testData) throws Exception {
         if(testData.isTestDataAvailable()) {
             try {
                 onTearDown(testData);
@@ -281,7 +213,7 @@ public class GeoServerIntegrationTestSupport<T extends TestData> {
         }
     }
 
-    protected void onTearDown(T testData) throws Exception {
+    protected void onTearDown(DefaultTestData testData) throws Exception {
     }
 
     //
@@ -421,10 +353,7 @@ public class GeoServerIntegrationTestSupport<T extends TestData> {
      * @return
      */
     public String getLayerId(QName layerName) {
-        if(layerName.getPrefix() != null)
-            return layerName.getPrefix() + ":" + layerName.getLocalPart();
-        else
-            return layerName.getLocalPart();
+        return toString(layerName);
     }
 
     //
