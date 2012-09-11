@@ -16,7 +16,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.geoserver.catalog.DataStoreInfo;
-import org.geoserver.data.test.DefaultTestData;
+import org.geoserver.data.test.SystemTestData;
 import org.geoserver.data.test.MockData;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureWriter;
@@ -46,7 +46,7 @@ public class JDBCTest extends CatalogRESTTestSupport {
     }
 
     @Override
-    protected void onSetUp(DefaultTestData testData) throws Exception {
+    protected void onSetUp(SystemTestData testData) throws Exception {
         super.onSetUp(testData);
 
         HashMap params = new HashMap();

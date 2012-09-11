@@ -16,7 +16,7 @@ import net.sf.json.JSONObject;
 import org.geoserver.catalog.CascadeDeleteVisitor;
 import org.geoserver.catalog.StoreInfo;
 import org.geoserver.catalog.WorkspaceInfo;
-import org.geoserver.data.test.DefaultTestData;
+import org.geoserver.data.test.SystemTestData;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -29,8 +29,8 @@ public class WorkspaceTest extends CatalogRESTTestSupport {
 
     @Before
     public void addWorkspaces() {
-        getTestData().addWorkspace(DefaultTestData.DEFAULT_PREFIX, DefaultTestData.DEFAULT_URI, catalog);
-        getTestData().addWorkspace(DefaultTestData.SF_PREFIX, DefaultTestData.SF_URI, catalog);
+        getTestData().addWorkspace(SystemTestData.DEFAULT_PREFIX, SystemTestData.DEFAULT_URI, catalog);
+        getTestData().addWorkspace(SystemTestData.SF_PREFIX, SystemTestData.SF_URI, catalog);
     }
 
     @Test
@@ -180,7 +180,7 @@ public class WorkspaceTest extends CatalogRESTTestSupport {
     
     @Test
     public void testDeleteNonEmptyForbidden() throws Exception {
-        getTestData().addDefaultVectorLayer(DefaultTestData.PRIMITIVEGEOFEATURE, catalog);
+        getTestData().addDefaultVectorLayer(SystemTestData.PRIMITIVEGEOFEATURE, catalog);
         assertEquals( 403, deleteAsServletResponse("/rest/workspaces/sf").getStatusCode() );
     }
     
@@ -209,7 +209,7 @@ public class WorkspaceTest extends CatalogRESTTestSupport {
     
     @Test
     public void testDeleteRecursive() throws Exception {
-        getTestData().addDefaultVectorLayer(DefaultTestData.PRIMITIVEGEOFEATURE, catalog);
+        getTestData().addDefaultVectorLayer(SystemTestData.PRIMITIVEGEOFEATURE, catalog);
         List<StoreInfo> stores = catalog.getStoresByWorkspace("sf", StoreInfo.class); 
         assertFalse(stores.isEmpty());
 

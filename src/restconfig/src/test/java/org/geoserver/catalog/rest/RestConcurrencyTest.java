@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.geoserver.data.test.DefaultTestData;
+import org.geoserver.data.test.SystemTestData;
 import org.geotools.util.logging.Logging;
 import org.junit.Test;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -27,7 +27,7 @@ public class RestConcurrencyTest extends CatalogRESTTestSupport {
     volatile DispatcherServlet dispatcher;
 
     @Override
-    protected void onSetUp(DefaultTestData testData) throws Exception {
+    protected void onSetUp(SystemTestData testData) throws Exception {
         super.onSetUp(testData);
         exception = null;
 

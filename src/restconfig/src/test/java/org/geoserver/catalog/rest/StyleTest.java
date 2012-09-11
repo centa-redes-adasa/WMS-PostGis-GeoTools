@@ -20,7 +20,7 @@ import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.LayerInfo;
 import org.geoserver.catalog.StyleInfo;
 import org.geoserver.platform.GeoServerResourceLoader;
-import org.geoserver.data.test.DefaultTestData;
+import org.geoserver.data.test.SystemTestData;
 import org.geotools.styling.Style;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class StyleTest extends CatalogRESTTestSupport {
 
     @Before
     public void addPondsStyle() throws IOException {
-       getTestData().addStyle(DefaultTestData.PONDS.getLocalPart(), getCatalog());
+       getTestData().addStyle(SystemTestData.PONDS.getLocalPart(), getCatalog());
     }
 
     @Test
@@ -406,7 +406,7 @@ public class StyleTest extends CatalogRESTTestSupport {
     
     @Test
     public void testPostByLayerWithDefault() throws Exception {
-        getTestData().addDefaultVectorLayer(DefaultTestData.BASIC_POLYGONS, getCatalog());
+        getTestData().addDefaultVectorLayer(SystemTestData.BASIC_POLYGONS, getCatalog());
         LayerInfo l = catalog.getLayerByName( "cite:BasicPolygons" );
         int nstyles = l.getStyles().size();
         
@@ -425,7 +425,7 @@ public class StyleTest extends CatalogRESTTestSupport {
     
     @Test
     public void testPostByLayerExistingWithDefault() throws Exception {
-        getTestData().addDefaultVectorLayer(DefaultTestData.BASIC_POLYGONS, getCatalog());
+        getTestData().addDefaultVectorLayer(SystemTestData.BASIC_POLYGONS, getCatalog());
         testPostByLayer();
         
         LayerInfo l = catalog.getLayerByName("cite:BasicPolygons");

@@ -9,7 +9,7 @@ import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
 import org.geoserver.data.test.TestData;
-import org.geoserver.test.GeoServerIntegrationTestSupport;
+import org.geoserver.test.GeoServerSystemTestSupport;
 import org.geoserver.test.GeoServerTestSupport;
 import org.geotools.data.DataUtilities;
 import org.junit.Test;

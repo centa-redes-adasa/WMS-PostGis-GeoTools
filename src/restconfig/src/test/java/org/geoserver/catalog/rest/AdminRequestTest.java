@@ -9,7 +9,7 @@ import java.util.Arrays;
 import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.LayerGroupInfo;
 import org.geoserver.catalog.StyleInfo;
-import org.geoserver.data.test.DefaultTestData;
+import org.geoserver.data.test.SystemTestData;
 import org.geoserver.data.test.TestData;
 import org.geoserver.security.AccessMode;
 import org.geoserver.security.AdminRequest;
@@ -24,7 +24,7 @@ import com.mockrunner.mock.web.MockHttpServletResponse;
 public class AdminRequestTest extends CatalogRESTTestSupport {
 
     @Override
-    protected void onSetUp(DefaultTestData testData) throws Exception {
+    protected void onSetUp(SystemTestData testData) throws Exception {
         super.onSetUp(testData);
     
         LayerGroupInfo lg = catalog.getFactory().createLayerGroup();

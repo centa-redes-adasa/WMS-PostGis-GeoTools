@@ -4,11 +4,13 @@
  */
 package org.geoserver.catalog.rest;
 
-import static org.custommonkey.xmlunit.XMLAssert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
+import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
 
 import org.geoserver.catalog.Catalog;
-import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
-import static org.junit.Assert.*;
 import org.geoserver.catalog.LayerInfo;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -90,6 +92,7 @@ public class LayerTest extends CatalogRESTTestSupport {
         assertNull(catalog.getFeatureTypeByName( "cite", "Bridges" ));
     }
 
+    @Test
     public void testPutWorkspaceStyle() throws Exception {
         Catalog cat = getCatalog();
         assertNull(cat.getStyleByName("foo"));

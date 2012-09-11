@@ -12,18 +12,18 @@ import org.custommonkey.xmlunit.SimpleNamespaceContext;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.custommonkey.xmlunit.XpathEngine;
 import org.geoserver.catalog.Catalog;
-import org.geoserver.data.test.DefaultTestData;
+import org.geoserver.data.test.SystemTestData;
 import org.geoserver.security.AccessMode;
-import org.geoserver.test.GeoServerIntegrationTestSupport;
+import org.geoserver.test.GeoServerSystemTestSupport;
 import org.junit.Before;
 
-public abstract class CatalogRESTTestSupport extends GeoServerIntegrationTestSupport<DefaultTestData> {
+public abstract class CatalogRESTTestSupport extends GeoServerSystemTestSupport {
 
     protected static Catalog catalog;
     protected static XpathEngine xp;
 
     @Override
-    protected void onSetUp(DefaultTestData testData) throws Exception {
+    protected void onSetUp(SystemTestData testData) throws Exception {
         super.onSetUp(testData);
 
         //addUser("admin", "geoxserver", null, Arrays.asList("ROLE_ADMINISTRATOR"));

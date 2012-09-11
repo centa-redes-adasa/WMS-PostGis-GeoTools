@@ -17,7 +17,7 @@ import net.sf.json.JSONObject;
 import org.geoserver.catalog.CatalogBuilder;
 import org.geoserver.catalog.WMSLayerInfo;
 import org.geoserver.catalog.WMSStoreInfo;
-import org.geoserver.data.test.DefaultTestData;
+import org.geoserver.data.test.SystemTestData;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -29,7 +29,7 @@ import com.mockrunner.mock.web.MockHttpServletResponse;
 public class WMSStoreTest extends CatalogRESTTestSupport {
     
     @Override
-    protected void onSetUp(DefaultTestData testData) throws Exception {
+    protected void onSetUp(SystemTestData testData) throws Exception {
         super.onSetUp(testData);
         
         // we need to add a wms store

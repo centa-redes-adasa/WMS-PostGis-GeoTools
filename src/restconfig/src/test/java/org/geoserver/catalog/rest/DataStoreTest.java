@@ -20,7 +20,7 @@ import net.sf.json.JSONObject;
 
 import org.geoserver.catalog.DataStoreInfo;
 import org.geoserver.catalog.FeatureTypeInfo;
-import org.geoserver.data.test.DefaultTestData;
+import org.geoserver.data.test.SystemTestData;
 import org.geotools.data.DataStore;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class DataStoreTest extends CatalogRESTTestSupport {
 
     @Before
     public void addDataStores() throws IOException {
-        getTestData().addVectorLayer(DefaultTestData.PRIMITIVEGEOFEATURE, catalog);
+        getTestData().addVectorLayer(SystemTestData.PRIMITIVEGEOFEATURE, catalog);
     }
 
     @Test
@@ -328,7 +328,7 @@ public class DataStoreTest extends CatalogRESTTestSupport {
 
     @Test
     public void testPutNameChangeForbidden() throws Exception {
-        getTestData().addDefaultVectorLayer(DefaultTestData.PRIMITIVEGEOFEATURE, getCatalog());
+        getTestData().addDefaultVectorLayer(SystemTestData.PRIMITIVEGEOFEATURE, getCatalog());
         String xml = "<dataStore>" +
             "<name>newName</name>" + 
             "</dataStore>";

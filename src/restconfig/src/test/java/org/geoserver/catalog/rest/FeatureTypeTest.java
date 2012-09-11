@@ -19,7 +19,7 @@ import net.sf.json.JSONObject;
 import org.geoserver.catalog.FeatureTypeInfo;
 import org.geoserver.catalog.Keyword;
 import org.geoserver.catalog.LayerInfo;
-import org.geoserver.data.test.DefaultTestData;
+import org.geoserver.data.test.SystemTestData;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.junit.Before;
@@ -41,7 +41,7 @@ public class FeatureTypeTest extends CatalogRESTTestSupport {
 
     @Before
     public void addPrimitiveGeoFeature() throws IOException {
-        getTestData().addDefaultVectorLayer(DefaultTestData.PRIMITIVEGEOFEATURE, catalog);
+        getTestData().addDefaultVectorLayer(SystemTestData.PRIMITIVEGEOFEATURE, catalog);
     }
 
     @Test

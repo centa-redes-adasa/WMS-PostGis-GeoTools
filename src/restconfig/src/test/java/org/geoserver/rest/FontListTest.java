@@ -1,7 +1,6 @@
 package org.geoserver.rest;
 
-import org.geoserver.data.test.TestData;
-import org.geoserver.test.GeoServerIntegrationTestSupport;
+import org.geoserver.test.GeoServerSystemTestSupport;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -16,7 +15,7 @@ import static org.junit.Assert.*;
  *
  * @author Jose Garca
  */
-public class FontListTest extends GeoServerIntegrationTestSupport<TestData> {
+public class FontListTest extends GeoServerSystemTestSupport {
 
     @Test
     public void testGetAsXML() throws Exception {

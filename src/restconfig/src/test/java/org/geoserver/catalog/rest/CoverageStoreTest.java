@@ -19,7 +19,7 @@ import org.apache.commons.io.IOUtils;
 import org.geoserver.catalog.CoverageInfo;
 import org.geoserver.catalog.CoverageStoreInfo;
 import org.geoserver.catalog.LayerInfo;
-import org.geoserver.data.test.DefaultTestData;
+import org.geoserver.data.test.SystemTestData;
 import org.geoserver.data.test.MockData;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,13 +32,13 @@ import com.mockrunner.mock.web.MockHttpServletResponse;
 public class CoverageStoreTest extends CatalogRESTTestSupport {
 
     @Override
-    protected void setUpTestData(DefaultTestData testData) throws Exception {
+    protected void setUpTestData(SystemTestData testData) throws Exception {
         testData.setUpDefaultRasterLayers();
     }
 
     @Before
     public void addBlueMarbleCoverage() throws Exception {
-        getTestData().addDefaultRasterLayer(DefaultTestData.TASMANIA_BM, getCatalog());
+        getTestData().addDefaultRasterLayer(SystemTestData.TASMANIA_BM, getCatalog());
     }
     
     @Test

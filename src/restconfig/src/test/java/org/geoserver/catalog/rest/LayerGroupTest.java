@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.LayerGroupInfo;
 import org.geoserver.catalog.StyleInfo;
-import org.geoserver.data.test.DefaultTestData;
+import org.geoserver.data.test.SystemTestData;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.junit.Before;
@@ -23,7 +23,7 @@ import com.mockrunner.mock.web.MockHttpServletResponse;
 public class LayerGroupTest extends CatalogRESTTestSupport {
 
     @Override
-    protected void onSetUp(DefaultTestData testData) throws Exception {
+    protected void onSetUp(SystemTestData testData) throws Exception {
         super.onSetUp(testData);
 
         LayerGroupInfo lg = catalog.getFactory().createLayerGroup();
