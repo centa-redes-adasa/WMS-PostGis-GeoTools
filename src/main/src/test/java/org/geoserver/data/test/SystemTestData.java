@@ -1,13 +1,9 @@
 package org.geoserver.data.test;
 
-import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
@@ -22,48 +18,29 @@ import org.geoserver.catalog.DataStoreInfo;
 import org.geoserver.catalog.FeatureTypeInfo;
 import org.geoserver.catalog.Keyword;
 import org.geoserver.catalog.LayerInfo;
-import org.geoserver.catalog.MetadataLinkInfo;
 import org.geoserver.catalog.NamespaceInfo;
 import org.geoserver.catalog.ProjectionPolicy;
-import org.geoserver.catalog.StoreInfo;
 import org.geoserver.catalog.StyleInfo;
 import org.geoserver.catalog.WorkspaceInfo;
 import org.geoserver.catalog.impl.CatalogImpl;
-import org.geoserver.config.GeoServer;
-import org.geoserver.config.GeoServerDataDirectory;
 import org.geoserver.config.GeoServerInfo;
 import org.geoserver.config.GeoServerPersister;
 import org.geoserver.config.LoggingInfo;
 import org.geoserver.config.impl.GeoServerImpl;
 import org.geoserver.config.util.XStreamPersister;
 import org.geoserver.config.util.XStreamPersisterFactory;
-import org.geoserver.data.util.CoverageStoreUtils;
-import org.geoserver.data.util.CoverageUtils;
 import org.geoserver.data.util.IOUtils;
 import org.geoserver.platform.GeoServerResourceLoader;
-import org.geoserver.security.GeoServerSecurityManager;
-import org.geotools.coverage.Category;
-import org.geotools.coverage.GridSampleDimension;
-import org.geotools.coverage.grid.GridCoverage2D;
-import org.geotools.coverage.grid.GridGeometry2D;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.coverage.grid.io.GridFormatFinder;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.property.PropertyDataStoreFactory;
 import org.geotools.feature.NameImpl;
-import org.geotools.geometry.GeneralEnvelope;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
-import org.geotools.referencing.crs.DefaultGeographicCRS;
-import org.opengis.coverage.grid.GridGeometry;
-import org.opengis.parameter.ParameterValueGroup;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.NoSuchAuthorityCodeException;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
-import org.opengis.referencing.cs.CoordinateSystem;
 
-public class DefaultTestData extends CiteTestData {
+public class SystemTestData extends CiteTestData {
 
     /**
      * Keys for overriding default layer properties
@@ -87,7 +64,7 @@ public class DefaultTestData extends CiteTestData {
     /** internal catalog, used for setup before the real catalog available */
     Catalog catalog;
 
-    public DefaultTestData() throws IOException {
+    public SystemTestData() throws IOException {
         // setup the root
         data = IOUtils.createRandomDirectory("./target", "default", "data");
         data.delete();
@@ -105,7 +82,6 @@ public class DefaultTestData extends CiteTestData {
             addVectorLayer(layerName, catalog);
         }
     }
-
 
     public void setUpDefaultRasterLayers() throws IOException {
         addWorkspace(WCS_PREFIX, WCS_URI, catalog);
@@ -168,6 +144,10 @@ public class DefaultTestData extends CiteTestData {
             createXStreamPersister()));
 
         GeoServerInfo global = geoServer.getFactory().createGlobal();
+        global.getSettings().getContact().setContactPerson("Andrea Aime");
+        global.getSettings().setNumDecimals(8);
+        global.getSettings().setOnlineResource("http://geoserver.org");
+        global.getSettings().setVerbose(false);
         geoServer.setGlobal(global);
 
         LoggingInfo logging = geoServer.getFactory().createLogging();

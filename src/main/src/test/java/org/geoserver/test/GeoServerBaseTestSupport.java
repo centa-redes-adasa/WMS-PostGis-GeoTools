@@ -14,6 +14,48 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.opengis.feature.type.Name;
 
+/**
+ * Base test support class for GeoServer test cases.
+ * <h2>Test Setup Lifecycle</h2>
+ * <p>
+ * This class provides a number of hooks for subclasses that are called throughout the life cycle
+ * of the test. These include:
+ * <ul>
+ *   <li>{@link #createTestData()} - The first subclass hook called to created the {@link TestData}
+ *   for the test</li> 
+ *   <li>{@link #setUp(TestData)} - Called after the test data setup has been completed and provides
+ *   subclass with a chance to any setup it requires</li>
+ *   <li>{@link #tearDown(TestData)} - Called after the test has run and before the test setup 
+ *   tear down.</li> 
+ * </ul>
+ * </p>
+ * <p>
+ * Additionally a test class may use the standard JUnit annotations such as {@link Before}, 
+ * {@link BeforeClass}, {@link After}, {@link AfterClass} to define additional life cycle setup 
+ * and tear down methods. Generally these methods will execute after methods of the super class with
+ * the same annotation.
+ * </p>
+ * <h2>Test Setup Frequency</h2>
+ * <p>
+ * The {@link TestSetup} annotation is used to control the frequency at which the test setup will
+ * occur over the life of the test class. It controls whether the test setup is run repeatedly for 
+ * each test method or once for the all the test methods of the class.
+ * </p>
+ * <p>
+ * The annotation is defined at the class level. For example, to define a single (one-time) setup:
+ * <code>
+ * <pre>
+ * {@literal @}TestSetup(run=TestSetupFrequency.ONCE)
+ * public class MyTest extends GeoServerBaseTestSupport {
+ * }
+ * </pre>
+ * </code>
+ * 
+ * </p>
+ * @author Justin Deoliveira, OpenGeo
+ *
+ * @param <T>
+ */
 public abstract class GeoServerBaseTestSupport<T extends TestData> {
 
     /**
@@ -32,7 +74,10 @@ public abstract class GeoServerBaseTestSupport<T extends TestData> {
      */
     protected static GeoServerBaseTestSupport test;
 
-    protected static TestSetupPolicy testSetupPolicy = null;
+    /**
+     * Controls the frequency of the test setup 
+     */
+    protected static TestSetupFrequency testSetupFrequency = null;
 
 //  @Rule
 //  public TestWatcher watcher = new TestWatcher() {
@@ -42,7 +87,7 @@ public abstract class GeoServerBaseTestSupport<T extends TestData> {
 //  };
 
     @BeforeClass
-    public static void setUpReferencing() throws Exception {
+    public final static void setUpReferencing() throws Exception {
         // do we need to reset the referencing subsystem and reorient it with lon/lat order?
         if (System.getProperty("org.geotools.referencing.forceXY") == null
                 || !"http".equals(Hints.getSystemDefault(Hints.FORCE_AXIS_ORDER_HONORING))) {
@@ -53,13 +98,12 @@ public abstract class GeoServerBaseTestSupport<T extends TestData> {
     }
 
     @Before
-    public final void setUpTestData() throws Exception {
+    public final void doSetup() throws Exception {
         if (testData == null) {
             test = this;
             testData = createTestData();
             testData.setUp();
-            
-            setUpTestData((T) testData);
+
             setUp((T) testData);
         }
     }
@@ -68,25 +112,37 @@ public abstract class GeoServerBaseTestSupport<T extends TestData> {
         return (T) testData;
     }
 
+    /**
+     * Creates the {@link TestData} implementation for this test.
+     * <p>
+     * If the concrete {@link TestData} class provides any configurable options that control how
+     * its setup will operate they should be set/unset in this method before turning the new 
+     * instance. 
+     * </p>
+     */
     protected abstract T createTestData() throws Exception;
 
-    protected void setUpTestData(T testData) throws Exception {
-    }
-
+    /**
+     * Subclass hook for set up before the test run. 
+     * <p>
+     * This methods should be used for setup that occurs after the {@link TestData} instance has 
+     * been setup. 
+     * </p>
+     */
     protected void setUp(T testData) throws Exception {
     }
 
     @After
-    public void tearDownTestData() throws Exception {
-        if (testSetupPolicy == null) {
-            testSetupPolicy = lookupTestSetupPolicy();
+    public final void doTearDown() throws Exception {
+        if (testSetupFrequency == null) {
+            testSetupFrequency = lookupTestSetupPolicy();
         }
-        if (testSetupPolicy != TestSetupPolicy.ONCE) {
-            doTearDownTestData();
+        if (testSetupFrequency != TestSetupFrequency.ONCE) {
+            doTearDownClass();
         }
     }
 
-    private TestSetupPolicy lookupTestSetupPolicy() {
+    private TestSetupFrequency lookupTestSetupPolicy() {
         Class clazz = getClass();
         while(clazz != null && !Object.class.equals(clazz)) {
             TestSetup testSetup = (TestSetup) clazz.getAnnotation(TestSetup.class);
@@ -95,11 +151,11 @@ public abstract class GeoServerBaseTestSupport<T extends TestData> {
             }
             clazz = clazz.getSuperclass();
         }
-        return TestSetupPolicy.REPEAT;
+        return TestSetupFrequency.REPEAT;
     }
 
     @AfterClass
-    public static void doTearDownTestData() throws Exception {
+    public final static void doTearDownClass() throws Exception {
         if (testData != null) {
             test.tearDown(testData);
             testData.tearDown();
@@ -108,6 +164,13 @@ public abstract class GeoServerBaseTestSupport<T extends TestData> {
         }
     }
 
+    /**
+     * Subclass hook for set up before the test run. 
+     * <p>
+     * This methods should be used for setup that occurs after the {@link TestData} instance has 
+     * been setup. 
+     * </p>
+     */
     protected void tearDown(T testData) throws Exception {
     }
 

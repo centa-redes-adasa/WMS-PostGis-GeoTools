@@ -31,10 +31,10 @@ import org.geoserver.data.test.MockTestData;
 import org.geoserver.data.test.MockTestData.MockCreator;
 import org.geoserver.test.GeoServerMockTestSupport;
 import org.geoserver.test.TestSetup;
-import org.geoserver.test.TestSetupPolicy;
+import org.geoserver.test.TestSetupFrequency;
 import org.junit.Test;
 
-@TestSetup(run=TestSetupPolicy.REPEAT)
+@TestSetup(run=TestSetupFrequency.REPEAT)
 public class CascadeDeleteVisitorTest extends GeoServerMockTestSupport {
     static final String LAKES_GROUP = "lakesGroup";
     

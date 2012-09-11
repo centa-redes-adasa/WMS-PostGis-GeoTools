@@ -57,7 +57,7 @@ import org.geoserver.catalog.WorkspaceInfo;
 import org.geoserver.config.GeoServer;
 import org.geoserver.config.GeoServerDataDirectory;
 import org.geoserver.config.GeoServerLoaderProxy;
-import org.geoserver.data.test.DefaultTestData;
+import org.geoserver.data.test.SystemTestData;
 import org.geoserver.logging.LoggingUtils;
 import org.geoserver.ows.util.KvpUtils;
 import org.geoserver.ows.util.ResponseUtils;
@@ -107,8 +107,36 @@ import com.mockrunner.mock.web.MockServletConfig;
 import com.mockrunner.mock.web.MockServletContext;
 import com.mockrunner.mock.web.MockServletOutputStream;
 
-@TestSetup(run=TestSetupPolicy.ONCE)
-public class GeoServerIntegrationTestSupport extends GeoServerBaseTestSupport<DefaultTestData> {
+/**
+ * Base test class for GeoServer system tests that require a fully configured spring context to 
+ * operate.
+ * <h2>Subclass Hooks</h2>
+ * <p>
+ * Subclasses extending this base class have the following hooks avaialble:
+ * <ul>
+ *   <li>{@link #setUp(SystemTestData)} - Perform post configuration of the {@link SystemTestData} 
+ *   instance</li>
+ *   <li>{@link #onSetUp(SystemTestData)} - Perform setup after the system has been fully initialized
+ *   <li>{@link #onTearDown(SystemTestData)} - Perform teardown before the system is to be shutdown 
+ * </ul>
+ * </p>
+ * <h2>Test Setup Frequency</h2>
+ * <p>
+ * By default the setup cycle is executed once for extensions of this class. Subclasses that require
+ * a different test setup frequency should annotate themselves with the appropriate {@link TestSetup}
+ * annotation. For example to implement a repeated setup:
+ * <code><pre> 
+ *  {@literal @}TestSetup(run=TestSetupFrequency.REPEATED}
+ *  public class MyTest extends GeoServerSystemTestSupport {
+ *  
+ *  }
+ * </pre></code>
+ * </p>
+ * @author Justin Deoliveira, OpenGeo
+ *
+ */
+@TestSetup(run=TestSetupFrequency.ONCE)
+public class GeoServerSystemTestSupport extends GeoServerBaseTestSupport<SystemTestData> {
 
     /**
      * spring application context containing the integrated geoserver
@@ -120,11 +148,13 @@ public class GeoServerIntegrationTestSupport extends GeoServerBaseTestSupport<De
      */
     protected String username, password; 
 
-    protected void setUpTestData(DefaultTestData testData) throws Exception {
-        testData.setUpDefaultLayers();
+    protected SystemTestData createTestData() throws Exception {
+        return new SystemTestData();
     }
 
-    final protected void setUp(DefaultTestData testData) throws Exception {
+    protected final void setUp(SystemTestData testData) throws Exception {
+        setUpTestData(testData);
+
         // setup quiet logging (we need to to this here because Data
         // is loaded before GoeServer has a chance to setup logging for good)
         try {
@@ -170,19 +200,7 @@ public class GeoServerIntegrationTestSupport extends GeoServerBaseTestSupport<De
         }
     }
 
-    protected void onSetUp(DefaultTestData testData) throws Exception {
-    }
-
-    protected DefaultTestData createTestData() throws Exception {
-        return new DefaultTestData();
-    }
-
-    @After
-    public void doLogout() {
-        logout();
-    }
-
-    protected void tearDown(DefaultTestData testData) throws Exception {
+    protected final void tearDown(SystemTestData testData) throws Exception {
         if(testData.isTestDataAvailable()) {
             try {
                 onTearDown(testData);
@@ -213,7 +231,55 @@ public class GeoServerIntegrationTestSupport extends GeoServerBaseTestSupport<De
         }
     }
 
-    protected void onTearDown(DefaultTestData testData) throws Exception {
+    @After
+    public void doLogout() {
+        logout();
+    }
+
+    //
+    // subclass hooks
+    //
+    /**
+     * Sets up the {@link SystemTestData} used for this test.
+     * <p>
+     * This method is used to add any additional data or configuration to the test setup and may 
+     * be overridden or extended. The default implementation calls 
+     * {@link SystemTestData#setUpDefaultLayers()} to add the default layers for the test.  
+     * </p>
+     */
+    protected void setUpTestData(SystemTestData testData) throws Exception {
+        testData.setUpDefaultLayers();
+    }
+
+    /**
+     * Sets up the spring context locations to use in constructing the spring context for this 
+     * system test.
+     * <p>
+     * Subclasses may override to provide additional context files/locations.
+     * </p>
+     */
+    protected void setUpSpring(List<String> springContextLocations) {
+        springContextLocations.add("classpath*:/applicationContext.xml");
+        springContextLocations.add("classpath*:/applicationSecurityContext.xml");
+    }
+
+    /**
+     * Subclass hook called after the system (ie spring context) has been fully initialized.
+     * <p>
+     * Subclasses should override for post setup that is needed. The default implementation does 
+     * nothing. 
+     * </p>
+     */
+    protected void onSetUp(SystemTestData testData) throws Exception {
+    }
+
+    /**
+     * Subclass hook called before the system (ie spring context) is to be shut down.
+     * <p>
+     * Subclasses should override for any cleanup / teardown that should occur on system shutdown. 
+     * </p>
+     */
+    protected void onTearDown(SystemTestData testData) throws Exception {
     }
 
     //
@@ -227,11 +293,6 @@ public class GeoServerIntegrationTestSupport extends GeoServerBaseTestSupport<De
      */
     protected String getLogConfiguration() {
         return "/TEST_LOGGING.properties";
-    }
-
-    protected void setUpSpring(List<String> springContextLocations) {
-        springContextLocations.add("classpath*:/applicationContext.xml");
-        springContextLocations.add("classpath*:/applicationSecurityContext.xml");
     }
 
     /**

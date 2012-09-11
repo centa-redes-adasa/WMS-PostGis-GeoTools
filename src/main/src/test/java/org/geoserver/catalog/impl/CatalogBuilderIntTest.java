@@ -16,8 +16,8 @@ import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.CatalogBuilder;
 import org.geoserver.catalog.CoverageInfo;
 import org.geoserver.catalog.CoverageStoreInfo;
-import org.geoserver.data.test.DefaultTestData;
-import org.geoserver.test.GeoServerIntegrationTestSupport;
+import org.geoserver.data.test.SystemTestData;
+import org.geoserver.test.GeoServerSystemTestSupport;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridCoverageFactory;
 import org.geotools.gce.geotiff.GeoTiffWriter;
@@ -26,10 +26,10 @@ import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Test;
 
-public class CatalogBuilderIntTest extends GeoServerIntegrationTestSupport {
+public class CatalogBuilderIntTest extends GeoServerSystemTestSupport {
 
     @Override
-    protected void setUpTestData(DefaultTestData testData) throws Exception {
+    protected void setUpTestData(SystemTestData testData) throws Exception {
         super.setUpTestData(testData);
         testData.setUpDefaultRasterLayers();
     }

@@ -6,10 +6,10 @@ import static junit.framework.Assert.assertNotNull;
 import java.util.List;
 
 import org.geoserver.data.test.TestData;
-import org.geoserver.test.GeoServerIntegrationTestSupport;
+import org.geoserver.test.GeoServerSystemTestSupport;
 import org.junit.Test;
 
-public class CatalogIntegrationTest extends GeoServerIntegrationTestSupport {
+public class CatalogIntegrationTest extends GeoServerSystemTestSupport {
 
     @Test
     public void testWorkspaceRemoveAndReadd() {

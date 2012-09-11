@@ -26,7 +26,7 @@ import org.geoserver.data.test.MockTestData;
 import org.geoserver.test.GeoServerMockTestSupport;
 import org.geoserver.test.RemoteOWSTestSupport;
 import org.geoserver.test.TestSetup;
-import org.geoserver.test.TestSetupPolicy;
+import org.geoserver.test.TestSetupFrequency;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.data.ResourceInfo;
@@ -37,7 +37,7 @@ import org.opengis.feature.type.FeatureType;
 
 import com.vividsolutions.jts.geom.Point;
 
-@TestSetup(run=TestSetupPolicy.ONCE)
+@TestSetup(run=TestSetupFrequency.ONCE)
 public class CatalogBuilderTest extends GeoServerMockTestSupport {
 
 //    /**
