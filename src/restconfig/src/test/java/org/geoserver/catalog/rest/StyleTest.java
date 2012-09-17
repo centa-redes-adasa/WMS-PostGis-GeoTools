@@ -406,7 +406,7 @@ public class StyleTest extends CatalogRESTTestSupport {
     
     @Test
     public void testPostByLayerWithDefault() throws Exception {
-        getTestData().addDefaultVectorLayer(SystemTestData.BASIC_POLYGONS, getCatalog());
+        getTestData().addVectorLayer(SystemTestData.BASIC_POLYGONS, getCatalog());
         LayerInfo l = catalog.getLayerByName( "cite:BasicPolygons" );
         int nstyles = l.getStyles().size();
         
@@ -425,7 +425,7 @@ public class StyleTest extends CatalogRESTTestSupport {
     
     @Test
     public void testPostByLayerExistingWithDefault() throws Exception {
-        getTestData().addDefaultVectorLayer(SystemTestData.BASIC_POLYGONS, getCatalog());
+        getTestData().addVectorLayer(SystemTestData.BASIC_POLYGONS, getCatalog());
         testPostByLayer();
         
         LayerInfo l = catalog.getLayerByName("cite:BasicPolygons");

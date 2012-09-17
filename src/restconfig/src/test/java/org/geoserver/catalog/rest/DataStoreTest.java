@@ -328,7 +328,7 @@ public class DataStoreTest extends CatalogRESTTestSupport {
 
     @Test
     public void testPutNameChangeForbidden() throws Exception {
-        getTestData().addDefaultVectorLayer(SystemTestData.PRIMITIVEGEOFEATURE, getCatalog());
+        getTestData().addVectorLayer(SystemTestData.PRIMITIVEGEOFEATURE, getCatalog());
         String xml = "<dataStore>" +
             "<name>newName</name>" + 
             "</dataStore>";

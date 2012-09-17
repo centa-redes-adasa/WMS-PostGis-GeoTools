@@ -180,7 +180,7 @@ public class WorkspaceTest extends CatalogRESTTestSupport {
     
     @Test
     public void testDeleteNonEmptyForbidden() throws Exception {
-        getTestData().addDefaultVectorLayer(SystemTestData.PRIMITIVEGEOFEATURE, catalog);
+        getTestData().addVectorLayer(SystemTestData.PRIMITIVEGEOFEATURE, catalog);
         assertEquals( 403, deleteAsServletResponse("/rest/workspaces/sf").getStatusCode() );
     }
     
@@ -209,7 +209,7 @@ public class WorkspaceTest extends CatalogRESTTestSupport {
     
     @Test
     public void testDeleteRecursive() throws Exception {
-        getTestData().addDefaultVectorLayer(SystemTestData.PRIMITIVEGEOFEATURE, catalog);
+        getTestData().addVectorLayer(SystemTestData.PRIMITIVEGEOFEATURE, catalog);
         List<StoreInfo> stores = catalog.getStoresByWorkspace("sf", StoreInfo.class); 
         assertFalse(stores.isEmpty());
 
