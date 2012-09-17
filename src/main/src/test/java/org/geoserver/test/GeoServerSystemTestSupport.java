@@ -477,6 +477,14 @@ public class GeoServerSystemTestSupport extends GeoServerBaseTestSupport<SystemT
         }
     }
 
+    protected void revertLayer(String workspace, String layerName) throws IOException {
+        revertLayer(new QName(workspace, layerName));
+    }
+
+    protected void revertLayer(QName qName) throws IOException {
+        getTestData().addVectorLayer(qName, getCatalog());
+    }
+
     //
     // authentication/security helpers
     //

@@ -41,7 +41,7 @@ public class FeatureTypeTest extends CatalogRESTTestSupport {
 
     @Before
     public void addPrimitiveGeoFeature() throws IOException {
-        getTestData().addVectorLayer(SystemTestData.PRIMITIVEGEOFEATURE, catalog);
+        revertLayer(SystemTestData.PRIMITIVEGEOFEATURE);
     }
 
     @Test
