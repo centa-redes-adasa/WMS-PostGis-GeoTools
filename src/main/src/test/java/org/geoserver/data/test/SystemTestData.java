@@ -31,15 +31,30 @@ import org.geoserver.config.util.XStreamPersister;
 import org.geoserver.config.util.XStreamPersisterFactory;
 import org.geoserver.data.util.IOUtils;
 import org.geoserver.platform.GeoServerResourceLoader;
+import org.geoserver.test.GeoServerSystemTestSupport;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.coverage.grid.io.GridFormatFinder;
 import org.geotools.data.DataUtilities;
+import org.geotools.data.property.PropertyDataStore;
 import org.geotools.data.property.PropertyDataStoreFactory;
 import org.geotools.feature.NameImpl;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 
+/**
+ * Test setup uses for GeoServer system tests.
+ * <p>
+ * This is the default test setup used by {@link GeoServerSystemTestSupport}. During setup this 
+ * class creates a full GeoServer data directory configuration on disk. 
+ * </p>
+ * <p>
+ * Customizing the setup, adding layers, etc... is done from 
+ * {@link GeoServerSystemTestSupport#setUpTestData}. 
+ * </p>
+ * @author Justin Deoliveira, OpenGeo
+ *
+ */
 public class SystemTestData extends CiteTestData {
 
     /**
@@ -77,12 +92,28 @@ public class SystemTestData extends CiteTestData {
         createConfig();
     }
 
+    /**
+     * Sets up the default set of layers, which is all the vector layers whose names are included
+     * in the {@link CiteTestData#TYPENAMES} array.
+     */
     public void setUpDefaultLayers() throws IOException {
         for (QName layerName : TYPENAMES) {
             addVectorLayer(layerName, catalog);
         }
     }
 
+    /**
+     * Sets up the default set of raster layers. 
+     * <p>
+     * Layer names included in this set include:
+     * <ul>
+     *  <li>{@link CiteTestData#TASMANIA_BM}
+     *  <li>{@link CiteTestData#TASMANIA_DEM}
+     *  <li>{@link CiteTestData#ROTATED_CAD}
+     *  <li>{@link CiteTestData#WORLD}
+     * </ul>
+     * </p>
+     */
     public void setUpDefaultRasterLayers() throws IOException {
         addWorkspace(WCS_PREFIX, WCS_URI, catalog);
         addDefaultRasterLayer(TASMANIA_DEM, catalog);
@@ -91,27 +122,16 @@ public class SystemTestData extends CiteTestData {
         addDefaultRasterLayer(WORLD, catalog);
     }
 
-    public void addDefaultRasterLayer(QName name, Catalog catalog) throws IOException {
-        if (name.equals(TASMANIA_DEM)) {
-            addRasterLayer(name,  "tazdem.tiff", catalog);
-        }
-        else if (name.equals(TASMANIA_BM)) {
-            addRasterLayer(name, "tazbm.tiff", catalog);
-        }
-        else if (name.equals(ROTATED_CAD)) {
-            addRasterLayer(name, "rotated.tiff", catalog);
-        }
-        else if (name.equals(WORLD)) {
-            addRasterLayer(name, "world.tiff", catalog);
-        }
-        else {
-            throw new IllegalArgumentException("Unknown default raster layer: " + name);
-        }
-    }
-
     public void setUpWcs10RasterLayers() throws IOException {
+        throw new UnsupportedOperationException("TODO");
     }
 
+    /**
+     * Sets up the WCS 11 raster layers.
+     * <p>
+     * This method is a synonym for {@link #setUpDefaultLayers()}
+     * </p>
+     */
     public void setUpWcs11RasterLayers() throws IOException {
         setUpDefaultRasterLayers();
     }
@@ -161,6 +181,12 @@ public class SystemTestData extends CiteTestData {
         return xp;
     }
 
+    /**
+     * Adds a workspace to the test setup.
+     * 
+     * @param name The name of the workspace.
+     * @param uri The namespace uri associated with the workspace.
+     */
     public void addWorkspace(String name, String uri, Catalog catalog) {
         
         WorkspaceInfo ws = catalog.getWorkspaceByName(name);
@@ -183,11 +209,32 @@ public class SystemTestData extends CiteTestData {
         }
     }
 
+    /**
+     * Adds a style to the test setup.
+     * <p>
+     * To set up the style a file named <tt>name</tt>.sld is copied from the classpath relative
+     * to this class.
+     * </p>
+     * @param name The name of the style.
+     */
     public void addStyle(String name, Catalog catalog) throws IOException {
+        addStyle(name, getClass(), catalog);
+    }
+
+    /**
+     * Adds a style to the test setup.
+     * <p>
+     * To set up the style a file named <tt>name</tt>.sld is copied from the classpath relative
+     * to the <tt>scope</tt> parameter.
+     * </p>
+     * @param name The name of the style.
+     * @param scope Class from which to load sld resource from.
+     */
+    public void addStyle(String name, Class scope, Catalog catalog) throws IOException {
         File styles = catalog.getResourceLoader().findOrCreateDirectory(data, "styles");
 
         String filename = name + ".sld";
-        catalog.getResourceLoader().copyFromClassPath(filename, new File(styles, filename), getClass());
+        catalog.getResourceLoader().copyFromClassPath(filename, new File(styles, filename), scope);
 
         StyleInfo style = catalog. getStyleByName(name);
         if (style == null) {
@@ -203,15 +250,50 @@ public class SystemTestData extends CiteTestData {
         }
     }
 
-    public void addDefaultVectorLayer(QName qName, Catalog catalog) throws IOException {
-        addVectorLayer(qName, catalog);
-    }
-
+    /**
+     * Adds a vector layer to the catalog setup.
+     * <p>
+     * This method calls through to {@link #addVectorLayer(QName, Map, Catalog)} with no custom 
+     * properties.
+     * </p>
+     */
     public void addVectorLayer(QName qName, Catalog catalog) throws IOException {
         addVectorLayer(qName, new HashMap(), catalog);
     }
 
-    public void addVectorLayer(QName qName, Map<LayerProperty,Object> props, Catalog catalog) throws IOException {
+    /**
+     * Adds a vector layer to the catalog setup.
+     * <p>
+     * This method calls through to {@link #addVectorLayer(QName, Map, Class, Catalog)} passing in
+     * this class as the scope.
+     * </p> 
+     */
+    public void addVectorLayer(QName qName, Map<LayerProperty,Object> props, Catalog catalog) 
+        throws IOException {
+        addVectorLayer(qName, props, getClass(), catalog);
+    }
+
+    /**
+     * Adds a vector layer to the catalog setup.
+     * <p>
+     * The layer is created within a store named <code>qName.getPrefix()</code>, creating it 
+     * if it does not exist. The resulting store is a {@link PropertyDataStore} that points at the 
+     * directory <code>getDataDirectoryRoot()/qName.getPrefix()</code>. Similarily the layer and
+     * store are created within a workspace named <code>qName.getPrefix()</code>, which is created
+     * if it does not already exist.
+     * </p>
+     * <p>
+     * The properties data for the layer is copied from the classpath, with a file name of 
+     * "<code>qName.getLocalPart()</code>.properties". The <tt>scope</tt> parameter is used as the 
+     * class from which to load the properties file relative to. 
+     * </p>
+     * <p>
+     * The <tt>props</tt> parameter is used to define custom properties for the layer. See the 
+     * {@link LayerProperty} class for supported properties. 
+     * </p>
+     */
+    public void addVectorLayer(QName qName, Map<LayerProperty,Object> props, Class scope, 
+        Catalog catalog) throws IOException {
         String prefix = qName.getPrefix();
         String name = qName.getLocalPart();
         String uri = qName.getNamespaceURI();
@@ -239,7 +321,7 @@ public class SystemTestData extends CiteTestData {
 
         //copy the properties file over
         String filename = name + ".properties";
-        catalog.getResourceLoader().copyFromClassPath(filename, new File(storeDir, filename), getClass());
+        catalog.getResourceLoader().copyFromClassPath(filename, new File(storeDir, filename), scope);
 
         //configure feature type
         FeatureTypeInfo featureType = catalog.getFactory().createFeatureType();
@@ -317,17 +399,92 @@ public class SystemTestData extends CiteTestData {
         }
     }
 
-
-    public void addRasterLayer(QName qName, String filename, Catalog catalog) throws IOException {
-        addRasterLayer(qName, filename, null, catalog);
+    /**
+     * Adds one of the default raster layers.
+     * <p>
+     *  The <tt>name</tt> parameter must be one of:
+     *  <ul>
+     *  <li>{@link CiteTestData#TASMANIA_BM}
+     *  <li>{@link CiteTestData#TASMANIA_DEM}
+     *  <li>{@link CiteTestData#ROTATED_CAD}
+     *  <li>{@link CiteTestData#WORLD}
+     * </ul>
+     * </p>
+     */
+    public void addDefaultRasterLayer(QName name, Catalog catalog) throws IOException {
+        if (name.equals(TASMANIA_DEM)) {
+            addRasterLayer(name,  "tazdem.tiff", null, catalog);
+        }
+        else if (name.equals(TASMANIA_BM)) {
+            addRasterLayer(name, "tazbm.tiff", null, catalog);
+        }
+        else if (name.equals(ROTATED_CAD)) {
+            addRasterLayer(name, "rotated.tiff", null, catalog);
+        }
+        else if (name.equals(WORLD)) {
+            addRasterLayer(name, "world.tiff", null, catalog);
+        }
+        else {
+            throw new IllegalArgumentException("Unknown default raster layer: " + name);
+        }
     }
 
-    public void addRasterLayer(QName qName, String filename, String format, Catalog catalog) throws IOException {
-        addRasterLayer(qName, filename, format, new HashMap(), catalog);
+    /**
+     * Adds a raster layer to the setup with no custom properties.
+     * <p>
+     * This method calls through to {@link #addRasterLayer(QName, String, String, Map, Catalog)}
+     * </p> 
+     */
+    public void addRasterLayer(QName qName, String filename, String extension, Catalog catalog) 
+        throws IOException {
+        addRasterLayer(qName, filename, extension, new HashMap(), catalog);
     }
 
+    /**
+     * Adds a raster layer to the setup.
+     * <p>
+     * The <tt>filename</tt> parameter defines the raster file to be loaded from the classpath.
+     * This method assumes the scope of this class and calls through to 
+     * {@link #addRasterLayer(QName, String, String, Map, Class, Catalog)}
+     * </p>
+     */
     public void addRasterLayer(QName qName, String filename, String extension, 
         Map<LayerProperty,Object> props, Catalog catalog) throws IOException {
+        addRasterLayer(qName, filename, extension, props, getClass(), catalog);
+    }
+
+    /**
+     * Adds a raster layer to the setup.
+     * <p>
+     * This method configures a raster layer with the name <code>qName.getLocalPart()</code>. A 
+     * coverage store is created (if it doesn't already exist) with the same name. The workspace
+     * of the resulting store and layer is determined by <code>qName.getPrefix()</code>.
+     * </p>
+     * <p>
+     * The <tt>filename</tt> parameter defines the raster file to be loaded from the classpath 
+     * and copied into the data directory. The <tt>scope</tt> is used as the class from which to 
+     * load the file from.
+     * </p>
+     * <p>
+     * In the case of adding a zipped archive that contains multiple file the <tt>filename</tt> 
+     * paramter should have a ".zip" extension and the <tt>extension</tt> parameter must define the 
+     * extension of the main raster file. The parameter is not necessary and may be null if the 
+     * <tt>filename</tt> does not refer to a zip file.
+     * </p>
+     * <p>
+     * The <tt>props</tt> parameter is used to define custom properties for the layer. See the 
+     * {@link LayerProperty} class for supported properties. 
+     * </p>
+     * @param qName The name of the raster layer.
+     * @param filename The name of the file containing the raster, to be loaded from the classpath.
+     * @param extension The file extension (without a ".") of the main raster file. This parameter
+     *   my be <code>null</code> only if <tt>filename</tt> does not refer to a zip file.
+     * @param props Custom properties to assign to the created raster layer.
+     * @param scope The class from which to load the <tt>filename</tt> resource from. 
+     *
+     */
+    public void addRasterLayer(QName qName, String filename, String extension, 
+        Map<LayerProperty,Object> props, Class scope, Catalog catalog) throws IOException {
 
         String prefix = qName.getPrefix();
         String name = qName.getLocalPart();

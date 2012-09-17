@@ -7,6 +7,13 @@ import javax.xml.namespace.QName;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 
+/**
+ * Abstract TestData class that defines names for all the layers from the WFS, WMS, and WCS CITE
+ * tests. 
+ * 
+ * @author Justin Deoliveira, OpenGeo
+ *
+ */
 public abstract class CiteTestData implements TestData {
 
     // //// WMS 1.1.1

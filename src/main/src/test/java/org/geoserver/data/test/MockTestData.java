@@ -1,6 +1,12 @@
 package org.geoserver.data.test;
 
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.createNiceMock;
+import static org.easymock.EasyMock.eq;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.or;
+import static org.easymock.EasyMock.replay;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,10 +21,8 @@ import javax.xml.namespace.QName;
 import org.apache.commons.io.FileUtils;
 import org.easymock.EasyMock;
 import org.easymock.IAnswer;
-import org.easymock.IArgumentMatcher;
 import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.CatalogBuilder;
-import org.geoserver.catalog.CatalogException;
 import org.geoserver.catalog.CoverageInfo;
 import org.geoserver.catalog.CoverageStoreInfo;
 import org.geoserver.catalog.DataStoreInfo;
@@ -34,15 +38,13 @@ import org.geoserver.catalog.StoreInfo;
 import org.geoserver.catalog.StyleInfo;
 import org.geoserver.catalog.Styles;
 import org.geoserver.catalog.WorkspaceInfo;
-import org.geoserver.catalog.event.CatalogAddEvent;
 import org.geoserver.catalog.event.CatalogListener;
-import org.geoserver.catalog.event.CatalogModifyEvent;
-import org.geoserver.catalog.event.CatalogPostModifyEvent;
-import org.geoserver.catalog.event.CatalogRemoveEvent;
 import org.geoserver.catalog.impl.CatalogFactoryImpl;
 import org.geoserver.catalog.impl.CatalogImpl;
 import org.geoserver.data.util.IOUtils;
 import org.geoserver.platform.GeoServerResourceLoader;
+import org.geoserver.test.GeoServerMockTestSupport;
+import org.geoserver.test.GeoServerSystemTestSupport;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
 import org.geotools.coverage.grid.io.AbstractGridFormat;
 import org.geotools.coverage.grid.io.GridFormatFinder;
@@ -59,6 +61,19 @@ import org.geotools.util.Version;
 import org.opengis.feature.type.FeatureType;
 import org.vfny.geoserver.global.GeoserverDataDirectory;
 
+/**
+ * Test setup uses for GeoServer mock tests.
+ * <p>
+ * This is the default test setup used by {@link GeoServerMockTestSupport}. During setup this 
+ * class creates a catalog whose contents contain all the layers defined by {@link CiteTestData}
+ * </p>
+ * <p>
+ * Customizing the setup, adding layers, etc... is done from 
+ * {@link GeoServerSystemTestSupport#setUpTestData}. 
+ * </p>
+ * @author Justin Deoliveira, OpenGeo
+ *
+ */
 public class MockTestData extends CiteTestData {
 
     File data;
@@ -75,16 +90,16 @@ public class MockTestData extends CiteTestData {
         mockCreator = new MockCreator();
     }
 
+    public void setMockCreator(MockCreator mockCreator) {
+        this.mockCreator = mockCreator;
+    }
+
     public boolean isInludeRaster() {
         return includeRaster;
     }
 
     public void setIncludeRaster(boolean includeRaster) {
         this.includeRaster = includeRaster;
-    }
-
-    public void setMockCreator(MockCreator mockCreator) {
-        this.mockCreator = mockCreator;
     }
 
     public Catalog getCatalog() {

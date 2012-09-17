@@ -1,19 +1,23 @@
 package org.geoserver.catalog.impl;
 
-import static org.easymock.EasyMock.*;
-import static org.geoserver.data.test.CiteTestData.*;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.createNiceMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.geoserver.data.test.CiteTestData.CITE_PREFIX;
+import static org.geoserver.data.test.CiteTestData.FORESTS;
+import static org.geoserver.data.test.CiteTestData.LAKES;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
-import org.easymock.IAnswer;
 import org.geoserver.catalog.CascadeDeleteVisitor;
 import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.CatalogVisitor;
@@ -26,7 +30,6 @@ import org.geoserver.catalog.ResourceInfo;
 import org.geoserver.catalog.StoreInfo;
 import org.geoserver.catalog.StyleInfo;
 import org.geoserver.catalog.WorkspaceInfo;
-import org.geoserver.data.test.CiteTestData;
 import org.geoserver.data.test.MockTestData;
 import org.geoserver.data.test.MockTestData.MockCreator;
 import org.geoserver.test.GeoServerMockTestSupport;
@@ -66,7 +69,7 @@ public class CascadeDeleteVisitorTest extends GeoServerMockTestSupport {
 
     @Test
     public void testCascadeLayer() {
-        getTestData().setMockCreator(new MockTestData.MockCreator() {
+        setMockCreator(new MockCreator() {
             @Override
             public Catalog createCatalog(MockTestData testData) {
                 Catalog cat = createMock(Catalog.class);
@@ -102,7 +105,7 @@ public class CascadeDeleteVisitorTest extends GeoServerMockTestSupport {
 
     @Test
     public void testCascadeStore() {
-        getTestData().setMockCreator(new MockTestData.MockCreator() {
+        setMockCreator(new MockCreator() {
             @Override
             public Catalog createCatalog(MockTestData testData) {
                 Catalog cat = createMock(Catalog.class);
@@ -137,7 +140,7 @@ public class CascadeDeleteVisitorTest extends GeoServerMockTestSupport {
 
     @Test
     public void testCascadeWorkspace() {
-        getTestData().setMockCreator(new MockTestData.MockCreator() {
+        setMockCreator(new MockCreator() {
             @Override
             public Catalog createCatalog(MockTestData testData) {
                 Catalog cat = createMock(Catalog.class);
@@ -184,7 +187,7 @@ public class CascadeDeleteVisitorTest extends GeoServerMockTestSupport {
 
     @Test
     public void testCascadeStyle() {
-        getTestData().setMockCreator(new MockTestData.MockCreator() {
+        setMockCreator(new MockCreator() {
             @Override
             public Catalog createCatalog(MockTestData testData) {
                 Catalog cat = createMock(Catalog.class);
