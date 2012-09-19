@@ -4,6 +4,10 @@ import org.geoserver.catalog.Catalog;
 import org.geoserver.data.test.MockTestData;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.data.test.MockTestData.MockCreator;
+import org.geoserver.security.GeoServerSecurityManager;
+import org.geoserver.security.password.GeoServerDigestPasswordEncoder;
+import org.geoserver.security.password.GeoServerPBEPasswordEncoder;
+import org.geoserver.security.password.GeoServerPlainTextPasswordEncoder;
 
 /**
  * Base test class for GeoServer mock tests that work from mocked up configuration. 
@@ -41,6 +45,38 @@ public class GeoServerMockTestSupport extends GeoServerBaseTestSupport<MockTestD
 
     public Catalog getCatalog() {
         return getTestData().getCatalog();
+    }
+
+    public GeoServerSecurityManager getSecurityManager() {
+        return getTestData().getSecurityManager();
+    }
+
+    /**
+     * Accessor for plain text password encoder.
+     */
+    protected GeoServerPlainTextPasswordEncoder getPlainTextPasswordEncoder() {
+        return getSecurityManager().loadPasswordEncoder(GeoServerPlainTextPasswordEncoder.class);
+    }
+
+    /**
+     * Accessor for digest password encoder.
+     */
+    protected GeoServerDigestPasswordEncoder getDigestPasswordEncoder() {
+        return getSecurityManager().loadPasswordEncoder(GeoServerDigestPasswordEncoder.class);
+    }
+
+    /**
+     * Accessor for regular (weak encryption) pbe password encoder.
+     */
+    protected GeoServerPBEPasswordEncoder getPBEPasswordEncoder() {
+        return getSecurityManager().loadPasswordEncoder(GeoServerPBEPasswordEncoder.class, null, false);
+    }
+
+    /**
+     * Accessor for strong encryption pbe password encoder.
+     */
+    protected GeoServerPBEPasswordEncoder getStrongPBEPasswordEncoder() {
+        return getSecurityManager().loadPasswordEncoder(GeoServerPBEPasswordEncoder.class, null, true);
     }
 
     /**

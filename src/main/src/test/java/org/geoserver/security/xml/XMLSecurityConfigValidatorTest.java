@@ -331,7 +331,7 @@ public class XMLSecurityConfigValidatorTest extends SecurityConfigValidatorTest 
     public void testAuthenticationProvider() throws IOException {
         super.testAuthenticationProvider();
         
-        SecurityAuthProviderConfig config = getAuthConfig("default2", 
+        SecurityAuthProviderConfig config = createAuthConfig("default2", 
                 UsernamePasswordAuthenticationProvider.class, null);
         
         boolean fail=false;
