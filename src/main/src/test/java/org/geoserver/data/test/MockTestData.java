@@ -61,6 +61,7 @@ import org.geoserver.security.password.GeoServerEmptyPasswordEncoder;
 import org.geoserver.security.password.GeoServerPBEPasswordEncoder;
 import org.geoserver.security.password.GeoServerPasswordEncoder;
 import org.geoserver.security.password.GeoServerPlainTextPasswordEncoder;
+import org.geoserver.security.password.PasswordEncodingType;
 import org.geoserver.security.password.PasswordValidator;
 import org.geoserver.security.validation.PasswordValidatorImpl;
 import org.geoserver.security.xml.XMLRoleService;
@@ -362,11 +363,28 @@ public class MockTestData extends CiteTestData {
                         return createDigestPasswordEncoder(secMgr);
                     }
                 }).anyTimes();
+            expect(secMgr.loadPasswordEncoder(GeoServerDigestPasswordEncoder.class)).andAnswer(
+                new IAnswer<GeoServerDigestPasswordEncoder>() {
+                    @Override
+                    public GeoServerDigestPasswordEncoder answer() throws Throwable {
+                        return createDigestPasswordEncoder(secMgr);
+                    }
+                }).anyTimes();
             expect(secMgr.loadPasswordEncoder("digestPasswordEncoder")).andAnswer(
                 new IAnswer<GeoServerPasswordEncoder>() {
                     @Override
                     public GeoServerPasswordEncoder answer() throws Throwable {
                         return createDigestPasswordEncoder(secMgr);
+                    }
+                }).anyTimes();
+            expect(secMgr.loadPasswordEncoders()).andAnswer(
+                new IAnswer<List<GeoServerPasswordEncoder>>() {
+                    @Override
+                    public List<GeoServerPasswordEncoder> answer()
+                            throws Throwable {
+                        return (List) Arrays.asList(
+                            createPlainTextPasswordEncoder(secMgr), createPbePasswordEncoder(secMgr), 
+                            createStrongPbePasswordEncoder(secMgr), createDigestPasswordEncoder(secMgr));
                     }
                 }).anyTimes();
 

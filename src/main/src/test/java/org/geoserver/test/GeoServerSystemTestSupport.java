@@ -465,17 +465,27 @@ public class GeoServerSystemTestSupport extends GeoServerBaseTestSupport<SystemT
 
     protected void removeWorkspace(String name) {
         Catalog cat = getCatalog();
-        
-        NamespaceInfo ns = cat.getNamespaceByPrefix(name);
-        if (ns != null) {
-            cat.remove(ns);
-        }
 
         WorkspaceInfo ws = cat.getWorkspaceByName(name);
         if (ws != null) {
-            cat.remove(ws);
+            new CascadeDeleteVisitor(cat).visit(ws);
         }
     }
+    
+    protected void removeNamespace(String prefix) {
+        Catalog cat = getCatalog();
+        NamespaceInfo ns = cat.getNamespaceByPrefix(prefix);
+        if (ns != null) {
+            cat.remove(ns);
+        }
+    }
+//   
+//
+//        WorkspaceInfo ws = cat.getWorkspaceByName(name);
+//        if (ws != null) {
+//            cat.remove(ws);
+//        }
+//    }
 
     protected void revertLayer(String workspace, String layerName) throws IOException {
         revertLayer(new QName(workspace, layerName));

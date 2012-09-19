@@ -12,6 +12,11 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 import org.opengis.feature.type.Name;
 
 /**
@@ -85,6 +90,21 @@ public abstract class GeoServerBaseTestSupport<T extends TestData> {
 //          System.out.println(description);
 //      };
 //  };
+
+    @Rule
+    public TestRule runSetup = new TestRule() {
+        @Override
+        public Statement apply(Statement base, Description description) {
+            if (description.getAnnotation(RunTestSetup.class) != null) {
+                try {
+                    doTearDownClass();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            return base;
+        }
+    };
 
     @BeforeClass
     public final static void setUpReferencing() throws Exception {

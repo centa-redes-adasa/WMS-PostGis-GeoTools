@@ -1,5 +1,7 @@
 package org.geoserver.security.password;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,9 +12,11 @@ import org.geoserver.security.GeoServerSecurityTestSupport;
 import org.geoserver.security.GeoServerUserGroupService;
 import org.geoserver.security.KeyStoreProvider;
 import org.geoserver.security.xml.XMLUserGroupService;
+import org.geoserver.test.GeoServerMockTestSupport;
 import org.geotools.util.logging.Logging;
+import org.junit.Test;
 
-public class GeoserverPasswordEncoderTest extends GeoServerSecurityTestSupport {
+public class GeoserverPasswordEncoderTest extends GeoServerMockTestSupport {
 
     
     protected String testPassword="geoserver";
@@ -20,22 +24,22 @@ public class GeoserverPasswordEncoderTest extends GeoServerSecurityTestSupport {
     protected char[] emptyArray = new char[] {};
     static protected Logger LOGGER = Logging.getLogger("org.geoserver.security");
 
-    @Override
-    protected String[] getSpringContextLocations() {
-        String[] locations = super.getSpringContextLocations();
-        String[] newLocations=null;
-        String classPath = "classpath*:/passwordSecurityContext.xml";
-        if (locations==null) {
-            newLocations = new String[] {classPath};
-        } else {        
-            newLocations =Arrays.copyOf(locations, locations.length+1);
-            newLocations[newLocations.length-1]=classPath;
-        }
-        return newLocations;
-    }
+//    @Override
+//    protected String[] getSpringContextLocations() {
+//        String[] locations = super.getSpringContextLocations();
+//        String[] newLocations=null;
+//        String classPath = "classpath*:/passwordSecurityContext.xml";
+//        if (locations==null) {
+//            newLocations = new String[] {classPath};
+//        } else {        
+//            newLocations =Arrays.copyOf(locations, locations.length+1);
+//            newLocations[newLocations.length-1]=classPath;
+//        }
+//        return newLocations;
+//    }
 
         
-    public void testPlainTextEncoder() {
+    @Test public void testPlainTextEncoder() {
         GeoServerPasswordEncoder encoder = getPlainTextPasswordEncoder();
 
         assertEquals(PasswordEncodingType.PLAIN,encoder.getEncodingType());
@@ -69,7 +73,7 @@ public class GeoserverPasswordEncoderTest extends GeoServerSecurityTestSupport {
         
     }
     
-    public void testConfigPlainTextEncoder() {
+    @Test public void testConfigPlainTextEncoder() {
         GeoServerPasswordEncoder encoder = getPlainTextPasswordEncoder();
         GeoServerMultiplexingPasswordEncoder encoder2 = new GeoServerMultiplexingPasswordEncoder(getSecurityManager());
         
@@ -125,7 +129,7 @@ public class GeoserverPasswordEncoderTest extends GeoServerSecurityTestSupport {
     }
 
     
-    public void testDigestEncoder() {
+    @Test public void testDigestEncoder() {
         GeoServerPasswordEncoder encoder = getDigestPasswordEncoder();
         GeoServerMultiplexingPasswordEncoder encoder2 = new GeoServerMultiplexingPasswordEncoder(getSecurityManager());
 
@@ -188,7 +192,7 @@ public class GeoserverPasswordEncoderTest extends GeoServerSecurityTestSupport {
 
     }
 
-//    public void testDigestEncoderBytes() {
+//    @Test public void testDigestEncoderBytes() {
 //        GeoServerPasswordEncoder encoder = getDigestPasswordEncoder();
 //        assertEquals(PasswordEncodingType.DIGEST,encoder.getEncodingType());
 //        assertTrue(encoder.encodePassword(testPassword.toCharArray(), null).startsWith("digest1:"));
@@ -211,7 +215,7 @@ public class GeoserverPasswordEncoderTest extends GeoServerSecurityTestSupport {
 //            testPassword,null));
 //    }
 
-    public void testEmptyEncoder() {
+    @Test public void testEmptyEncoder() {
         GeoServerPasswordEncoder encoder = getSecurityManager().loadPasswordEncoder(GeoServerEmptyPasswordEncoder.class);
         assertEquals(PasswordEncodingType.EMPTY, encoder.getEncodingType());
         String encodedPassword = encoder.getPrefix()+GeoServerPasswordEncoder.PREFIX_DELIMTER;
@@ -260,7 +264,7 @@ public class GeoserverPasswordEncoderTest extends GeoServerSecurityTestSupport {
         return result;
     }
     
-    public void testConfigPBEEncoder() throws Exception {
+    @Test public void testConfigPBEEncoder() throws Exception {
         
         // TODO runs from eclpise, but not from mnv clean install 
         //assertTrue("masterpw".equals(MasterPasswordProviderImpl.get().getMasterPassword()));
@@ -341,7 +345,7 @@ public class GeoserverPasswordEncoderTest extends GeoServerSecurityTestSupport {
     }
 
     
-    public void testUserGroupServiceEncoder() throws Exception {
+    @Test public void testUserGroupServiceEncoder() throws Exception {
         
         GeoServerUserGroupService service = getSecurityManager().
                 loadUserGroupService(XMLUserGroupService.DEFAULT_NAME);
@@ -405,7 +409,7 @@ public class GeoserverPasswordEncoderTest extends GeoServerSecurityTestSupport {
         }
     }
     
-    public void testCustomPasswordProvider() {
+    @Test public void testCustomPasswordProvider() {
         List<GeoServerPasswordEncoder> encoders = GeoServerExtensions.extensions(GeoServerPasswordEncoder.class);
         boolean found = false;
         for (GeoServerPasswordEncoder enc : encoders) {

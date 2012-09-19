@@ -5,6 +5,8 @@
 
 package org.geoserver.security.impl;
 
+import static org.junit.Assert.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 
@@ -31,6 +33,7 @@ import org.geoserver.security.config.impl.MemoryUserGroupServiceConfigImpl;
 import org.geoserver.security.password.DecodingUserDetailsService;
 import org.geoserver.security.password.GeoServerPasswordEncoder;
 import org.geoserver.security.password.PasswordValidator;
+import org.junit.Test;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -88,7 +91,7 @@ public class MemoryUserDetailsServiceTest extends AbstractUserDetailsServiceTest
     }
 
 
-    public void testDecodingUserDetailsService() throws Exception {
+    @Test public void testDecodingUserDetailsService() throws Exception {
         GeoServerUserGroupService service = createUserGroupService("test");        
         DecodingUserDetailsService decService = DecodingUserDetailsService.newInstance(service);
         GeoServerUserGroupStore store = createStore(service);
@@ -102,7 +105,7 @@ public class MemoryUserDetailsServiceTest extends AbstractUserDetailsServiceTest
         assertTrue(plainpassword.equals(admin2.getPassword()));
     }
 
-    public void testCopyFrom() {
+    @Test public void testCopyFrom() {
         try {
     
             // from crypt tp crytp
@@ -154,7 +157,7 @@ public class MemoryUserDetailsServiceTest extends AbstractUserDetailsServiceTest
         
     }
 
-    public void testEncryption() throws Exception {
+    @Test public void testEncryption() throws Exception {
         SecurityManagerConfig config = getSecurityManager().getSecurityConfig();
         GeoServerPasswordEncoder encoder = getPlainTextPasswordEncoder();
         String plainprefix=encoder.getPrefix()+GeoServerPasswordEncoder.PREFIX_DELIMTER;
@@ -216,7 +219,7 @@ public class MemoryUserDetailsServiceTest extends AbstractUserDetailsServiceTest
         assertEquals(plainTextUserGroup, ugService.getToBeEncrypted());        
     }
     
-    public void testEncryption2() throws Exception {
+    @Test public void testEncryption2() throws Exception {
         SecurityManagerConfig config = getSecurityManager().getSecurityConfig();
         config.setConfigPasswordEncrypterName(getPBEPasswordEncoder().getName());
         getSecurityManager().saveSecurityConfig(config);
@@ -279,7 +282,7 @@ public class MemoryUserDetailsServiceTest extends AbstractUserDetailsServiceTest
     }
 
 
-    public void testPasswordPersistence() throws Exception {
+    @Test public void testPasswordPersistence() throws Exception {
         Catalog cat = getCatalog();
         SecurityManagerConfig config = getSecurityManager().getSecurityConfig();
         GeoServerPasswordEncoder encoder = getPlainTextPasswordEncoder();
