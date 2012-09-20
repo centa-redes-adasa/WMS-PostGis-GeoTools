@@ -4,6 +4,9 @@
  */
 package org.geoserver.security.xml;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -19,6 +22,8 @@ import org.geoserver.security.impl.AbstractRoleServiceTest;
 import org.geoserver.security.impl.GeoServerRole;
 import org.geoserver.security.impl.GeoServerUser;
 import org.geoserver.security.impl.Util;
+import org.junit.After;
+import org.junit.Test;
 
 public class XMLRoleServiceTest extends AbstractRoleServiceTest {
 
@@ -28,10 +33,9 @@ public class XMLRoleServiceTest extends AbstractRoleServiceTest {
     public GeoServerRoleService createRoleService(String serviceName) throws Exception {
         return createRoleService(serviceName,XMLConstants.FILE_RR);
     }
-    
-    @Override
-    protected void tearDownInternal() throws Exception {
-        super.tearDownInternal();
+
+    @After
+    public void removeTestRoleService() throws Exception {
         if (getSecurityManager().listRoleServices().contains("test")) {
             GeoServerRoleStore store = getSecurityManager().loadRoleService("test").createStore();
             store.clear();
@@ -59,6 +63,7 @@ public class XMLRoleServiceTest extends AbstractRoleServiceTest {
 
         
     
+    @Test 
     public void testCopyFrom() {
         try {
             
@@ -82,6 +87,7 @@ public class XMLRoleServiceTest extends AbstractRoleServiceTest {
         }                
     }
 
+    @Test 
     public void testDefault() {
         try {
             GeoServerRoleService service = getSecurityManager().loadRoleService(XMLRoleService.DEFAULT_NAME);
@@ -107,6 +113,7 @@ public class XMLRoleServiceTest extends AbstractRoleServiceTest {
         }                
     }
     
+    @Test 
     public void testLocking() throws Exception {
         File xmlFile = File.createTempFile("roles", ".xml");
         FileUtils.copyURLToFile(getClass().getResource("rolesTemplate.xml"),xmlFile);
@@ -225,6 +232,7 @@ public class XMLRoleServiceTest extends AbstractRoleServiceTest {
                 
     }
     
+    @Test 
     public void testDynamicReload() throws Exception {
         File xmlFile = File.createTempFile("roles", ".xml");
         FileUtils.copyURLToFile(getClass().getResource("rolesTemplate.xml"),xmlFile);

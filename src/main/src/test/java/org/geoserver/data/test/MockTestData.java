@@ -2,6 +2,7 @@ package org.geoserver.data.test;
 
 import static org.easymock.EasyMock.expect;
 import static org.easymock.classextension.EasyMock.*;
+import static org.geoserver.security.SecurityUtils.toBytes;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.UUID;
 
+import javax.crypto.spec.SecretKeySpec;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.io.FileUtils;
@@ -48,6 +50,7 @@ import org.geoserver.security.GeoServerSecurityFilterChain;
 import org.geoserver.security.GeoServerSecurityManager;
 import org.geoserver.security.GeoServerUserGroupStore;
 import org.geoserver.security.KeyStoreProvider;
+import org.geoserver.security.KeyStoreProviderImpl;
 import org.geoserver.security.MasterPasswordProvider;
 import org.geoserver.security.config.PasswordPolicyConfig;
 import org.geoserver.security.config.SecurityAuthProviderConfig;
@@ -312,6 +315,20 @@ public class MockTestData extends CiteTestData {
                 GeoServerSecurityFilterChain.FILTER_SECURITY_INTERCEPTOR)).andReturn(filterConfig).anyTimes();
 
             //password encoders
+            expect(secMgr.loadPasswordEncoder(GeoServerEmptyPasswordEncoder.class)).andAnswer(
+                new IAnswer<GeoServerEmptyPasswordEncoder>() {
+                    @Override
+                    public GeoServerEmptyPasswordEncoder answer() throws Throwable {
+                        return createEmptyPasswordEncoder(secMgr);
+                    }
+                }).anyTimes();
+            expect(secMgr.loadPasswordEncoder("emptyPasswordEncoder")).andAnswer(
+                new IAnswer<GeoServerPasswordEncoder>() {
+                    @Override
+                    public GeoServerPasswordEncoder answer() throws Throwable {
+                        return createEmptyPasswordEncoder(secMgr);
+                    }
+                }).anyTimes();
             expect(secMgr.loadPasswordEncoder(GeoServerPlainTextPasswordEncoder.class)).andAnswer(
                 new IAnswer<GeoServerPlainTextPasswordEncoder>() {
                     @Override
@@ -383,6 +400,7 @@ public class MockTestData extends CiteTestData {
                     public List<GeoServerPasswordEncoder> answer()
                             throws Throwable {
                         return (List) Arrays.asList(
+                            createEmptyPasswordEncoder(secMgr),
                             createPlainTextPasswordEncoder(secMgr), createPbePasswordEncoder(secMgr), 
                             createStrongPbePasswordEncoder(secMgr), createDigestPasswordEncoder(secMgr));
                     }
@@ -390,15 +408,37 @@ public class MockTestData extends CiteTestData {
 
             //keystore provider
             KeyStoreProvider keyStoreProvider = createNiceMock(KeyStoreProvider.class);
-            expect(keyStoreProvider.isKeyStorePassword(aryEq("geoserver".toCharArray()))).andReturn(true).anyTimes();
-            expect(secMgr.getKeyStoreProvider()).andReturn(keyStoreProvider).anyTimes();
+            expect(keyStoreProvider.isKeyStorePassword(aryEq("geoserver".toCharArray())))
+                .andReturn(true).anyTimes();
+            expect(keyStoreProvider.containsAlias(KeyStoreProviderImpl.CONFIGPASSWORDKEY))
+                .andReturn(true).anyTimes();;
+            expect(keyStoreProvider.getSecretKey(KeyStoreProviderImpl.CONFIGPASSWORDKEY))
+                .andReturn(new SecretKeySpec(toBytes("geoserver".toCharArray()),"PBE")).anyTimes();
+            expect(keyStoreProvider.hasUserGroupKey(XMLUserGroupService.DEFAULT_NAME))
+                .andReturn(true).anyTimes();
 
+            String alias = "ugServiceAlias";
+            expect(keyStoreProvider.aliasForGroupService(XMLUserGroupService.DEFAULT_NAME))
+                .andReturn(alias).anyTimes();
+            expect(keyStoreProvider.containsAlias(alias)).andReturn(true).anyTimes();;
+            expect(keyStoreProvider.getSecretKey(alias)).andReturn(
+                    new SecretKeySpec(toBytes("geoserver".toCharArray()),"PBE")).anyTimes();
+            expect(secMgr.getKeyStoreProvider()).andReturn(keyStoreProvider).anyTimes();
+            
             replay(keyStoreProvider, masterPasswdProvider, ugStore, ugConfig, roleStore, authProvider, 
                 authProviderConfig, filterConfig, passwdValidator, masterPasswdPolicyConfig, appContext, 
                 secMgr);
             return secMgr;
         }
 
+        protected GeoServerEmptyPasswordEncoder createEmptyPasswordEncoder( 
+            GeoServerSecurityManager secMgr) throws IOException {
+            GeoServerEmptyPasswordEncoder emptyPwe = new GeoServerEmptyPasswordEncoder();
+            emptyPwe.setBeanName("emptyPasswordEncoder");
+            emptyPwe.setPrefix("empty");
+            return emptyPwe;
+        }
+        
         protected GeoServerDigestPasswordEncoder createDigestPasswordEncoder(
             GeoServerSecurityManager secMgr) throws IOException {
             GeoServerDigestPasswordEncoder digestPwe = new GeoServerDigestPasswordEncoder();
