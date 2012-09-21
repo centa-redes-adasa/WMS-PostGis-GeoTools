@@ -23,6 +23,7 @@ import org.geoserver.security.impl.GeoServerRole;
 import org.geoserver.security.impl.GeoServerUser;
 import org.geoserver.security.impl.Util;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class XMLRoleServiceTest extends AbstractRoleServiceTest {
@@ -34,17 +35,12 @@ public class XMLRoleServiceTest extends AbstractRoleServiceTest {
         return createRoleService(serviceName,XMLConstants.FILE_RR);
     }
 
-    @After
-    public void removeTestRoleService() throws Exception {
-        if (getSecurityManager().listRoleServices().contains("test")) {
-            GeoServerRoleStore store = getSecurityManager().loadRoleService("test").createStore();
-            store.clear();
-            store.store();
-            getSecurityManager().removeRoleService(
-                    getSecurityManager().loadRoleServiceConfig("test"));
-        }
+    @Before
+    public void cleraRoleService() throws Exception {
+        store.clear();
+        store.store();
     }
-    
+
     protected GeoServerRoleService createRoleService(String serviceName, String xmlFileName) throws Exception {
          
         XMLRoleServiceConfig gaConfig = 
