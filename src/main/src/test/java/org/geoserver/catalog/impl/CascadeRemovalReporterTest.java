@@ -1,6 +1,10 @@
 package org.geoserver.catalog.impl;
 
+import static org.junit.Assert.*;
+
 import java.util.List;
+
+import javax.xml.namespace.QName;
 
 import org.geoserver.catalog.CascadeRemovalReporter;
 import org.geoserver.catalog.Catalog;
@@ -14,46 +18,56 @@ import org.geoserver.catalog.StyleInfo;
 import org.geoserver.catalog.WorkspaceInfo;
 import org.geoserver.catalog.CascadeRemovalReporter.ModificationType;
 import org.geoserver.data.test.MockData;
+import org.geoserver.data.test.MockTestData;
+import org.geoserver.test.GeoServerMockTestSupport;
 import org.geoserver.test.GeoServerTestSupport;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.Before;
+import org.junit.Test;
 
-public class CascadeRemovalReporterTest extends GeoServerTestSupport {
+public class CascadeRemovalReporterTest extends GeoServerMockTestSupport {
     
     static final String LAKES_GROUP = "lakesGroup";
     CascadeRemovalReporter visitor;
     Catalog catalog;
-    
-    @Override
-    protected void setUpInternal() throws Exception {
-        super.setUpInternal();
-        
+
+//    @Override
+//    protected void setUp(MockTestData testData) throws Exception {
+//        super.setUp(testData);
+//        
+//        catalog = getCatalog();
+//        visitor = new CascadeRemovalReporter(catalog);
+//        
+//        // setup a group, see GEOS-3040
+//        Catalog catalog = getCatalog();
+//        String lakes = MockData.LAKES.getLocalPart();
+//        String forests = MockData.FORESTS.getLocalPart();
+//        String bridges = MockData.BRIDGES.getLocalPart();
+//        
+//        setNativeBox(catalog, lakes);
+//        setNativeBox(catalog, forests);
+//        setNativeBox(catalog, bridges);
+//        
+//        LayerGroupInfo lg = catalog.getFactory().createLayerGroup();
+//        lg.setName(LAKES_GROUP);
+//        lg.getLayers().add(catalog.getLayerByName(lakes));
+//        lg.getStyles().add(catalog.getStyleByName(lakes));
+//        lg.getLayers().add(catalog.getLayerByName(forests));
+//        lg.getStyles().add(catalog.getStyleByName(forests));
+//        lg.getLayers().add(catalog.getLayerByName(bridges));
+//        lg.getStyles().add(catalog.getStyleByName(bridges));
+//        CatalogBuilder builder = new CatalogBuilder(catalog);
+//        builder.calculateLayerGroupBounds(lg);
+//        catalog.add(lg);
+//    }
+
+    @Before
+    public void init() {
         catalog = getCatalog();
         visitor = new CascadeRemovalReporter(catalog);
-        
-        // setup a group, see GEOS-3040
-        Catalog catalog = getCatalog();
-        String lakes = MockData.LAKES.getLocalPart();
-        String forests = MockData.FORESTS.getLocalPart();
-        String bridges = MockData.BRIDGES.getLocalPart();
-        
-        setNativeBox(catalog, lakes);
-        setNativeBox(catalog, forests);
-        setNativeBox(catalog, bridges);
-        
-        LayerGroupInfo lg = catalog.getFactory().createLayerGroup();
-        lg.setName(LAKES_GROUP);
-        lg.getLayers().add(catalog.getLayerByName(lakes));
-        lg.getStyles().add(catalog.getStyleByName(lakes));
-        lg.getLayers().add(catalog.getLayerByName(forests));
-        lg.getStyles().add(catalog.getStyleByName(forests));
-        lg.getLayers().add(catalog.getLayerByName(bridges));
-        lg.getStyles().add(catalog.getStyleByName(bridges));
-        CatalogBuilder builder = new CatalogBuilder(catalog);
-        builder.calculateLayerGroupBounds(lg);
-        catalog.add(lg);
     }
-    
+
     public void setNativeBox(Catalog catalog, String name) throws Exception {
         FeatureTypeInfo fti = catalog.getFeatureTypeByName(name);
         fti.setNativeBoundingBox(fti.getFeatureSource(null, null).getBounds());
@@ -61,11 +75,13 @@ public class CascadeRemovalReporterTest extends GeoServerTestSupport {
         catalog.save(fti);
     }
 
+    @Test
     public void testCascadeLayer() {
         String name = getLayerId(MockData.LAKES);
         LayerInfo layer = catalog.getLayerByName(name);
         assertNotNull(layer);
-        layer.accept(visitor);
+        visitor.visit(layer);
+        //layer.accept(visitor);
         
         // we expect a layer, a resource and a group
         assertEquals(3, visitor.getObjects(null).size());
@@ -83,6 +99,7 @@ public class CascadeRemovalReporterTest extends GeoServerTestSupport {
                 ModificationType.GROUP_CHANGED).get(0).getId());
     }
     
+    @Test
     public void testCascadeStore() {
         String citeStore = MockData.CITE_PREFIX;
         StoreInfo store = catalog.getStoreByName(citeStore, StoreInfo.class);
@@ -104,6 +121,7 @@ public class CascadeRemovalReporterTest extends GeoServerTestSupport {
         assertTrue(resources.contains(lr));
     }
     
+    @Test
     public void testCascadeWorkspace() {
         WorkspaceInfo ws = catalog.getWorkspaceByName(MockData.CITE_PREFIX);
         assertNotNull(ws);
@@ -114,6 +132,7 @@ public class CascadeRemovalReporterTest extends GeoServerTestSupport {
         assertTrue(stores.containsAll(visitor.getObjects(StoreInfo.class, ModificationType.DELETE)));
     }
     
+    @Test
     public void testCascadeStyle() {
         String styleName = MockData.LAKES.getLocalPart();
         String layerName = getLayerId(MockData.LAKES);
@@ -137,5 +156,9 @@ public class CascadeRemovalReporterTest extends GeoServerTestSupport {
         // test style removal
         String buildingsId = catalog.getLayerByName(getLayerId(MockData.BUILDINGS)).getId();
         assertEquals(buildingsId, visitor.getObjects(LayerInfo.class, ModificationType.EXTRA_STYLE_REMOVED).get(0).getId());
+    }
+
+    String getLayerId(QName name) {
+        return toString(name);
     }
 }
