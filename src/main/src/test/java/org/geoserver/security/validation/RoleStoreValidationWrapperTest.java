@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.TreeSet;
 
+import org.geoserver.data.test.MockCreator;
 import org.geoserver.data.test.MockTestData;
 import org.geoserver.security.GeoServerRoleStore;
 import org.geoserver.security.GeoServerSecurityManager;
@@ -53,7 +54,7 @@ public class RoleStoreValidationWrapperTest extends GeoServerMockTestSupport {
 
     @Test
     public void testRoleStoreWrapper() throws Exception {
-        setMockCreator(new MockTestData.MockCreator() {
+        setMockCreator(new MockCreator() {
             @Override
             public GeoServerSecurityManager createSecurityManager(MockTestData testData) throws Exception {
                 GeoServerSecurityManager secMgr = createMock(GeoServerSecurityManager.class);
@@ -184,7 +185,7 @@ public class RoleStoreValidationWrapperTest extends GeoServerMockTestSupport {
     
     @Test
     public void testRoleServiceWrapperAccessRules() throws Exception {
-        setMockCreator(new MockTestData.MockCreator() {
+        setMockCreator(new MockCreator() {
             @Override
             public GeoServerSecurityManager createSecurityManager( MockTestData testData) throws Exception {
                 GeoServerSecurityManager secMgr = createNiceMock(GeoServerSecurityManager.class);
@@ -230,7 +231,7 @@ public class RoleStoreValidationWrapperTest extends GeoServerMockTestSupport {
 
     @Test
     public void testRoleStoreWrapperWithUGServices() throws Exception {
-        setMockCreator(new MockTestData.MockCreator() {
+        setMockCreator(new MockCreator() {
             @Override
             public GeoServerSecurityManager createSecurityManager(MockTestData testData) throws Exception {
                 GeoServerSecurityManager secMgr = createNiceMock(GeoServerSecurityManager.class);
@@ -310,7 +311,7 @@ public class RoleStoreValidationWrapperTest extends GeoServerMockTestSupport {
 
     @Test
     public void testMappedRoles() throws Exception {
-        setMockCreator(new MockTestData.MockCreator() {
+        setMockCreator(new MockCreator() {
             @Override
             public GeoServerSecurityManager createSecurityManager(MockTestData testData) throws Exception {
                 GeoServerSecurityManager secMgr = createNiceMock(GeoServerSecurityManager.class);

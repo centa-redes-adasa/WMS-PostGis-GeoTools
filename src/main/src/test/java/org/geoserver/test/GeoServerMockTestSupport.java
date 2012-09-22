@@ -1,9 +1,9 @@
 package org.geoserver.test;
 
 import org.geoserver.catalog.Catalog;
+import org.geoserver.data.test.MockCreator;
 import org.geoserver.data.test.MockTestData;
 import org.geoserver.data.test.SystemTestData;
-import org.geoserver.data.test.MockTestData.MockCreator;
 import org.geoserver.security.GeoServerSecurityManager;
 import org.geoserver.security.password.GeoServerDigestPasswordEncoder;
 import org.geoserver.security.password.GeoServerPBEPasswordEncoder;
