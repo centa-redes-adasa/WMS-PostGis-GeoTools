@@ -7,7 +7,7 @@ import org.geoserver.data.util.IOUtils;
 
 public class LiveSystemTestData extends SystemTestData {
 
-    File source;
+    protected File source;
 
     public LiveSystemTestData(File source) throws IOException {
         super();

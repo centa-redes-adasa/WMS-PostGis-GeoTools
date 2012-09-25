@@ -3,39 +3,42 @@ package org.geoserver.security.jdbc;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import org.geoserver.data.test.LiveData;
-import org.geoserver.data.test.TestData;
+import org.geoserver.data.test.LiveSystemTestData;
+import org.geoserver.data.test.SystemTestData;
 import org.geoserver.security.GeoServerRoleService;
 import org.geoserver.security.GeoServerRoleStore;
 import org.geoserver.security.GeoServerUserGroupService;
 import org.geoserver.security.GeoServerUserGroupStore;
 import org.geoserver.security.GroupAdminServiceTest;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Test;
 
 public class JDBCGroupAdminServiceTest extends GroupAdminServiceTest {
 
     @Override
-    protected TestData buildTestData() throws Exception {
-        return new LiveData(unpackTestDataDir());
+    protected SystemTestData createTestData() throws Exception {
+        return new LiveSystemTestData(unpackTestDataDir());
     }
 
     @Override
+    @Test
     public void testHideAdminRole() throws Exception {
     	// TODO, create the correct test setup,
     	// for the moment, skip this test.
     }
     
-    @Override
-    protected void tearDownInternal() throws Exception {
-        super.tearDownInternal();
-
-        JDBCRoleStore rs = (JDBCRoleStore) roleStore;
-        JDBCTestSupport.dropExistingTables(rs, rs.getConnection());
-        roleStore.store();
-
-        JDBCUserGroupStore ugs = (JDBCUserGroupStore) ugStore;
-        JDBCTestSupport.dropExistingTables(ugs, ugs.getConnection());
-        ugStore.store();
-    }
+//    @AfterClass
+//    public void dropTables() throws Exception {
+//       
+//        JDBCRoleStore rs = (JDBCRoleStore) roleStore;
+//        JDBCTestSupport.dropExistingTables(rs, rs.getConnection());
+//        roleStore.store();
+//
+//        JDBCUserGroupStore ugs = (JDBCUserGroupStore) ugStore;
+//        JDBCTestSupport.dropExistingTables(ugs, ugs.getConnection());
+//        ugStore.store();
+//    }
 
     @Override
     public GeoServerUserGroupService createUserGroupService(String name) throws Exception {

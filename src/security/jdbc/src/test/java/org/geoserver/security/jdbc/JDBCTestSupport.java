@@ -29,7 +29,7 @@ public class JDBCTestSupport {
     
     static Logger LOGGER = org.geotools.util.logging.Logging.getLogger("org.geoserver.security.jdbc");
     
-    protected static void dropExistingTables(AbstractJDBCService service) throws IOException {
+    public static void dropExistingTables(AbstractJDBCService service) throws IOException {
         Connection con = null;
         try {
             con = service.getDataSource().getConnection();
