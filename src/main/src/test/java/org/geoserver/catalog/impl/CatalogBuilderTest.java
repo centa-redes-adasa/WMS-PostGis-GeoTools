@@ -296,9 +296,4 @@ public class CatalogBuilderTest extends GeoServerMockTestSupport {
         CatalogBuilder cb = new CatalogBuilder(getCatalog());
         cb.setupMetadata(ftInfo, fs);
     }
-
-    Name toName(QName qname) {
-        return new NameImpl(qname.getNamespaceURI(), qname.getLocalPart());
-    }
-
 }
