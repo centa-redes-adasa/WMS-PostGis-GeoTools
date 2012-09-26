@@ -4,34 +4,38 @@
  */
 package org.geoserver.wms.wms_1_1_1;
 
+import static org.junit.Assert.*;
 import java.util.logging.Level;
 
-import junit.framework.Test;
 
+import org.geoserver.catalog.Catalog;
+import org.geoserver.catalog.DataStoreInfo;
 import org.geoserver.config.GeoServerInfo;
 import org.geoserver.data.test.MockData;
+import org.geoserver.data.test.SystemTestData;
 import org.geoserver.wms.WMSTestSupport;
+import org.geoserver.wms.WMSTestSupport2;
 import org.geotools.util.logging.Logging;
+import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class DescribeLayerTest extends WMSTestSupport {
+public class DescribeLayerTest extends WMSTestSupport2 {
     
-    /**
-     * This is a READ ONLY TEST so we can use one time setup
-     */
-    public static Test suite() {
-        return new OneTimeTestSetup(new DescribeLayerTest());
-    }
+ 
     
     @Override
-    protected void oneTimeSetUp() throws Exception {
-        super.oneTimeSetUp();
+    protected void onSetUp(SystemTestData testData) throws Exception {
+        super.onSetUp(testData);
+        
         Logging.getLogger("org.geoserver.ows").setLevel(Level.OFF);
         GeoServerInfo global = getGeoServer().getGlobal();
-        global.setProxyBaseUrl("src/test/resources/geoserver");
+        global.getSettings().setProxyBaseUrl("src/test/resources/geoserver");
         getGeoServer().save(global);
+        
     }
-
+    
+  
+    @Test
     public void testDescribeLayerVersion111() throws Exception {
         String layer = MockData.FORESTS.getPrefix() + ":" + MockData.FORESTS.getLocalPart();
         String request = "wms?service=wms&version=1.1.1&request=DescribeLayer&layers=" + layer;
@@ -41,6 +45,7 @@ public class DescribeLayerTest extends WMSTestSupport {
         assertEquals("1.1.1", dom.getDocumentElement().getAttributes().getNamedItem("version").getNodeValue());
     }
     
+//    @Test
 //    public void testDescribeLayerVersion110() throws Exception {
 //        String layer = MockData.FORESTS.getPrefix() + ":" + MockData.FORESTS.getLocalPart();
 //        String request = "wms?service=wms&version=1.1.0&request=DescribeLayer&layers=" + layer;
@@ -48,6 +53,7 @@ public class DescribeLayerTest extends WMSTestSupport {
 //        assertEquals("1.1.0", dom.getDocumentElement().getAttributes().getNamedItem("version").getNodeValue());
 //    }
     
+    @Test 
     public void testWorkspaceQualified() throws Exception {
         Document dom = getAsDOM("cite/wms?service=wms&version=1.1.1&request=DescribeLayer" +
             "&layers=PrimitiveGeoFeature", true);
