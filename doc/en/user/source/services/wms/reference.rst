@@ -16,6 +16,9 @@ The relevant OGC WMS specifications are:
 - `OGC Web Map Service Implementation Specification, Version 1.3.0 <http://portal.opengeospatial.org/files/?artifact_id=14416>`_
  
 GeoServer also supports some extensions to the WMS specification made by the Styled Layer Descriptor (SLD) standard to control the styling of the map output.
+These are defined in:
+
+- `OpenGIS Styled Layer Descriptor Profile of the Web Map Service Implementation Specification, Version 1.1.0 <http://portal.opengeospatial.org/files/?artifact_id=22364>`_
 
 Benefits of WMS
 --------------- 
@@ -69,6 +72,21 @@ The parameters for the GetCapabilities operation are:
      - Yes
      - Operation name. Value is ``GetCapabilities``.
 
+GeoServer provides the following vendor-specific parameters
+for the GetCapabilities operation.
+They are fully documented in the :ref:`wms_vendor_parameters` section.
+
+.. list-table::
+   :widths: 20 10 70
+   
+   * - **Parameter**
+     - **Required?**
+     - **Description**
+   * - ``namespace``
+     - No
+     - limits response to layers in a given namespace
+
+
 A example GetCapabilities request is:
 
 .. code-block:: xml
@@ -79,11 +97,12 @@ A example GetCapabilities request is:
    request=GetCapabilities
 	  
 There are three parameters being passed to the WMS server, ``service=wms``, ``version=1.1.1``, and ``request=GetCapabilities``.  
-The standard requires that a WMS request have these three parameters (``service``, ``version``, and ``request``).  
-GeoServer relaxes these requirements (setting the default version if omitted), but "officially" they are mandatory, so they should always be included.  
-The *service* key tells the WMS server that a WMS request is forthcoming.  
-The *version* key refers to which version of WMS is being requested.  
-The *request* key specifies the GetCapabilities operation.
+The ``service`` parameter tells the WMS server that a WMS request is forthcoming.  
+The ``version`` parameter refers to which version of WMS is being requested.  
+The ``request`` parameter specifies the GetCapabilities operation.
+The WMS standard requires that requests always includes these three parameters.  
+GeoServer relaxes these requirements (by setting the default version if omitted), 
+but for standard-compliance they should always be specified.  
 
 The response is a Capabilities XML document that is a detailed description of the WMS service.  
 It contains three main sections:
@@ -110,13 +129,11 @@ The **GetMap** operation requests that the server generate a map.
 The core parameters specify one or more layers and styles to appear on the map,
 a bounding box for the map extent,
 a target spatial reference system,
-and a width, height, and format for the output, 
+and a width, height, and format for the output.
+The information needed to specify values for parameters such as ``layers``, ``styles`` and ``srs`` can be obtained from the Capabilities document.  
+
 The response is a map image, or other map output artifact, depending on the format requested.
 GeoServer provides a wide variety of output formats, described in :ref:`wms_output_formats`.
-
-The information needed to specify values for parameters such as ``layers``, ``styles`` and ``srs`` are supplied by the Capabilities document.  
-
-A good way to get to know the GetMap parameters is to experiment with the :ref:`tutorials_wmsreflector`.  
 
 The standard parameters for the GetMap operation are:
 
@@ -179,11 +196,28 @@ The standard parameters for the GetMap operation are:
      - Format in which to report exceptions.
        Default value is ``application/vnd.ogc.se_xml``. 
        Other valid values are ``application/vnd.ogc.inimage`` and ``application/vnd.ogc.se_blank``.
+   * - ``time``
+     - No
+     - Time value or range for map data.
+       See :ref:`wms_time` for more information.
+   * - ``sld``
+     - No
+     - A URL referencing a StyledLayerDescriptor XML file
+       which is used to control or enhance map layers and styling
+   * - ``sld_body``
+     - No
+     - A URL-encoded StyledLayerDescriptor
+       which is used to control or enhance map layers and styling     
 
        
-GeoServer provides a number of useful vendor-specific parameters, which are documented in the :ref:`wms_vendor_parameters` section.
+GeoServer provides a number of useful vendor-specific parameters for the GetMap operation.  
+These are documented in the :ref:`wms_vendor_parameters` section.
 
-An example request for a PNG map image using default styling is:
+Although the standard specifies many of the parameters as being mandatory,
+GeoServer provides the :ref:`tutorials_wmsreflector` to allow many of them to be optionally specified.
+Experimenting with this is also a good way to get to know the GetMap parameters.  
+
+An example request for a PNG map image showing the ``topp:states`` layer using default styling is:
 
 .. code-block:: xml
 
@@ -218,7 +252,7 @@ It is similar to the WFS **GetFeature** operation, but that operation provides m
 Since GeoServer provides a WFS we recommend using it instead of ``GetFeatureInfo`` whenever possible.  
  
 The one advantage of ``GetFeatureInfo`` is that the request uses an (x,y) pixel value from a returned WMS image.  
-This is easier to use for a naive client that is not able to perform the geographic referencing otherwise needed.
+This is easier to use for a naive client that is not able to perform true geographic referencing.
 
 The standard parameters for the GetFeatureInfo operation are:
 
@@ -276,7 +310,25 @@ The standard parameters for the GetFeatureInfo operation are:
    * - ``exceptions``
      - No
      - Format in which to report exceptions.
-       The only valid value is ``application/vnd.ogc.se_xml``, which is the default.
+       The default value is ``application/vnd.ogc.se_xml``.
+
+The supported values for exceptions are:
+
+.. list-table::
+   :widths: 15 35 50
+   
+   * - **Format**
+     - **Syntax**
+     - **Notes**
+   * - XML
+     - ``EXCEPTIONS=application/vnd.ogc.se_xml``
+     - Xml output. (The default format)
+   * - JSON
+     - ``EXCEPTIONS=application/json``
+     - Simple Json representation.
+   * - JSONP
+     - ``EXCEPTIONS=text/javascript``
+     - Return a JsonP in the form: paddingOutput(...jsonp...). See :ref:`wms_vendor_parameters` to change the callback name.
 
 Geoserver supports a number of output formats for the ``GetFeatureInfo`` response.
 Server-styled HTML is the most commonly-used format. 
@@ -300,14 +352,40 @@ The supported formats are:
      - Works for both Simple and Complex Features (see :ref:`app-schema.complex-features`)
    * - HTML
      - ``info_format=text/html``
-     - Uses HTML templates that are defined on the server.  See :ref:`tutorials_getfeatureinfo` for information on how to template HTML output. 
+     - Uses HTML templates that are defined on the server. See :ref:`tutorials_getfeatureinfo` for information on how to template HTML output. 
+   * - JSON
+     - ``info_format=application/json``
+     - Simple Json representation.
+   * - JSONP
+     - ``info_format=text/javascript``
+     - Return a JsonP in the form: paddingOutput(...jsonp...). See :ref:`wms_vendor_parameters` to change the callback name.
+
+GeoServer provides the following vendor-specific parameters
+for the GetFeatureInfo operation.
+They are fully documented in the :ref:`wms_vendor_parameters` section.
+
+.. list-table::
+   :widths: 20 10 70
+   
+   * - **Parameter**
+     - **Required?**
+     - **Description**
+   * - ``buffer``
+     - No
+     - width of search radius around query point.
+   * - ``cql_filter``
+     - No
+     - Filter for returned data, in ECQL format
+   * - ``filter``
+     - No
+     - Filter for returned data, in OGC Filter format
+   * - ``propertyName``
+     - No
+     - Feature properties to be returned
 
 
-GeoServer provides a number of useful vendor-specific parameters
-for this operation, including ``buffer``, ``cql_filter``, ``filter`` and ``propertyName``.
-These are documented in the :ref:`wms_vendor_parameters` section.
 
-An example request for feature information in HTML format is:
+An example request for feature information from the ``topp:states`` layer in HTML format is:
 
 .. code-block:: xml
 
@@ -329,6 +407,81 @@ An example request for feature information in HTML format is:
    &y=145
    &exceptions=application%2Fvnd.ogc.se_xml
 
+An example request for feature information in JSONP format is:
+
+.. code-block:: xml
+
+   http://localhost:8080/geoserver/wms?
+   &INFO_FORMAT=text/javascript
+   &REQUEST=GetFeatureInfo
+   &EXCEPTIONS=application/vnd.ogc.se_xml
+   &SERVICE=WMS
+   &VERSION=1.1.1
+   &WIDTH=970&HEIGHT=485&X=486&Y=165&BBOX=-180,-90,180,90
+   &LAYERS=COUNTRYPROFILES:grp_administrative_map
+   &QUERY_LAYERS=COUNTRYPROFILES:grp_administrative_map
+   &TYPENAME=COUNTRYPROFILES:grp_administrative_map
+   &format_options=callback:getLayerFeatures
+
+The result will be:
+
+.. code-block:: xml
+   
+   getLayerFeatures({
+   "type":"FeatureCollection",
+   "features":[
+      {
+         "type":"Feature",
+         "id":"dt_gaul_geom.fid-138e3070879",
+         "geometry":{
+            "type":"MultiPolygon",
+            "coordinates":[
+               [
+                  [
+                     [
+                        XXXXXXXXXX,
+                        XXXXXXXXXX
+                     ],
+                     ...
+                     [
+                        XXXXXXXXXX,
+                        XXXXXXXXXX
+                     ]
+                  ]
+               ]
+            ]
+         },
+         "geometry_name":"at_geom",
+         "properties":{
+            "bk_gaul":X,
+            "at_admlevel":0,
+            "at_iso3":"XXX",
+            "ia_name":"XXXX",
+            "at_gaul_l0":X,
+            "bbox":[
+               XXXX,
+               XXXX,
+               XXXX,
+               XXXX
+            ]
+         }
+      }
+   ],
+   "crs":{
+      "type":"EPSG",
+      "properties":{
+         "code":"4326"
+      }
+   },
+   "bbox":[
+      XXXX,
+      XXXX,
+      XXXX,
+      XXXX
+   ]
+   })
+
+
 .. _wms_describelayer:
 
 DescribeLayer
@@ -337,6 +490,117 @@ DescribeLayer
 The **DescribeLayer** operation is used primarily by clients that understand SLD-based WMS.  
 In order to make an SLD one needs to know the structure of the data.  
 WMS and WFS both have operations to do this, so the **DescribeLayer** operation just routes the client to the appropriate service.
+
+The standard parameters for the GetFeatureInfo operation are:
+
+.. list-table::
+   :widths: 20 10 70
+   
+   * - **Parameter**
+     - **Required?**
+     - **Description**
+   * - ``service``
+     - Yes
+     - Service name. Value is ``WMS``.
+   * - ``version``
+     - Yes
+     - Service version. Value is ``1.1.1``.
+   * - ``request``
+     - Yes
+     - Operation name. Value is ``DescribeLayer``.
+   * - ``layers``
+     - Yes
+     - See :ref:`wms_getmap`
+   * - ``exceptions``
+     - No
+     - Format in which to report exceptions.
+       The default value is ``application/vnd.ogc.se_xml``.
+
+The supported values for exceptions are:
+
+.. list-table::
+   :widths: 15 35 50
+   
+   * - **Format**
+     - **Syntax**
+     - **Notes**
+   * - XML
+     - ``EXCEPTIONS=application/vnd.ogc.se_xml``
+     - Xml output. (The default format)
+   * - JSON
+     - ``EXCEPTIONS=application/json``
+     - Simple Json representation.
+   * - JSONP
+     - ``EXCEPTIONS=text/javascript``
+     - Return a JsonP in the form: paddingOutput(...jsonp...). See :ref:`wms_vendor_parameters` to change the callback name.
+
+Geoserver supports a number of output formats for the ``DescribeLayer`` response.
+Server-styled HTML is the most commonly-used format. 
+For maximum control and customisation the client should use GML3 and style the raw data itself.
+The supported formats are:
+
+.. list-table::
+   :widths: 15 35 50
+   
+   * - **Format**
+     - **Syntax**
+     - **Notes**
+   * - TEXT
+     - ``output_format=text/xml``
+     - Same as default.
+   * - GML 2
+     - ``output_format=application/vnd.ogc.wms_xml``
+     - The default format.
+   * - JSON
+     - ``output_format=application/json``
+     - Simple Json representation.
+   * - JSONP
+     - ``output_format=text/javascript``
+     - Return a JsonP in the form: paddingOutput(...jsonp...). See :ref:`wms_vendor_parameters` to change the callback name.
+     
+
+An example request in XML (default) format on a layer is:
+
+.. code-block:: xml
+
+   http://localhost:8080/geoserver/topp/wms?service=WMS
+   &version=1.1.1
+   &request=DescribeLayer
+   &layers=topp:coverage
+
+.. code-block:: xml
+
+   <?xml version="1.0" encoding="UTF-8"?>
+   <!DOCTYPE WMS_DescribeLayerResponse SYSTEM "http://localhost:8080/geoserver/schemas/wms/1.1.1/WMS_DescribeLayerResponse.dtd">
+   <WMS_DescribeLayerResponse version="1.1.1">
+      <LayerDescription name="topp:coverage" owsURL="http://localhost:8080/geoserver/topp/wcs?" owsType="WCS">
+         <Query typeName="topp:coverage"/>
+      </LayerDescription>
+   </WMS_DescribeLayerResponse>
+
+An example request for feature description in JSONP format on a layer group is:
+
+.. code-block:: xml
+
+   http://localhost:8080/geoserver/wms?service=WMS
+   &version=1.1.1
+   &request=DescribeLayer
+   &layers=topp:group
+   &outputFormat=text/javascript
+   &format_options=callback:DescribeLayer
+
+
+The result will be:
+
+.. code-block:: xml
+
+   DescribeLayer({"WMS_DescribeLayerResponse": {
+      "version": "1.1.1",
+      "LayerDescription": { "name": "topp:coverage", "owsURL": "http://localhost:8080/geoserver/wcs?", "owsType": "WCS" },
+      "LayerDescription": { "name": "topp:features", "owsURL": "http://localhost:8080/geoserver/wfs/WfsDispatcher?", "owsType": "WFS" }
+   }})
+
+
 
 
 .. _wms_getlegendgraphic:
