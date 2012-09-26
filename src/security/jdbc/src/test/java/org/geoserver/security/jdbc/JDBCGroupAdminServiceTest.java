@@ -10,8 +10,10 @@ import org.geoserver.security.GeoServerRoleStore;
 import org.geoserver.security.GeoServerUserGroupService;
 import org.geoserver.security.GeoServerUserGroupStore;
 import org.geoserver.security.GroupAdminServiceTest;
+import org.geoserver.security.jdbc.config.JDBCRoleServiceConfig;
+import org.geoserver.security.xml.XMLRoleService;
 import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.Test;
 
 public class JDBCGroupAdminServiceTest extends GroupAdminServiceTest {
@@ -21,11 +23,17 @@ public class JDBCGroupAdminServiceTest extends GroupAdminServiceTest {
         return new LiveSystemTestData(unpackTestDataDir());
     }
 
-    @Override
-    @Test
-    public void testHideAdminRole() throws Exception {
-    	// TODO, create the correct test setup,
-    	// for the moment, skip this test.
+//    @Before
+//    public void init() throws Exception {
+//        super.init();
+//        ugStore.store();
+//        roleStore.store();
+//    }
+    
+    @After
+    public void rollback() throws Exception {
+        if (ugStore!=null) ugStore.load();
+        if (roleStore!=null) roleStore.load();
     }
     
 //    @AfterClass
@@ -58,8 +66,11 @@ public class JDBCGroupAdminServiceTest extends GroupAdminServiceTest {
         if (!service.tablesAlreadyCreated()) {
             service.createTables();
         }
-
-        return service;
+        JDBCRoleServiceConfig gaConfig = (JDBCRoleServiceConfig) getSecurityManager().loadRoleServiceConfig(name);
+        gaConfig.setAdminRoleName("adminRole");
+        gaConfig.setGroupAdminRoleName("groupAdminRole");
+        getSecurityManager().saveRoleService(gaConfig);
+        return getSecurityManager().loadRoleService(name);
     }
     
     @Override

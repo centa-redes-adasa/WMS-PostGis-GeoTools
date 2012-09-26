@@ -95,6 +95,8 @@ public class GroupAdminServiceTest extends AbstractSecurityServiceTest {
         if (bill != null) {
             ugStore.removeUser(bill);
             ugStore.store();
+        } else {
+            ugStore.load();
         }
     }
 
@@ -230,6 +232,7 @@ public class GroupAdminServiceTest extends AbstractSecurityServiceTest {
         assertTrue(ugStore.getGroupsForUser(bill).contains(users));
 
         ugStore.associateUserToGroup(bill, admins);
+        ugStore.store();
         assertEquals(1, ugStore.getGroupsForUser(bill).size());
         assertTrue(ugStore.getGroupsForUser(bill).contains(users));
         assertFalse(ugStore.getGroupsForUser(bill).contains(admins));
@@ -268,7 +271,7 @@ public class GroupAdminServiceTest extends AbstractSecurityServiceTest {
             ugStore.removeUser(sally);
             fail();
         }
-        catch(IOException e) {};
+        catch(IOException e) { ugStore.load();};
 
 
     }
