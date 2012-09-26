@@ -109,11 +109,6 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.geoserver.security</groupId>
-      <artifactId>sec-cas</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.geotools.jdbc</groupId>
       <artifactId>gt-jdbc-postgis</artifactId>
     </dependency>
@@ -697,6 +692,16 @@
       </dependencies>
     </profile>
     <profile>
+      <id>cas</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.geoserver.security</groupId>
+          <artifactId>sec-cas</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
       <id>imagecollection</id>
       <dependencies>
         <dependency>
@@ -742,6 +747,16 @@
         <dependency>
           <groupId>org.geoserver.csw</groupId>
           <artifactId>csw-core</artifactId>
+          <version>${project.version}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>csw-simple</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.geoserver.csw</groupId>
+          <artifactId>csw-simple-store</artifactId>
           <version>${project.version}</version>
         </dependency>
       </dependencies>
