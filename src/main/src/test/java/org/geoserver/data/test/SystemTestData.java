@@ -552,7 +552,14 @@ public class SystemTestData extends CiteTestData {
                 file = dir;
             }
             else {
+                //files may have been top level, or one directory level deep
                 file = new File(dir, FilenameUtils.getBaseName(filename) + "." + extension);
+                if (!file.exists()) {
+                    File file2 = new File(new File(dir, dir.getName()), file.getName());
+                    if (file2.exists()){
+                        file = file2;
+                    }
+                }
             }
 
             if (!file.exists()) {
