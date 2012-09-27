@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.lang.reflect.Field;
@@ -46,6 +47,8 @@ import net.sf.json.JSON;
 import net.sf.json.JSONSerializer;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.XMLSerializer;
 import org.geoserver.catalog.CascadeDeleteVisitor;
 import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.FeatureTypeInfo;
@@ -1469,18 +1472,29 @@ public class GeoServerSystemTestSupport extends GeoServerBaseTestSupport<SystemT
      * Utility method to print out a dom.
      */
     protected void print( Document dom ) throws Exception {
-        TransformerFactory txFactory = TransformerFactory.newInstance();
+        print (dom, System.out);
+    }
+
+    /**
+     * Pretty-print a {@link Document} to an {@link OutputStream}.
+     * 
+     * @param document
+     *            document to be prettified
+     * @param output
+     *            stream to which output is written
+     */
+    protected void print(Document document, OutputStream output) {
+        OutputFormat format = new OutputFormat(document);
+        // setIndenting must be first as it resets indent and line width
+        format.setIndenting(true);
+        format.setIndent(4);
+        format.setLineWidth(200);
+        XMLSerializer serializer = new XMLSerializer(output, format);
         try {
-            txFactory.setAttribute("{http://xml.apache.org/xalan}indent-number", new Integer(2));
-        } catch(Exception e) {
-            // some 
+            serializer.serialize(document);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        
-        Transformer tx = txFactory.newTransformer();
-        tx.setOutputProperty(OutputKeys.METHOD,"xml");
-        tx.setOutputProperty( OutputKeys.INDENT, "yes" );
-          
-        tx.transform( new DOMSource( dom ), new StreamResult(new OutputStreamWriter(System.out, "utf-8") ));
     }
 
     /**

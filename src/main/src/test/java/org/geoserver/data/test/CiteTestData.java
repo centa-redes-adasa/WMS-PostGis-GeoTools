@@ -1,6 +1,7 @@
 package org.geoserver.data.test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.namespace.QName;
 
@@ -233,5 +234,18 @@ public abstract class CiteTestData implements TestData {
      */
     public static final ReferencedEnvelope DEFAULT_LATLON_ENVELOPE = 
         new ReferencedEnvelope(-180,180,-90,90, DefaultGeographicCRS.WGS84);
+    
+    
+    
+    /**
+     * Populates a map with prefix to namespace uri mappings for all the 
+     * mock data namespaces. 
+     */
+    public static void registerNamespaces(Map<String,String> namespaces) {
+        namespaces.put(CITE_PREFIX, CITE_URI); 
+        namespaces.put(CDF_PREFIX, CDF_URI);
+        namespaces.put(CGF_PREFIX, CGF_URI);
+        namespaces.put(SF_PREFIX, SF_URI);
+    }
 
 }

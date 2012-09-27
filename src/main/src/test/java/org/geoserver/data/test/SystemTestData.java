@@ -72,6 +72,7 @@ public class SystemTestData extends CiteTestData {
         public static LayerProperty<String> STYLE = new LayerProperty<String>();
         public static LayerProperty<ReferencedEnvelope> ENVELOPE = new LayerProperty<ReferencedEnvelope>();
         public static LayerProperty<ReferencedEnvelope> LATLON_ENVELOPE = new LayerProperty<ReferencedEnvelope>();
+        public static LayerProperty<Integer> SRS = new LayerProperty<Integer>();
     }
 
     /** data directory root */
@@ -374,7 +375,7 @@ public class SystemTestData extends CiteTestData {
         featureType.setTitle(name);
         featureType.setAbstract("abstract about " + name);
 
-        Integer srs = SRS.get( name );
+        Integer srs = LayerProperty.SRS.get(props, SRS.get(qName));
         if ( srs == null ) {
             srs = 4326;
         }
@@ -669,14 +670,4 @@ public class SystemTestData extends CiteTestData {
         return true;
     }
 
-    /**
-     * Populates a map with prefix to namespace uri mappings for all the 
-     * mock data namespaces. 
-     */
-    public void registerNamespaces(Map<String,String> namespaces) {
-        namespaces.put(MockData.CITE_PREFIX, MockData.CITE_URI); 
-        namespaces.put(MockData.CDF_PREFIX, MockData.CDF_URI);
-        namespaces.put(MockData.CGF_PREFIX, MockData.CGF_URI);
-        namespaces.put(MockData.SF_PREFIX, MockData.SF_URI);
-    }
 }
