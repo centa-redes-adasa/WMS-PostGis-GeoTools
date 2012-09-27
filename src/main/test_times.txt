@@ -1,0 +1,205 @@
+
+Mocked:
+
+Running org.geoserver.security.validation.RoleStoreValidationWrapperTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.035 sec
+Running org.geoserver.security.validation.FilterConfigValidatorTest
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.254 sec
+Running org.geoserver.security.validation.SecurityConfigValidatorTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.933 sec
+Running org.geoserver.security.validation.MasterPasswordChangeValidatorTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.512 sec
+Running org.geoserver.config.GeoServerPersisterTest
+Tests run: 45, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 41.605 sec
+Running org.geoserver.config.util.XStreamPersisterTest
+Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 21.882 sec
+Running org.geoserver.security.password.GeoserverPasswordEncoderTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.235 sec
+Running org.geoserver.security.auth.AuthenticationCacheFilterTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.145 sec
+Running org.geoserver.security.GroupAdminServiceTest
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.619 sec
+Running org.geoserver.security.xml.XMLSecurityConfigValidatorTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.618 sec
+Running org.geoserver.template.GeoServerTemplateLoader2Test
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.085 sec
+Running org.geoserver.security.validation.PasswordValidatorTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.751 sec
+Running org.geoserver.catalog.impl.CascadeRemovalReporterTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.271 sec
+Running org.vfny.geoserver.util.SLDValidatorTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.295 sec
+Running org.geoserver.ows.CustomManglerTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.568 sec
+
+OneTime:
+
+Running org.geoserver.security.xml.XMLUserGroupServiceTest
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 21.927 sec
+Running org.geoserver.security.auth.AuthenticationFilterTest
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 19.71 sec
+Running org.geoserver.security.impl.MemoryUserDetailsServiceTest
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.226 sec
+Running org.geoserver.security.xml.XMLRoleServiceTest
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.554 sec
+Running org.geoserver.security.impl.MemoryRoleServiceTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.097 sec
+Running org.geoserver.security.xml.XMLUserDetailsServiceTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.223 sec
+Running org.geoserver.security.impl.MemoryUserGroupServiceTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.884 sec
+Running org.geoserver.security.GeoServerCustomFilterTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.944 sec
+Running org.geoserver.security.GeoServerAnonymousAuthTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.537 sec
+Running org.geoserver.catalog.CatalogIntegrationTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.595 sec
+Running org.geoserver.catalog.impl.CatalogBuilderIntTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.332 sec
+Running org.geoserver.security.GeoServerAnonymousAuthTestthTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.131 sec
+Running org.vfny.geoserver.crs.OvverideCRSTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.246 sec
+Running org.geoserver.config.ServicePersisterTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.589 sec
+Running org.vfny.geoserver.crs.OvverideTransformationsTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.27 sec
+Running org.geoserver.security.password.MasterPasswordChangeTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.793 sec
+Running org.geoserver.security.GeoServerSecurityManagerTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.584 sec
+Running org.geoserver.security.impl.SecureCatalogIntegrationTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.217 sec
+Running org.geoserver.ows.URLManglersTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.778 sec
+Running org.geoserver.security.rememberme.RememberMeTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.126 sec
+
+Repeated:
+
+Running org.geoserver.catalog.SchemaMappingTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.83 sec
+
+Pending:
+
+Running org.geoserver.security.impl.SecureTreeNodeTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.055 sec
+Running org.geoserver.catalog.impl.LocalWorkspaceCatalogTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.289 sec
+Running org.geoserver.security.decorators.ReadOnlyDataAccessTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.801 sec
+Running org.geoserver.security.decorators.SecuredFeatureCollectionTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.073 sec
+Running org.vfny.geoserver.global.xml.WriterHelperTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.01 sec
+Running org.geoserver.feature.retype.FullyRetypingDataStoreTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.349 sec
+
+Running org.geoserver.config.util.LayerIdentifierInfoListConverterTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.15 sec
+Running org.geoserver.feature.retype.RetypingFeatureSourceMockTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.01 sec
+
+
+Running org.geoserver.security.auth.LRUAuthenticationCacheTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.118 sec
+Running org.geoserver.catalog.impl.LocalWorkspaceLayersTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.882 sec
+Running org.geoserver.catalog.impl.InfoObjectProxyTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 sec
+Running org.geoserver.security.GeoServerCustomSecurityProviderTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.601 sec
+Running org.vfny.geoserver.util.ResponseUtilsTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.028 sec
+Running org.geoserver.util.PartialBufferOutputStream2Test
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 sec
+
+Running org.geoserver.security.file.FileTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.113 sec
+Running org.geoserver.catalog.PredicatesTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 sec
+Running org.geoserver.security.decorators.ReadOnlyDataStoreTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 sec
+
+Running org.geoserver.feature.ReprojectingFeatureCollectionTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.057 sec
+Running org.geoserver.catalog.impl.util.LegacyCatalogImporterTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.787 sec
+
+Running org.geoserver.catalog.impl.CatalogImplTest
+Tests run: 73, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.384 sec
+Running org.geoserver.feature.retype.RetypingFeatureSourceTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 sec
+
+Running org.geoserver.vfny.global.TolerantStartupTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.995 sec
+Running org.geoserver.logging.LegacyLoggingImporterTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.284 sec
+Running org.geoserver.security.impl.DataAccessRuleTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 sec
+Running org.geoserver.security.validation.UserGroupStoreValidationWrapperTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.017 sec
+Running org.geoserver.catalog.impl.WorkspaceNamespaceConstencyTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.761 sec
+Running org.geoserver.security.password.URLMasterPasswordProviderTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.081 sec
+Running org.geoserver.config.GeoServerPropertyConfigurerTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.102 sec
+Running org.geoserver.ows.LocalWorkspaceSecureCatalogTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.169 sec
+Running org.vfny.geoserver.ProjectionPolicyTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.586 sec
+Running org.geoserver.security.KeyStoreProviderTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.68 sec
+Running org.geoserver.security.impl.GeoServerRoleConverterImplTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 sec
+Running org.geoserver.logging.LoggingStartupContextListenerTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.034 sec
+Running org.geoserver.util.XCQLTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.097 sec
+Running org.geoserver.catalog.ResourcePoolTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.594 sec
+Running org.geoserver.config.UpdateSequenceListenerTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.86 sec
+Running org.geoserver.config.LegacyConfigurationImporterTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 sec
+Running org.geoserver.catalog.impl.CascadeDeleteVisitorTest
+Tests run: 4, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.017 sec <<< FAILURE!
+Running org.geoserver.config.GeoServerImplTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 sec
+Running org.geoserver.template.FeatureWrapperTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.288 sec
+
+Running org.geoserver.config.util.AuthorityURLInfoInfoListConverterTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.02 sec
+Running org.geoserver.security.impl.SecureCatalogImplTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.443 sec
+Running org.geoserver.security.impl.DefaultDataAccessManagerTreeTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 sec
+Running org.geoserver.security.auth.GeoServerRootAuthenticationProviderTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.119 sec
+Running org.geoserver.feature.retype.RetypingDataStoreTest
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.052 sec
+Running org.geoserver.security.decorators.ReadSecuredCatalogDecoratorsTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.074 sec
+Running org.geoserver.template.GeoServerTemplateLoaderTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.749 sec
+Running org.geoserver.security.impl.RoleHierarchyHelperTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 sec
+
+Running org.geoserver.security.GeoServerRoleFilterTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.898 sec
+Running org.geoserver.security.impl.GeoServerUserDaoTest
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 sec
+Running org.geoserver.security.impl.DataAccessRuleDAOTest
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 sec
+Running org.geoserver.data.util.CoverageUtilsTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 sec
+Running org.geoserver.security.decorators.SecuredFeatureSourceTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 sec
+Running org.geoserver.catalog.impl.CatalogBuilderTest
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.528 sec
+Running org.geoserver.security.impl.DefaultDataAccessManagerAuthTest
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.081 sec
+
+Tests run: 477, Failures: 3, Errors: 0, Skipped: 0

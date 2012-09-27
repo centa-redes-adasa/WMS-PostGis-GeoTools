@@ -312,6 +312,30 @@ public class SystemTestData extends CiteTestData {
      */
     public void addVectorLayer(QName qName, Map<LayerProperty,Object> props, Class scope, 
         Catalog catalog) throws IOException {
+        addVectorLayer(qName, props, qName.getLocalPart()+".properties", scope, catalog);
+    }
+
+    /**
+     * Adds a vector layer to the catalog setup.
+     * <p>
+     * The layer is created within a store named <code>qName.getPrefix()</code>, creating it 
+     * if it does not exist. The resulting store is a {@link PropertyDataStore} that points at the 
+     * directory <code>getDataDirectoryRoot()/qName.getPrefix()</code>. Similarily the layer and
+     * store are created within a workspace named <code>qName.getPrefix()</code>, which is created
+     * if it does not already exist.
+     * </p>
+     * <p>
+     * The properties data for the layer is copied from the classpath, with a file name of 
+     * "<code>filename</code>.properties". The <tt>scope</tt> parameter is used as the 
+     * class from which to load the properties file relative to. 
+     * </p>
+     * <p>
+     * The <tt>props</tt> parameter is used to define custom properties for the layer. See the 
+     * {@link LayerProperty} class for supported properties. 
+     * </p>
+     */
+    public void addVectorLayer(QName qName, Map<LayerProperty,Object> props, String filename, 
+        Class scope, Catalog catalog) throws IOException {
         String prefix = qName.getPrefix();
         String name = qName.getLocalPart();
         String uri = qName.getNamespaceURI();
@@ -338,7 +362,7 @@ public class SystemTestData extends CiteTestData {
         }
 
         //copy the properties file over
-        String filename = name + ".properties";
+        
         catalog.getResourceLoader().copyFromClassPath(filename, new File(storeDir, filename), scope);
 
         //configure feature type
