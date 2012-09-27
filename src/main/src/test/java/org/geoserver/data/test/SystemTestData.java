@@ -370,7 +370,7 @@ public class SystemTestData extends CiteTestData {
         featureType.setStore(store);
         featureType.setNamespace(catalog.getNamespaceByPrefix(prefix));
         featureType.setName(LayerProperty.NAME.get(props, name));
-        featureType.setNativeName(name);
+        featureType.setNativeName(FilenameUtils.getBaseName(filename));
         featureType.setTitle(name);
         featureType.setAbstract("abstract about " + name);
 
