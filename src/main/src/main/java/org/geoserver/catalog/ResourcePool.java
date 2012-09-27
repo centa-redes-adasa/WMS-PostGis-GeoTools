@@ -1468,7 +1468,12 @@ public class ResourcePool {
         @Override
         public void clear() {
             for (Entry entry : entrySet()) {
-                dispose((K) entry.getKey(), (V) entry.getValue());
+                try {
+                    dispose((K) entry.getKey(), (V) entry.getValue());
+                }
+                catch(Exception e) {
+                    LOGGER.log(Level.WARNING, "Error dispoing entry: " + entry, e);
+                }
             }
             super.clear();
         }
