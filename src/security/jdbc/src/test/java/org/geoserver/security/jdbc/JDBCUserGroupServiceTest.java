@@ -11,11 +11,13 @@ import java.util.logging.Logger;
 
 import junit.framework.Assert;
 
-import org.geoserver.data.test.TestData;
+import org.geoserver.data.test.SystemTestData;
 import org.geoserver.security.GeoServerUserGroupService;
 import org.geoserver.security.GeoServerUserGroupStore;
 import org.geoserver.security.config.SecurityUserGroupServiceConfig;
 import org.geoserver.security.impl.AbstractUserGroupServiceTest;
+import org.junit.After;
+import org.junit.Test;
 
 
 public abstract class JDBCUserGroupServiceTest extends AbstractUserGroupServiceTest {
@@ -23,27 +25,29 @@ public abstract class JDBCUserGroupServiceTest extends AbstractUserGroupServiceT
     static Logger LOGGER = org.geotools.util.logging.Logging.getLogger("org.geoserver.security.jdbc");
     
     protected abstract String getFixtureId();
-    
 
-    @Override
-    protected void tearDownInternal() throws Exception {
-        super.tearDownInternal();
+    
+    @After
+    public void dropExistingTables() throws Exception {
         if (store!=null) {
             JDBCUserGroupStore jdbcStore =(JDBCUserGroupStore)store;
             JDBCTestSupport.dropExistingTables(jdbcStore,jdbcStore.getConnection());
             store.store();
         }
-
     }
 
+   
+    
     @Override
-    protected void setUpInternal() throws Exception {
-        if (getTestData().isTestDataAvailable())
-            super.setUpInternal();
+    public void setServiceAndStore() throws Exception {
+        if (getTestData().isTestDataAvailable()) {
+            service = getSecurityManager().loadUserGroupService(getFixtureId());
+            store = createStore(service);
+        }
     }
 
+ 
     @Override
-
     protected SecurityUserGroupServiceConfig createConfigObject(String name) {
 
         try {
@@ -74,18 +78,18 @@ public abstract class JDBCUserGroupServiceTest extends AbstractUserGroupServiceT
         store.store();
         return store;        
     }
-    
+    @Test
     public void testUserGroupDatabaseSetup() {
         try {                        
             JDBCUserGroupStore jdbcStore = 
                 (JDBCUserGroupStore) store;            
-            assertTrue(jdbcStore.tablesAlreadyCreated());
+            assert(jdbcStore.tablesAlreadyCreated());
             jdbcStore.checkDDLStatements();
             jdbcStore.checkDMLStatements();
             jdbcStore.clear();
             jdbcStore.dropTables();
             jdbcStore.store();
-            assertFalse(jdbcStore.tablesAlreadyCreated());
+            assert(!jdbcStore.tablesAlreadyCreated());
             jdbcStore.load();
 
         } catch (IOException ex) {
@@ -93,13 +97,13 @@ public abstract class JDBCUserGroupServiceTest extends AbstractUserGroupServiceT
         }
     }
         
+
     @Override
-    protected TestData buildTestData() throws Exception {
+    protected SystemTestData createTestData() throws Exception {
         if ("h2".equalsIgnoreCase(getFixtureId()))
-            return super.buildTestData();
+            return super.createTestData();
         return new LiveDbmsDataSecurity(getFixtureId());
     }
-
     
     @Override
     protected boolean isJDBCTest() {

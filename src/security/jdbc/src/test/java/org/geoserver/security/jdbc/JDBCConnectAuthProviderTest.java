@@ -14,6 +14,7 @@ import org.geoserver.security.auth.AbstractAuthenticationProviderTest;
 import org.geoserver.security.impl.GeoServerRole;
 import org.geoserver.security.impl.GeoServerUser;
 import org.geoserver.security.jdbc.config.JDBCConnectAuthProviderConfig;
+import org.junit.Test;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,6 +36,7 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
         return config;        
     }
     
+    @Test
     public void testAuthentificationWithoutUserGroupService() throws Exception {
         JDBCConnectAuthProviderConfig config = createAuthConfg("jdbc1", null);
         getSecurityManager().saveAuthenticationProvider(config);
@@ -42,15 +44,15 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
         
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken("sa","");
         token.setDetails("details");
-        assertTrue(provider.supports(token.getClass()));
-        assertFalse(provider.supports(RememberMeAuthenticationToken.class));
+        assert(provider.supports(token.getClass()));
+        assert(!provider.supports(RememberMeAuthenticationToken.class));
         
         Authentication auth = provider.authenticate(token);
-        assertNotNull(auth);
-        assertEquals("sa", auth.getPrincipal());
-        assertNull(auth.getCredentials());
-        assertEquals("details", auth.getDetails());
-        assertEquals(1,auth.getAuthorities().size());
+        assert(null!=auth);
+        assert("sa".equals(auth.getPrincipal()));
+        assert(null==auth.getCredentials());
+        assert("details".equals( auth.getDetails()));
+        assert(1==auth.getAuthorities().size());
         checkForAuthenticatedRole(auth);
         
         token = new UsernamePasswordAuthenticationToken("abc","def");
@@ -61,10 +63,10 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
         } catch (BadCredentialsException ex) {
             fail=true;
         }        
-        assertTrue(fail);                
+        assert(fail);                
     }
     
-    
+    @Test
     public void testAuthentificationWithUserGroupService() throws Exception {
         GeoServerRoleService roleService = createRoleService("jdbc2");
         GeoServerUserGroupService ugService = createUserGroupService("jdbc2");
@@ -86,17 +88,17 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
         
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken("sa","");
         token.setDetails("details");
-        assertTrue(provider.supports(token.getClass()));
-        assertFalse(provider.supports(RememberMeAuthenticationToken.class));
+        assert(provider.supports(token.getClass()));
+        assert(!provider.supports(RememberMeAuthenticationToken.class));
         
         Authentication auth = provider.authenticate(token);
-        assertNotNull(auth);
-        assertEquals("sa", auth.getPrincipal());
-        assertNull(auth.getCredentials());
-        assertEquals("details", auth.getDetails());
-        assertEquals(2,auth.getAuthorities().size());
+        assert(null!=auth);
+        assert("sa".equals(auth.getPrincipal()));
+        assert(null==auth.getCredentials());
+        assert("details".equals(auth.getDetails()));
+        assert(2==auth.getAuthorities().size());
         checkForAuthenticatedRole(auth);
-        assertTrue(auth.getAuthorities().contains(GeoServerRole.ADMIN_ROLE));
+        assert(auth.getAuthorities().contains(GeoServerRole.ADMIN_ROLE));
         
         
         // Test disabled user
@@ -105,7 +107,7 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
         ugStore.updateUser(sa);
         ugStore.store();
         
-        assertNull(provider.authenticate(token));
+        assert(null==provider.authenticate(token));
         
         // test invalid user
         token = new UsernamePasswordAuthenticationToken("abc","def");
@@ -119,15 +121,15 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
             fail=true;
         }        
 
-        assertTrue(fail);
+        assert(fail);
                 
     }
-    
+    @Test
     public void testAuthentificationWithRoleAssociation() throws Exception {
-        GeoServerRoleService roleService = createRoleService("jdbc2");
-        JDBCConnectAuthProviderConfig config = createAuthConfg("jdbc2", null);
+        GeoServerRoleService roleService = createRoleService("jdbc3");
+        JDBCConnectAuthProviderConfig config = createAuthConfg("jdbc3", null);
         getSecurityManager().saveAuthenticationProvider(config);
-        GeoServerAuthenticationProvider provider = getSecurityManager().loadAuthenticationProvider("jdbc2");
+        GeoServerAuthenticationProvider provider = getSecurityManager().loadAuthenticationProvider("jdbc3");
         
         
         GeoServerRoleStore roleStore =  roleService.createStore();
@@ -139,17 +141,17 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
         
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken("sa","");
         token.setDetails("details");
-        assertTrue(provider.supports(token.getClass()));
-        assertFalse(provider.supports(RememberMeAuthenticationToken.class));
+        assert(provider.supports(token.getClass()));
+        assert(!!provider.supports(RememberMeAuthenticationToken.class));
         
         Authentication auth = provider.authenticate(token);
-        assertNotNull(auth);
-        assertEquals("sa", auth.getPrincipal());
-        assertNull(auth.getCredentials());
-        assertEquals("details", auth.getDetails());
-        assertEquals(2,auth.getAuthorities().size());
+        assert(null!=auth);
+        assert("sa".equals(auth.getPrincipal()));
+        assert(null==auth.getCredentials());
+        assert("details".equals(auth.getDetails()));
+        assert(2==auth.getAuthorities().size());
         checkForAuthenticatedRole(auth);
-        assertTrue(auth.getAuthorities().contains(GeoServerRole.ADMIN_ROLE));
+        assert(auth.getAuthorities().contains(GeoServerRole.ADMIN_ROLE));
                 
         
         // test invalid user
@@ -164,7 +166,7 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
             fail=true;
         }        
 
-        assertTrue(fail);
+        assert(fail);
                 
     }
 

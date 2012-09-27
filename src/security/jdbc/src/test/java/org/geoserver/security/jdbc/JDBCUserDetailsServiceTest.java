@@ -10,12 +10,14 @@ import java.sql.SQLException;
 
 import junit.framework.Assert;
 
-import org.geoserver.data.test.TestData;
+import org.geoserver.data.test.SystemTestData;
 import org.geoserver.security.GeoServerRoleService;
 import org.geoserver.security.GeoServerRoleStore;
 import org.geoserver.security.GeoServerUserGroupService;
 import org.geoserver.security.GeoServerUserGroupStore;
 import org.geoserver.security.impl.AbstractUserDetailsServiceTest;
+import org.junit.After;
+import org.junit.Test;
 
 public abstract class JDBCUserDetailsServiceTest extends AbstractUserDetailsServiceTest {
 
@@ -64,9 +66,8 @@ public abstract class JDBCUserDetailsServiceTest extends AbstractUserDetailsServ
     }
     
     
-    @Override
-    protected void tearDownInternal() throws Exception {
-        super.tearDownInternal();
+    @After
+    public void dropTables() throws Exception {
         if (roleStore!=null) {
             JDBCRoleStore jdbcStore1 =(JDBCRoleStore) roleStore;
             JDBCTestSupport.dropExistingTables(jdbcStore1,jdbcStore1.getConnection());
@@ -79,13 +80,20 @@ public abstract class JDBCUserDetailsServiceTest extends AbstractUserDetailsServ
             usergroupStore.store();
         }
     }
-
+    
     @Override
-    protected void setUpInternal() throws Exception {
-        if (getTestData().isTestDataAvailable())
-            super.setUpInternal();
+    protected void setServices(String serviceName) throws Exception{
+        if (getSecurityManager().loadRoleService(getFixtureId())==null)
+            super.setServices(getFixtureId());
+        else {
+            roleService=getSecurityManager().loadRoleService(getFixtureId());
+            roleStore = createStore(roleService);
+            usergroupService=getSecurityManager().loadUserGroupService(getFixtureId());
+            usergroupStore =createStore(usergroupService);
+            getSecurityManager().setActiveRoleService(roleService);
+        }
     }
-
+    
     
     @Override
     protected boolean isJDBCTest() {
@@ -93,21 +101,22 @@ public abstract class JDBCUserDetailsServiceTest extends AbstractUserDetailsServ
     }
 
     @Override
-    protected TestData buildTestData() throws Exception {
+    protected SystemTestData createTestData() throws Exception {
         if ("h2".equalsIgnoreCase(getFixtureId()))
-            return super.buildTestData();
+            return super.createTestData();
         return new LiveDbmsDataSecurity(getFixtureId());
     }
-
+    
+    @Test
     public void testConfiguration() {
         try {
             setServices("config");
-            assertEquals(roleService,getSecurityManager().getActiveRoleService());
+            assert(roleService.equals(getSecurityManager().getActiveRoleService()));
             //assertEquals(usergroupService,getSecurityManager().getActiveUserGroupService());
-            assertEquals(usergroupService.getName(),
-                    getSecurityManager().loadUserGroupService(getFixtureId()).getName());
-            assertTrue(roleService.canCreateStore());
-            assertTrue(usergroupService.canCreateStore());
+            assert(usergroupService.getName().equals(
+                    getSecurityManager().loadUserGroupService(getFixtureId()).getName()));
+            assert(roleService.canCreateStore());
+            assert(usergroupService.canCreateStore());
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }

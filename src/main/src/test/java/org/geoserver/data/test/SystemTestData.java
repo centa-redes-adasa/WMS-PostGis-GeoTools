@@ -237,9 +237,22 @@ public class SystemTestData extends CiteTestData {
      * @param scope Class from which to load sld resource from.
      */
     public void addStyle(String name, Class scope, Catalog catalog) throws IOException {
+        addStyle(name, name + ".sld", scope, catalog);
+    }
+
+    /**
+     * Adds a style to the test setup.
+     * <p>
+     * To set up the style a file named <tt>filename</tt> is copied from the classpath relative
+     * to the <tt>scope</tt> parameter.
+     * </p>
+     * @param name The name of the style.
+     * @param filename The filename to copy from classpath.
+     * @param scope Class from which to load sld resource from.
+     */
+    public void addStyle(String name, String filename, Class scope, Catalog catalog) throws IOException {
         File styles = catalog.getResourceLoader().findOrCreateDirectory(data, "styles");
 
-        String filename = name + ".sld";
         catalog.getResourceLoader().copyFromClassPath(filename, new File(styles, filename), scope);
 
         StyleInfo style = catalog. getStyleByName(name);
@@ -255,7 +268,6 @@ public class SystemTestData extends CiteTestData {
             catalog.save(style);
         }
     }
-
     /**
      * Adds a vector layer to the catalog setup.
      * <p>
@@ -623,4 +635,14 @@ public class SystemTestData extends CiteTestData {
         return true;
     }
 
+    /**
+     * Populates a map with prefix to namespace uri mappings for all the 
+     * mock data namespaces. 
+     */
+    public void registerNamespaces(Map<String,String> namespaces) {
+        namespaces.put(MockData.CITE_PREFIX, MockData.CITE_URI); 
+        namespaces.put(MockData.CDF_PREFIX, MockData.CDF_URI);
+        namespaces.put(MockData.CGF_PREFIX, MockData.CGF_URI);
+        namespaces.put(MockData.SF_PREFIX, MockData.SF_URI);
+    }
 }
