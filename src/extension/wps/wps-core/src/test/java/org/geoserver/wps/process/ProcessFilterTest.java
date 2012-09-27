@@ -1,13 +1,7 @@
 package org.geoserver.wps.process;
 
-import junit.framework.Test;
 
 public class ProcessFilterTest extends AbstractProcessFilterTest {
-    
-    //read-only test
-    public static Test suite() {
-        return new OneTimeTestSetup(new ProcessFilterTest());
-    }
     
     /**
      * Returns the spring context locations to be used in order to build the GeoServer Spring
@@ -21,7 +15,5 @@ public class ProcessFilterTest extends AbstractProcessFilterTest {
                 "classpath*:/processFilterContext.xml"
             };
     }
-    
-
     
 }

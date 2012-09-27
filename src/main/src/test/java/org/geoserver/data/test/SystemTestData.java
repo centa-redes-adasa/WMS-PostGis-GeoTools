@@ -403,7 +403,7 @@ public class SystemTestData extends CiteTestData {
         }
 
         LayerInfo layer = catalog.getLayerByName(new NameImpl(prefix, name));
-        if (layer == null) {
+        if (layer == null || !layer.getResource().getNamespace().equals(catalog.getNamespaceByPrefix(prefix))) {
             layer = catalog.getFactory().createLayer();    
         }
 
@@ -537,7 +537,7 @@ public class SystemTestData extends CiteTestData {
         dir.mkdirs();
 
         File file = new File(dir, filename);
-        catalog.getResourceLoader().copyFromClassPath(filename, file, getClass());
+        catalog.getResourceLoader().copyFromClassPath(filename, file, scope);
 
         String ext = FilenameUtils.getExtension(filename);
         if ("zip".equalsIgnoreCase(ext)) {

@@ -1,11 +1,14 @@
 package org.geoserver.wps.gs;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+
 import java.io.IOException;
 
 import org.geoserver.catalog.FeatureTypeInfo;
 import org.geoserver.catalog.LayerInfo;
 import org.geoserver.data.test.MockData;
-import org.geoserver.test.GeoServerTestSupport;
+import org.geoserver.wps.WPSTestSupport;
 import org.geotools.data.Query;
 import org.geotools.data.crs.ForceCoordinateSystemFeatureResults;
 import org.geotools.data.simple.SimpleFeatureCollection;
@@ -13,14 +16,16 @@ import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.referencing.CRS;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.filter.FilterFactory;
 
-public class ImportProcessTest extends GeoServerTestSupport {
+public class ImportProcessTest extends WPSTestSupport {
 
     /**
      * Try to re-import buildings as another layer (different name, different projection)
      */
+    @Test
     public void testImportBuildings() throws Exception {
         FeatureTypeInfo ti = getCatalog().getFeatureTypeByName(getLayerId(MockData.BUILDINGS));
         SimpleFeatureCollection rawSource = (SimpleFeatureCollection) ti.getFeatureSource(null,
@@ -38,6 +43,7 @@ public class ImportProcessTest extends GeoServerTestSupport {
     /**
      * Try to re-import buildings as another layer (different name, different projection)
      */
+    @Test
     public void testImportBuildingsForceCRS() throws Exception {
         FeatureTypeInfo ti = getCatalog().getFeatureTypeByName(getLayerId(MockData.BUILDINGS));
         SimpleFeatureCollection rawSource = (SimpleFeatureCollection) ti.getFeatureSource(null,
