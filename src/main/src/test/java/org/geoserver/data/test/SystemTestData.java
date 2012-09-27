@@ -64,7 +64,7 @@ public class SystemTestData extends CiteTestData {
     public static class LayerProperty<T> {
 
         T get(Map<LayerProperty,Object> map, T def) {
-            return map.containsKey(this) ? (T) map.get(this) : def;
+            return map != null && map.containsKey(this) ? (T) map.get(this) : def;
         }
 
         public static LayerProperty<String> NAME = new LayerProperty<String>(); 
@@ -124,7 +124,7 @@ public class SystemTestData extends CiteTestData {
     }
 
     public void setUpWcs10RasterLayers() throws IOException {
-        throw new UnsupportedOperationException("TODO");
+        addRasterLayer(USA_WORLDIMG, "usa.zip", PNG, catalog);
     }
 
     /**
@@ -540,18 +540,21 @@ public class SystemTestData extends CiteTestData {
 
         String ext = FilenameUtils.getExtension(filename);
         if ("zip".equalsIgnoreCase(ext)) {
-            if (extension == null) {
-                throw new IllegalArgumentException("Raster data specified as archive but no " + 
-                    "extension of coverage was specified");
-            }
-
+            
             //unpack the archive
             IOUtils.decompress(file, dir);
 
             //delete archive
             file.delete();
 
-            file = new File(dir, FilenameUtils.getBaseName(filename) + "." + ext);
+            if (extension == null) {
+                //zip with no extension, we just the directory as the file
+                file = dir;
+            }
+            else {
+                file = new File(dir, FilenameUtils.getBaseName(filename) + "." + extension);
+            }
+
             if (!file.exists()) {
                 throw new FileNotFoundException(file.getPath());
             }
