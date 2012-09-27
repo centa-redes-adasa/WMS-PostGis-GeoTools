@@ -17,6 +17,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,7 @@ import org.geoserver.config.GeoServerDataDirectory;
 import org.geoserver.config.GeoServerLoaderProxy;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.logging.LoggingUtils;
+import org.geoserver.ows.util.CaseInsensitiveMap;
 import org.geoserver.ows.util.KvpUtils;
 import org.geoserver.ows.util.ResponseUtils;
 import org.geoserver.platform.ContextLoadedEvent;
@@ -1543,6 +1545,33 @@ public class GeoServerSystemTestSupport extends GeoServerBaseTestSupport<SystemT
      */
     protected List<Filter> getFilters() {
         return null;
+    }
+    
+    /**
+     * Parses a raw set of kvp's into a parsed set of kvps.
+     *
+     * @param kvp Map of String,String.
+     */
+    protected Map parseKvp(Map /*<String,String>*/ raw)
+        throws Exception {
+        
+        // parse like the dispatcher but make sure we don't change the original map
+        HashMap input = new HashMap(raw);
+        List<Throwable> errors = KvpUtils.parse(input);
+        if(errors != null && errors.size() > 0)
+            throw (Exception) errors.get(0);
+        
+        return caseInsensitiveKvp(input);
+    }
+
+    protected Map caseInsensitiveKvp(HashMap input) {
+        // make it case insensitive like the servlet+dispatcher maps
+        Map result = new HashMap();
+        for (Iterator it = input.keySet().iterator(); it.hasNext();) {
+            String key = (String) it.next();
+            result.put(key.toUpperCase(), input.get(key));
+        }
+        return new CaseInsensitiveMap(result);
     }
 
  
