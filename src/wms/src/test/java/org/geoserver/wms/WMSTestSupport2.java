@@ -41,6 +41,7 @@ import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.CatalogBuilder;
 import org.geoserver.catalog.LayerGroupInfo;
 import org.geoserver.catalog.LayerInfo;
+import org.geoserver.catalog.ResourceInfo;
 import org.geoserver.data.test.MockData;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.test.GeoServerSystemTestSupport;
@@ -471,6 +472,22 @@ public abstract class WMSTestSupport2 extends GeoServerSystemTestSupport {
             actual = new Color(cm.getRed(pixel), cm.getGreen(pixel), cm.getBlue(pixel), 255);
         }
         return actual;
+    }
+    /**
+     * Sets up a template in a feature type directory.
+     * 
+     * @param featureTypeName The name of the feature type.
+     * @param template The name of the template.
+     * @param body The content of the template.
+     * 
+     * @throws IOException
+     */
+    protected void setupTemplate(QName featureTypeName,String template,String body)
+        throws IOException {
+        
+        ResourceInfo info = getCatalog().getResourceByName(toName(featureTypeName), ResourceInfo.class);
+        getDataDirectory().copyToResourceDir(info, new ByteArrayInputStream(body.getBytes()),template);
+        
     }
 
 }
