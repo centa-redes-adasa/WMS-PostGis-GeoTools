@@ -18,6 +18,7 @@ import org.geoserver.catalog.CoverageInfo;
 import org.geoserver.catalog.CoverageStoreInfo;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.test.GeoServerSystemTestSupport;
+import org.geoserver.test.SystemTest;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.coverage.grid.GridCoverageFactory;
 import org.geotools.gce.geotiff.GeoTiffWriter;
@@ -25,7 +26,9 @@ import org.geotools.gce.imagemosaic.ImageMosaicFormat;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
+@Category(SystemTest.class)
 public class CatalogBuilderIntTest extends GeoServerSystemTestSupport {
 
     @Override

@@ -3,6 +3,7 @@ package org.geoserver.data.test;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -134,6 +135,11 @@ public class SystemTestData extends CiteTestData {
      */
     public void setUpWcs11RasterLayers() throws IOException {
         setUpDefaultRasterLayers();
+    }
+
+    public void setUpSecurity() throws IOException {
+        File secDir = new File(getDataDirectoryRoot(), "security");
+        IOUtils.decompress(getClass().getResourceAsStream("security.zip"), secDir);
     }
 
     protected void createCatalog() throws IOException {
@@ -584,6 +590,24 @@ public class SystemTestData extends CiteTestData {
         }
     }
 
+    /**
+     * Copies some content to a file under the base of the data directory.
+     * <p>
+     * The <code>location</code> is considred to be a path relative to the
+     * data directory root.
+     * </p>
+     * <p>
+     * Note that the resulting file will be deleted when {@link #tearDown()}
+     * is called.
+     * </p>
+     * @param input The content to copy.
+     * @param location A relative path
+     */
+    public void copyTo(InputStream input, String location)
+        throws IOException {
+        IOUtils.copy(input, new File(getDataDirectoryRoot(), location));
+    }
+    
     @Override
     public void tearDown() throws Exception {
         FileUtils.deleteDirectory(data);

@@ -28,10 +28,12 @@ import org.geoserver.security.filter.GeoServerX509CertificateAuthenticationFilte
 import org.geoserver.security.impl.GeoServerRole;
 import org.geoserver.security.impl.GeoServerUser;
 import org.geoserver.test.RunTestSetup;
+import org.geoserver.test.SystemTest;
 import org.geoserver.test.TestSetupFrequency;
 import org.geoserver.test.TestSetup;
 import org.geotools.data.Base64;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,6 +42,7 @@ import com.mockrunner.mock.web.MockFilterChain;
 import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
+@Category(SystemTest.class)
 public class AuthenticationCacheFilterTest extends AbstractAuthenticationProviderTest {
     
     public final static String testFilterName = "basicAuthTestFilter";

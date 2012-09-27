@@ -25,9 +25,12 @@ import org.geoserver.security.impl.GeoServerUserGroup;
 import org.geoserver.security.impl.Util;
 import org.geoserver.security.password.GeoServerMultiplexingPasswordEncoder;
 import org.geoserver.security.password.PasswordValidator;
+import org.geoserver.test.SystemTest;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
+@Category(SystemTest.class)
 public class XMLUserGroupServiceTest extends AbstractUserGroupServiceTest {
 
     static Logger LOGGER = org.geotools.util.logging.Logging.getLogger("org.geoserver.security.xml");

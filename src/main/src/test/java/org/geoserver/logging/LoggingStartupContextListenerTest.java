@@ -1,5 +1,10 @@
 package org.geoserver.logging;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 
 import javax.servlet.ServletContextEvent;
@@ -8,14 +13,13 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Appender;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
-import org.geoserver.platform.GeoServerExtensions;
+import org.junit.Test;
 
 import com.mockrunner.mock.web.MockServletContext;
 
-import junit.framework.TestCase;
+public class LoggingStartupContextListenerTest {
 
-public class LoggingStartupContextListenerTest extends TestCase {
-
+    @Test
     public void testLogLocationFromServletContext() throws Exception {
         File tmp = File.createTempFile("log", "tmp", new File("target"));
         tmp.delete();

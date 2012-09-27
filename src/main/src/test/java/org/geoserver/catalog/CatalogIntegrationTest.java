@@ -7,8 +7,11 @@ import java.util.List;
 
 import org.geoserver.data.test.TestData;
 import org.geoserver.test.GeoServerSystemTestSupport;
+import org.geoserver.test.SystemTest;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
+@Category(SystemTest.class)
 public class CatalogIntegrationTest extends GeoServerSystemTestSupport {
 
     @Test

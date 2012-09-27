@@ -75,6 +75,9 @@ import org.geoserver.security.impl.DataAccessRuleDAO;
 import org.geoserver.security.impl.GeoServerRole;
 import org.geoserver.security.impl.GeoServerUser;
 import org.geoserver.security.impl.GeoServerUserGroup;
+import org.geoserver.security.password.GeoServerDigestPasswordEncoder;
+import org.geoserver.security.password.GeoServerPBEPasswordEncoder;
+import org.geoserver.security.password.GeoServerPlainTextPasswordEncoder;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureSource;
@@ -82,6 +85,7 @@ import org.geotools.util.logging.Log4JLoggerFactory;
 import org.geotools.util.logging.Logging;
 import org.geotools.xml.XSD;
 import org.junit.After;
+import org.junit.experimental.categories.Category;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
@@ -202,32 +206,39 @@ public class GeoServerSystemTestSupport extends GeoServerBaseTestSupport<SystemT
 
     protected final void tearDown(SystemTestData testData) throws Exception {
         if(testData.isTestDataAvailable()) {
-            try {
-                onTearDown(testData);
+            onTearDown(testData);
 
-                //dispose WFS XSD schema's - they will otherwise keep geoserver instance alive forever!!
-                disposeIfExists(getXSD11());
-                disposeIfExists(getXSD10());
+            destroyGeoServer();
 
-                // kill the context
-                applicationContext.destroy();
-                
-                // kill static caches
-                new GeoServerExtensions().setApplicationContext(null);
-        
-                // some tests do need a kick on the GC to fully clean up
-                if(isMemoryCleanRequired()) {
-                    System.gc(); 
-                    System.runFinalization();
-                }
-
-                // this cleans up the data directory static loader, if we don't the next test
-                // will keep on running on the current data dir
-                GeoserverDataDirectory.destroy();
-
-            } finally {
-                applicationContext = null;
+            // some tests do need a kick on the GC to fully clean up
+            if(isMemoryCleanRequired()) {
+                System.gc(); 
+                System.runFinalization();
             }
+        }
+    }
+
+    protected void destroyGeoServer() {
+        if (applicationContext == null) {
+            return;
+        }
+
+        try {
+            //dispose WFS XSD schema's - they will otherwise keep geoserver instance alive forever!!
+            disposeIfExists(getXSD11());
+            disposeIfExists(getXSD10());
+    
+            // kill the context
+            applicationContext.destroy();
+            
+            // kill static caches
+            new GeoServerExtensions().setApplicationContext(null);
+    
+            // this cleans up the data directory static loader, if we don't the next test
+            // will keep on running on the current data dir
+            GeoserverDataDirectory.destroy();
+        } finally {
+            applicationContext = null;
         }
     }
 
@@ -249,6 +260,7 @@ public class GeoServerSystemTestSupport extends GeoServerBaseTestSupport<SystemT
      */
     protected void setUpTestData(SystemTestData testData) throws Exception {
         testData.setUpDefaultLayers();
+        testData.setUpSecurity();
     }
 
     /**
@@ -328,6 +340,34 @@ public class GeoServerSystemTestSupport extends GeoServerBaseTestSupport<SystemT
      */
     protected GeoServerSecurityManager getSecurityManager() {
         return (GeoServerSecurityManager) applicationContext.getBean("geoServerSecurityManager");
+    }
+
+    /**
+     * Accessor for plain text password encoder.
+     */
+    protected GeoServerPlainTextPasswordEncoder getPlainTextPasswordEncoder() {
+        return getSecurityManager().loadPasswordEncoder(GeoServerPlainTextPasswordEncoder.class);
+    }
+
+    /**
+     * Accessor for digest password encoder.
+     */
+    protected GeoServerDigestPasswordEncoder getDigestPasswordEncoder() {
+        return getSecurityManager().loadPasswordEncoder(GeoServerDigestPasswordEncoder.class);
+    }
+
+    /**
+     * Accessor for regular (weak encryption) pbe password encoder.
+     */
+    protected GeoServerPBEPasswordEncoder getPBEPasswordEncoder() {
+        return getSecurityManager().loadPasswordEncoder(GeoServerPBEPasswordEncoder.class, null, false);
+    }
+
+    /**
+     * Accessor for strong encryption pbe password encoder.
+     */
+    protected GeoServerPBEPasswordEncoder getStrongPBEPasswordEncoder() {
+        return getSecurityManager().loadPasswordEncoder(GeoServerPBEPasswordEncoder.class, null, true);
     }
 
     /**

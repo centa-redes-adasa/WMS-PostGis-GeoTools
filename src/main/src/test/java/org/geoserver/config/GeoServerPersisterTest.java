@@ -26,11 +26,14 @@ import org.geoserver.config.util.XStreamPersisterFactory;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.data.util.IOUtils;
 import org.geoserver.test.GeoServerSystemTestSupport;
+import org.geoserver.test.SystemTest;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.w3c.dom.Document;
 
+@Category(SystemTest.class)
 public class GeoServerPersisterTest extends GeoServerSystemTestSupport {
 
     Catalog catalog;

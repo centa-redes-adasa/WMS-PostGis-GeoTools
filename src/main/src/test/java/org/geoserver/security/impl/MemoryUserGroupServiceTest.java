@@ -8,6 +8,7 @@ package org.geoserver.security.impl;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import junit.framework.Assert;
 
@@ -15,9 +16,12 @@ import org.geoserver.security.GeoServerUserGroupService;
 import org.geoserver.security.config.SecurityUserGroupServiceConfig;
 import org.geoserver.security.config.impl.MemoryUserGroupServiceConfigImpl;
 import org.geoserver.security.password.PasswordValidator;
+import org.geoserver.test.SystemTest;
 import org.junit.After;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
+@Category(SystemTest.class)
 public class MemoryUserGroupServiceTest extends AbstractUserGroupServiceTest {
 
     @After

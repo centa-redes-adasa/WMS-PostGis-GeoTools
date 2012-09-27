@@ -20,9 +20,12 @@ import org.geoserver.security.GeoServerUserGroupService;
 import org.geoserver.security.config.impl.MemoryRoleServiceConfigImpl;
 import org.geoserver.security.config.impl.MemoryUserGroupServiceConfigImpl;
 import org.geoserver.security.password.PasswordValidator;
+import org.geoserver.test.SystemTest;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
+@Category(SystemTest.class)
 public class MemoryRoleServiceTest extends AbstractRoleServiceTest {
 
     @Override

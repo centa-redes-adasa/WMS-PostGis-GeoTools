@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
@@ -33,12 +34,14 @@ import org.geoserver.security.config.impl.MemoryUserGroupServiceConfigImpl;
 import org.geoserver.security.password.DecodingUserDetailsService;
 import org.geoserver.security.password.GeoServerPasswordEncoder;
 import org.geoserver.security.password.PasswordValidator;
+import org.geoserver.test.SystemTest;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-
+@Category(SystemTest.class)
 public class MemoryUserDetailsServiceTest extends AbstractUserDetailsServiceTest {
     
     static final String plainTextRole = "plainrole";

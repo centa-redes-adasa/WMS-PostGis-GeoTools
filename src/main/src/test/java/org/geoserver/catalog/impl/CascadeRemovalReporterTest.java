@@ -39,33 +39,6 @@ public class CascadeRemovalReporterTest extends GeoServerMockTestSupport {
     
     static final String LAKES_GROUP = "lakesGroup";
 
-//    @Override
-//    protected void setUp(MockTestData testData) throws Exception {
-//        super.setUp(testData);
-//        
-//        catalog = getCatalog();
-//        visitor = new CascadeRemovalReporter(catalog);
-//        
-//        // setup a group, see GEOS-3040
-//        Catalog catalog = getCatalog();
-//        
-//        setNativeBox(catalog, lakes);
-//        setNativeBox(catalog, forests);
-//        setNativeBox(catalog, bridges);
-//        
-//        LayerGroupInfo lg = catalog.getFactory().createLayerGroup();
-//        lg.setName(LAKES_GROUP);
-//        lg.getLayers().add(catalog.getLayerByName(lakes));
-//        lg.getStyles().add(catalog.getStyleByName(lakes));
-//        lg.getLayers().add(catalog.getLayerByName(forests));
-//        lg.getStyles().add(catalog.getStyleByName(forests));
-//        lg.getLayers().add(catalog.getLayerByName(bridges));
-//        lg.getStyles().add(catalog.getStyleByName(bridges));
-//        CatalogBuilder builder = new CatalogBuilder(catalog);
-//        builder.calculateLayerGroupBounds(lg);
-//        catalog.add(lg);
-//    }
-
     @Override
     protected void setUp(MockTestData testData) throws Exception {
         super.setUp(testData);

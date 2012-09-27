@@ -22,10 +22,13 @@ import org.geoserver.security.impl.AbstractRoleServiceTest;
 import org.geoserver.security.impl.GeoServerRole;
 import org.geoserver.security.impl.GeoServerUser;
 import org.geoserver.security.impl.Util;
+import org.geoserver.test.SystemTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
+@Category(SystemTest.class)
 public class XMLRoleServiceTest extends AbstractRoleServiceTest {
 
     static Logger LOGGER = org.geotools.util.logging.Logging.getLogger("org.geoserver.security.xml");

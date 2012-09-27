@@ -519,7 +519,7 @@ public abstract class AbstractSecurityServiceTest extends GeoServerSystemTestSup
     }
 
     public static File unpackTestDataDir() throws Exception {
-        URL url = AbstractSecurityServiceTest.class.getResource("/datadir");
+        URL url = AbstractSecurityServiceTest.class.getResource("/data_dir/default");
         if (!"file".equals(url.getProtocol())) {
             //means a dependency is using this directory via a jarfile, copy out manually
             File dataDir = File.createTempFile("data", "live", new File("./target"));
@@ -528,7 +528,7 @@ public abstract class AbstractSecurityServiceTest extends GeoServerSystemTestSup
 
             //TODO: instead of harcoding files, dynamically read all subentries from the jar
             // and copy them out
-            FileUtils.copyURLToFile(AbstractSecurityServiceTest.class.getResource("/datadir/dummy.txt"), 
+            FileUtils.copyURLToFile(AbstractSecurityServiceTest.class.getResource("/data_dir/default/dummy.txt"), 
                 new File(dataDir, "dummy.txt"));
             return dataDir;
         }

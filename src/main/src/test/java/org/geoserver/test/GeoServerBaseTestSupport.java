@@ -184,6 +184,11 @@ public abstract class GeoServerBaseTestSupport<T extends TestData> {
         }
     }
 
+    @AfterClass
+    public static void clearTestSetupFrequency() {
+        testSetupFrequency = null;
+    }
+
     /**
      * Subclass hook for set up before the test run. 
      * <p>
