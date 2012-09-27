@@ -578,6 +578,10 @@ public class SystemTestData extends CiteTestData {
             throw new RuntimeException("No reader for " + file.getCanonicalPath() + " with format " + format.getName());
         }
 
+        //configure workspace if it doesn;t already exist
+        if (catalog.getWorkspaceByName(prefix) == null) {
+            addWorkspace(prefix, qName.getNamespaceURI(), catalog);
+        }
         //create the store
         CoverageStoreInfo store = catalog.getCoverageStoreByName(prefix, name);
         if (store == null) {
