@@ -1136,7 +1136,7 @@
       <exclude>${test.exclude.pattern}</exclude>
      </excludes>
      <forkMode>once</forkMode>
-     <argLine>-Xmx${test.maxHeapSize} -XX:MaxPermSize=${test.maxPermSize} -enableassertions ${jvm.opts} -Djava.awt.headless=${java.awt.headless} -DremoteOwsTests=${remoteOwsTests}</argLine>
+     <argLine>-Xmx${test.maxHeapSize} -XX:MaxPermSize=${test.maxPermSize} -enableassertions ${jvm.opts} -Djava.awt.headless=${java.awt.headless} -DremoteOwsTests=${remoteOwsTests} -DquietTests=${quietTests}</argLine>
      <enableAssertions>true</enableAssertions>
      <printSummary>true</printSummary>
      <testFailureIgnore>${allow.test.failure.ignore}</testFailureIgnore>
@@ -1432,6 +1432,7 @@
   <test.maxPermSize>128M</test.maxPermSize>
   <test.excludedGroups></test.excludedGroups>
   <test.exclude.pattern>none</test.exclude.pattern>
+  <quietTests>true</quietTests>
   <remoteOwsTests>false</remoteOwsTests>
   <maven.build.timestamp.format>dd-MMM-yyyy HH:mm</maven.build.timestamp.format>
   <build.timestamp>${maven.build.timestamp}</build.timestamp>
