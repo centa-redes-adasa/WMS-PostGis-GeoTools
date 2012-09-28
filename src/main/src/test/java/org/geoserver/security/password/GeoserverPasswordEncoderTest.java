@@ -262,9 +262,6 @@ public class GeoserverPasswordEncoderTest extends GeoServerMockTestSupport {
         // TODO runs from eclpise, but not from mnv clean install 
         //assertTrue("masterpw".equals(MasterPasswordProviderImpl.get().getMasterPassword()));
         
-        System.out.println("Strong cryptography enabled: " +
-            getSecurityManager().isStrongEncryptionAvailable());
-
         GeoServerMultiplexingPasswordEncoder encoder2 = new GeoServerMultiplexingPasswordEncoder(getSecurityManager());
 
         for (GeoServerPasswordEncoder encoder: getConfigPBEEncoders()) {
