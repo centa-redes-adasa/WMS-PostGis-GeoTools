@@ -6,13 +6,16 @@ import java.util.Locale;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.RequestCycle;
+import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.util.tester.FormTester;
 import org.apache.wicket.util.tester.WicketTester;
+import org.geoserver.data.test.SystemTestData;
 import org.geoserver.security.GeoServerSecurityTestSupport;
 import org.geoserver.web.wicket.WicketHierarchyPrinter;
+import org.junit.After;
+import org.junit.Test;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,8 +24,7 @@ import org.springframework.security.core.context.SecurityContextImpl;
 public abstract class GeoServerWicketTestSupport extends GeoServerSecurityTestSupport {
     public static WicketTester tester;
 
-    public void oneTimeSetUp() throws Exception {        
-        super.oneTimeSetUp();
+    protected void onSetUp(SystemTestData testData) throws Exception {
         // prevent Wicket from bragging about us being in dev mode (and run
         // the tests as if we were in production all the time)
         System.setProperty("wicket.configuration", "deployment");
@@ -32,14 +34,18 @@ public abstract class GeoServerWicketTestSupport extends GeoServerSecurityTestSu
         
         GeoServerApplication app = 
             (GeoServerApplication) applicationContext.getBean("webApplication");
-        tester = new WicketTester(app);
+        tester = new WicketTester(
+                (GeoServerApplication) applicationContext.getBean("webApplication"));
         app.init();
-        
+    }
+
+    @After
+    public void clearErrorMessages() {
+        Session.get().cleanupFeedbackMessages();
     }
 
     @Override
-    protected void oneTimeTearDown() throws Exception {
-        super.oneTimeTearDown();
+    protected void onTearDown(SystemTestData testData) throws Exception {
         tester.destroy();
     }
 
