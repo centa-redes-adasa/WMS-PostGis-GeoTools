@@ -4,6 +4,7 @@
  */
 package org.geoserver.gwc.web.layer;
 
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -21,8 +22,11 @@ import org.geoserver.gwc.layer.GeoServerTileLayer;
 import org.geoserver.gwc.layer.GeoServerTileLayerInfo;
 import org.geoserver.gwc.layer.GeoServerTileLayerInfoImpl;
 import org.geoserver.gwc.layer.TileLayerInfoUtil;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-public class LayerEditCacheOptionsTabPanelInfoTest extends TestCase {
+public class LayerEditCacheOptionsTabPanelInfoTest {
 
     LayerEditCacheOptionsTabPanelInfo panelInfo;
 
@@ -36,8 +40,8 @@ public class LayerEditCacheOptionsTabPanelInfoTest extends TestCase {
 
     IModel<LayerInfo> layerModel;
 
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         panelInfo = new LayerEditCacheOptionsTabPanelInfo();
         gwc = mock(GWC.class);
         GWC.set(gwc);
@@ -56,11 +60,12 @@ public class LayerEditCacheOptionsTabPanelInfoTest extends TestCase {
         layerModel = new Model<LayerInfo>(layer);
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         GWC.set(null);
     }
 
+    @Test
     public void testCreateOwnModelNew() {
         final boolean isNew = true;
 
@@ -71,6 +76,7 @@ public class LayerEditCacheOptionsTabPanelInfoTest extends TestCase {
         assertEquals(expected, ownModel.getObject());
     }
 
+    @Test
     public void testCreateOwnModelExisting() {
         final boolean isNew = false;
 
