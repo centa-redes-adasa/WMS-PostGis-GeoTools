@@ -40,7 +40,7 @@ public class LayerEditCacheOptionsTabPanelInfoTest {
     IModel<LayerInfo> layerModel;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUpInternal() throws Exception {
         panelInfo = new LayerEditCacheOptionsTabPanelInfo();
         gwc = mock(GWC.class);
         GWC.set(gwc);

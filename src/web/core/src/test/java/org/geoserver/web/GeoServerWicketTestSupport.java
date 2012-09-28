@@ -13,19 +13,13 @@ import org.geoserver.data.test.SystemTestData;
 import org.geoserver.security.GeoServerSecurityTestSupport;
 import org.geoserver.web.wicket.WicketHierarchyPrinter;
 import org.junit.After;
-import org.junit.Test;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.context.SecurityContextImpl;
+import org.junit.Before;
 
 public abstract class GeoServerWicketTestSupport extends GeoServerSecurityTestSupport {
     public static WicketTester tester;
 
-    @Override
-    protected void onSetUp(SystemTestData testData) throws Exception {
-        super.onSetUp(testData);
-        
+    @Before
+    public void setUp() throws Exception {
         // prevent Wicket from bragging about us being in dev mode (and run
         // the tests as if we were in production all the time)
         System.setProperty("wicket.configuration", "deployment");
