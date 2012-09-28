@@ -50,9 +50,11 @@ import org.geotools.referencing.CRS;
  * class creates a full GeoServer data directory configuration on disk. 
  * </p>
  * <p>
- * Customizing the setup, adding layers, etc... is done from 
- * {@link GeoServerSystemTestSupport#setUpTestData}. 
+ * Customizing the setup can be done in two ways. Customizations that occur pre system startup and
+ * those that happen after. Methods that may be called pre system start with the prefix "setUp". 
+ * Methods that may be called after system startup are prefixed with "add".  
  * </p>
+ *
  * @author Justin Deoliveira, OpenGeo
  *
  */
@@ -136,6 +138,105 @@ public class SystemTestData extends CiteTestData {
      */
     public void setUpWcs11RasterLayers() throws IOException {
         setUpDefaultRasterLayers();
+    }
+
+    /**
+     * Adds a vector layer to the setup with no custom properties.
+     * <p>
+     * This method should be called during the pre system setup phase, for example from 
+     * {@link GeoServerSystemTestSupport#setUpTestData(SystemTestData)}.  
+     * </p>
+     *
+     * @see {@link #addVectorLayer(QName, Catalog)}
+     *  
+     */
+    public void setUpVectorLayer(QName layerName) throws IOException {
+        addVectorLayer(layerName, catalog);
+    }
+
+    /**
+     * Adds a vector layer to the setup.
+     * <p>
+     * This method should be called during the pre system setup phase, for example from 
+     * {@link GeoServerSystemTestSupport#setUpTestData(SystemTestData)}.  
+     * </p>
+     *
+     * @see {@link #addVectorLayer(QName, Map, Catalog)}
+     *  
+     */
+    public void setUpVectorLayer(QName qName, Map<LayerProperty,Object> props) throws IOException {
+        addVectorLayer(qName, props, catalog);
+    }
+
+    /**
+     * Adds a vector layer to the setup.
+     * <p>
+     * This method should be called during the pre system setup phase, for example from 
+     * {@link GeoServerSystemTestSupport#setUpTestData(SystemTestData)}.  
+     * </p>
+     *
+     * @see {@link #addVectorLayer(QName, Map, Class, Catalog)}
+     *  
+     */
+    public void setUpVectorLayer(QName qName, Map<LayerProperty,Object> props, Class scope) throws IOException {
+        addVectorLayer(qName, props, scope, catalog);
+    }
+
+    /**
+     * Adds a vector layer to the setup.
+     * <p>
+     * This method should be called during the pre system setup phase, for example from 
+     * {@link GeoServerSystemTestSupport#setUpTestData(SystemTestData)}.  
+     * </p>
+     *
+     * @see {@link #addVectorLayer(QName, Map, String, Class, Catalog)}
+     *  
+     */
+    public void setUpVectorLayer(QName qName, Map<LayerProperty,Object> props, String filename, 
+        Class scope) throws IOException {
+        addVectorLayer(qName, props, filename, scope, catalog);
+    }
+
+    /**
+     * Adds a raster layer to the setup with no custom properties.
+     * <p>
+     * This method should be called during the pre system setup phase, for example from 
+     * {@link GeoServerSystemTestSupport#setUpTestData(SystemTestData)}.  
+     * </p>
+     *
+     * @see {@link #addRasterLayer(QName, String, String, Catalog)}
+     *  
+     */
+    public void setUpRasterLayer(QName qName, String filename, String extension) throws IOException {
+        addRasterLayer(qName, filename, extension, catalog);
+    }
+
+    /**
+     * Adds a raster layer to the setup.
+     * <p>
+     * This method should be called during the pre system setup phase, for example from 
+     * {@link GeoServerSystemTestSupport#setUpTestData(SystemTestData)}.  
+     * </p>
+     *
+     * @see {@link #addRasterLayer(QName, String, String, Map, Catalog)}
+     */
+    public void setUpRasterLayer(QName qName, String filename, String extension, 
+        Map<LayerProperty,Object> props) throws IOException {
+        addRasterLayer(qName, filename, extension, props, catalog);
+    }
+
+    /**
+     * Adds a raster layer to the setup.
+     * <p>
+     * This method should be called during the pre system setup phase, for example from 
+     * {@link GeoServerSystemTestSupport#setUpTestData(SystemTestData)}.  
+     * </p>
+     *
+     * @see {@link #addRasterLayer(QName, String, String, Map, Class, Catalog)}
+     */
+    public void setUpRasterLayer(QName qName, String filename, String extension, 
+        Map<LayerProperty,Object> props, Class scope) throws IOException {
+        addRasterLayer(qName, filename, extension, props, scope, catalog);
     }
 
     public void setUpSecurity() throws IOException {
