@@ -18,8 +18,8 @@ import org.junit.Before;
 public abstract class GeoServerWicketTestSupport extends GeoServerSecurityTestSupport {
     public static WicketTester tester;
 
-    @Before
-    public void setUpApp() throws Exception {
+    @Override
+    protected void onSetUp(SystemTestData testData) throws Exception {
         // prevent Wicket from bragging about us being in dev mode (and run
         // the tests as if we were in production all the time)
         System.setProperty("wicket.configuration", "deployment");
