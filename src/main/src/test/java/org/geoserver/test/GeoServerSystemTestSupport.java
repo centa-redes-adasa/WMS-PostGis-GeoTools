@@ -57,6 +57,7 @@ import org.geoserver.catalog.WorkspaceInfo;
 import org.geoserver.config.GeoServer;
 import org.geoserver.config.GeoServerDataDirectory;
 import org.geoserver.config.GeoServerLoaderProxy;
+import org.geoserver.config.util.XStreamPersister;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.logging.LoggingUtils;
 import org.geoserver.ows.util.KvpUtils;
@@ -169,7 +170,7 @@ public class GeoServerSystemTestSupport extends GeoServerBaseTestSupport<SystemT
         System.setProperty(LoggingUtils.RELINQUISH_LOG4J_CONTROL, "true");
         GeoServerResourceLoader loader = new GeoServerResourceLoader(testData.getDataDirectoryRoot());
         LoggingUtils.configureGeoServerLogging(loader, getClass().getResourceAsStream(getLogConfiguration()), false, true, null);
-
+         
         // if we have data, create a mock servlet context and start up the spring configuration
         if (testData.isTestDataAvailable()) {
             MockServletContext servletContext = new MockServletContext();
@@ -304,6 +305,9 @@ public class GeoServerSystemTestSupport extends GeoServerBaseTestSupport<SystemT
      * @return
      */
     protected String getLogConfiguration() {
+        if (isQuietTests()) {
+            return "/QUIET_LOGGING.properties";
+        }
         return "/TEST_LOGGING.properties";
     }
 

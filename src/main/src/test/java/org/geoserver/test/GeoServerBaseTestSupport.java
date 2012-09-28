@@ -1,5 +1,6 @@
 package org.geoserver.test;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.xml.namespace.QName;
@@ -8,6 +9,7 @@ import org.geoserver.data.test.TestData;
 import org.geotools.factory.Hints;
 import org.geotools.feature.NameImpl;
 import org.geotools.referencing.CRS;
+import org.geotools.util.logging.Logging;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -105,6 +107,22 @@ public abstract class GeoServerBaseTestSupport<T extends TestData> {
             return base;
         }
     };
+
+    /**
+     * Checks for existence of a system property named "quietTests". 
+     */
+    public static boolean isQuietTests() {
+        return !"false".equalsIgnoreCase(System.getProperty("quietTests"));
+    }
+
+    @BeforeClass
+    public final static void setUpLogging() throws Exception {
+        if (isQuietTests()) {
+            Logging.getLogger("org.geoserver").setLevel(Level.SEVERE);
+            Logging.getLogger("org.vfny.geoserver").setLevel(Level.SEVERE);
+            Logging.getLogger("org.geotools").setLevel(Level.SEVERE);
+        }
+    }
 
     @BeforeClass
     public final static void setUpReferencing() throws Exception {
