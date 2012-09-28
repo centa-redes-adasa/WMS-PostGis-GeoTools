@@ -196,10 +196,15 @@ public abstract class GeoServerBaseTestSupport<T extends TestData> {
     @AfterClass
     public final static void doTearDownClass() throws Exception {
         if (testData != null) {
-            test.tearDown(testData);
-            testData.tearDown();
-            testData = null;
-            test = null;
+            try {
+                test.tearDown(testData);
+                testData.tearDown();
+            } finally {
+                // clean up the static variables anyways, otherwise a failure
+                // to tear down will pullute the test and test data used by subsequent tests
+                testData = null;
+                test = null;
+            }
         }
     }
 
