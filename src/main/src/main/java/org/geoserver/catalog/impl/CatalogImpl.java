@@ -1279,9 +1279,9 @@ public class CatalogImpl implements Catalog {
         this.resourceLoader = resourceLoader;
     }
     public void dispose() {
-        facade.dispose();
         if ( listeners != null ) listeners.clear();
         if ( resourcePool != null ) resourcePool.dispose();
+        facade.dispose();
     }
     
     protected void added(CatalogInfo object) {
