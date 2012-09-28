@@ -19,7 +19,7 @@ import javax.xml.transform.TransformerException;
 
 import org.geoserver.data.test.MockData;
 import org.geoserver.wms.WMSMapContent;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.geoserver.wms.georss.GeoRSSTransformerBase.GeometryEncoding;
 import org.geotools.data.Query;
 import org.geotools.factory.CommonFactoryFinder;
@@ -34,7 +34,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 
-public class RSSGeoRSSTransformerTest extends WMSTestSupport2 {
+public class RSSGeoRSSTransformerTest extends WMSTestSupport {
     FilterFactory ff = CommonFactoryFinder.getFilterFactory(GeoTools.getDefaultHints());
     
  

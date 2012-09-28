@@ -22,7 +22,6 @@ import org.geoserver.wms.WMSTestSupport;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.feature.FeatureCollections;
-import org.geotools.map.DefaultMapLayer;
 import org.geotools.map.FeatureLayer;
 import org.geotools.map.Layer;
 import org.w3c.dom.Document;

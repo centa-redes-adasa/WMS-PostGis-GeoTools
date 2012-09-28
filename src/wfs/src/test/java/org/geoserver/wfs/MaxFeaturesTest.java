@@ -75,7 +75,7 @@ public class MaxFeaturesTest extends WFSTestSupport2 {
         info.setMaxFeatures(2);
         getCatalog().save( info );
         
-        Document doc = getAsDOM("wfs?request=GetFeature&typename=cdf:Fifteen,cite:BasicPolygons" +
+        Document doc = getAsDOM("wfs?request=GetFeature&srsName=EPSG:4326&typename=cdf:Fifteen,cite:BasicPolygons" +
         		"&version=1.0.0&service=wfs");
         assertEquals("wfs:FeatureCollection", doc.getDocumentElement().getNodeName());
 
@@ -95,7 +95,7 @@ public class MaxFeaturesTest extends WFSTestSupport2 {
         info.setMaxFeatures(2);
         getCatalog().save( info );
         
-        Document doc = getAsDOM("wfs?request=GetFeature&typename=cdf:Fifteen,cite:BasicPolygons" +
+        Document doc = getAsDOM("wfs?request=GetFeature&srsName=EPSG:4326&typename=cdf:Fifteen,cite:BasicPolygons" +
         		"&version=1.0.0&service=wfs");
         assertEquals("wfs:FeatureCollection", doc.getDocumentElement().getNodeName());
 
@@ -116,7 +116,7 @@ public class MaxFeaturesTest extends WFSTestSupport2 {
         
         info.setMaxFeatures(2);
         
-        Document doc = getAsDOM("wfs?request=GetFeature&typename=cdf:Fifteen,cite:BasicPolygon" +
+        Document doc = getAsDOM("wfs?request=GetFeature&srsName=EPSG:4326&typename=cdf:Fifteen,cite:BasicPolygon" +
         		"s&version=1.0.0&service=wfs&maxFeatures=4");
         assertEquals("wfs:FeatureCollection", doc.getDocumentElement().getNodeName());
 

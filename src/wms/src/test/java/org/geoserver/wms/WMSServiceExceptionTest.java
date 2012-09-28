@@ -16,7 +16,7 @@ import org.w3c.dom.Document;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
 
-public class WMSServiceExceptionTest extends WMSTestSupport2 {
+public class WMSServiceExceptionTest extends WMSTestSupport {
 
     @Test
     public void testException111() throws Exception {

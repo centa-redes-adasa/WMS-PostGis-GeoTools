@@ -21,7 +21,7 @@ import org.geoserver.data.test.SystemTestData.LayerProperty;
 import org.junit.After;
 import org.junit.Before;
 
-public abstract class WMSDimensionsTestSupport extends WMSTestSupport2 {
+public abstract class WMSDimensionsTestSupport extends WMSTestSupport {
 
     protected QName V_TIME_ELEVATION = new QName(MockData.SF_URI, "TimeElevation", MockData.SF_PREFIX);
     protected QName V_TIME_ELEVATION_EMPTY = new QName(MockData.SF_URI, "TimeElevationEmpty", MockData.SF_PREFIX);

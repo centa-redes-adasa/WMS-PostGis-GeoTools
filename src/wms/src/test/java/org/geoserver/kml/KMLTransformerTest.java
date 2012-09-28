@@ -4,7 +4,10 @@
  */
 package org.geoserver.kml;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -31,7 +34,6 @@ import org.geoserver.kml.KMZMapResponse.KMZMap;
 import org.geoserver.wms.GetMapRequest;
 import org.geoserver.wms.WMSMapContent;
 import org.geoserver.wms.WMSTestSupport;
-import org.geoserver.wms.WMSTestSupport2;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureSource;
@@ -46,7 +48,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class KMLTransformerTest extends WMSTestSupport2 {
+public class KMLTransformerTest extends WMSTestSupport {
     WMSMapContent mapContent;
 
     Layer layer;

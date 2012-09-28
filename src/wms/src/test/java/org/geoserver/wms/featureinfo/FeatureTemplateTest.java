@@ -10,14 +10,14 @@ import static org.junit.Assert.fail;
 import java.util.Iterator;
 
 import org.geoserver.data.test.MockData;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.geoserver.wms.featureinfo.dummy.Dummy;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 
-public class FeatureTemplateTest extends WMSTestSupport2 {
+public class FeatureTemplateTest extends WMSTestSupport {
     
   
     @Test

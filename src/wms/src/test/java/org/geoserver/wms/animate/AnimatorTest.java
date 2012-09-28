@@ -17,7 +17,7 @@ import javax.xml.namespace.QName;
 
 import org.geoserver.data.test.MockData;
 import org.geoserver.wms.GetMapRequest;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.geoserver.wms.WebMapService;
 import org.geoserver.wms.map.RenderedImageMap;
 
@@ -30,7 +30,7 @@ import com.mockrunner.mock.web.MockHttpServletResponse;
  * @author Alessio Fabiani, GeoSolutions S.A.S., alessio.fabiani@geo-solutions.it
  * @author Andrea Aime, GeoSolutions S.A.S., andrea.aime@geo-solutions.it
  */
-public class AnimatorTest extends WMSTestSupport2 {
+public class AnimatorTest extends WMSTestSupport {
 
     /** default 'format' value */
     public static final String GIF_ANIMATED_FORMAT = "image/gif;subtype=animated";

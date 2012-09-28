@@ -30,7 +30,7 @@ import org.geoserver.security.decorators.DecoratingFeatureSource;
 import org.geoserver.wms.GetMapRequest;
 import org.geoserver.wms.WMS;
 import org.geoserver.wms.WMSMapContent;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.data.simple.SimpleFeatureCollection;
@@ -50,7 +50,7 @@ import org.opengis.referencing.operation.TransformException;
 
 import com.vividsolutions.jts.geom.Envelope;
 
-public class RenderedImageMapOutputFormatTest extends WMSTestSupport2 {
+public class RenderedImageMapOutputFormatTest extends WMSTestSupport {
 
     private static final Logger LOGGER = org.geotools.util.logging.Logging
             .getLogger(RenderedImageMapOutputFormatTest.class.getPackage().getName());

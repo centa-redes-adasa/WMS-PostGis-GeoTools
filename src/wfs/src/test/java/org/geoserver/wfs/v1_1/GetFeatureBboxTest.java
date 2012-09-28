@@ -1,24 +1,17 @@
 package org.geoserver.wfs.v1_1;
 
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
-import junit.framework.Test;
-
 import org.custommonkey.xmlunit.XMLUnit;
 import org.custommonkey.xmlunit.XpathEngine;
 import org.geoserver.data.test.MockData;
 import org.geoserver.wfs.WFSInfo;
 import org.geoserver.wfs.WFSTestSupport;
+import org.junit.Test;
 import org.w3c.dom.Document;
 
 public class GetFeatureBboxTest extends WFSTestSupport {
     
-    /**
-     * This is a READ ONLY TEST so we can use one time setup
-     */
-    public static Test suite() {
-        return new OneTimeTestSetup(new GetFeatureBboxTest());
-    }
-    
+    @Test
     public void testFeatureBoudingOn() throws Exception {
         WFSInfo wfs = getWFS();
         wfs.setFeatureBounding( true );
@@ -37,6 +30,7 @@ public class GetFeatureBboxTest extends WFSTestSupport {
         
     }
     
+    @Test
     public void testFeatureBoudingOff() throws Exception {
         WFSInfo wfs = getWFS();
         wfs.setFeatureBounding( false );

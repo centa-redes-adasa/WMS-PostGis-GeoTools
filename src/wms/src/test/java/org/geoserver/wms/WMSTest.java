@@ -30,7 +30,7 @@ import org.opengis.filter.Filter;
  *
  * @author Ian Schneider <ischneider@opengeo.org>
  */
-public class WMSTest extends WMSTestSupport2 {
+public class WMSTest extends WMSTestSupport {
     
     static final QName TIME_WITH_START_END = new QName(MockData.SF_URI, "TimeWithStartEnd", MockData.SF_PREFIX);
     WMS wms;

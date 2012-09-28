@@ -20,7 +20,7 @@ import org.geoserver.data.test.MockData;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.wms.GetLegendGraphic;
 import org.geoserver.wms.GetLegendGraphicRequest;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.resources.coverage.FeatureUtilities;
@@ -39,7 +39,7 @@ import org.opengis.coverage.grid.GridCoverage;
  * @author Gabriel Roldan
  * @version $Id$
  */
-public class AbstractLegendGraphicOutputFormatTest extends WMSTestSupport2 {
+public class AbstractLegendGraphicOutputFormatTest extends WMSTestSupport {
 
     private static final Logger LOGGER = Logging
             .getLogger(AbstractLegendGraphicOutputFormatTest.class);

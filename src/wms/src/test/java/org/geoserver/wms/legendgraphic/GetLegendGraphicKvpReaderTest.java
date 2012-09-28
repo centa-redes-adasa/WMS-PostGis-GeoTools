@@ -17,14 +17,14 @@ import java.util.Map;
 import org.geoserver.platform.ServiceException;
 import org.geoserver.wms.GetLegendGraphicRequest;
 import org.geoserver.wms.WMS;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.geotools.styling.Style;
 import org.junit.Before;
 
 import com.mockrunner.mock.web.MockHttpServletRequest;
 
 
-public class GetLegendGraphicKvpReaderTest extends WMSTestSupport2 {
+public class GetLegendGraphicKvpReaderTest extends WMSTestSupport {
     /**
      * request reader to test against, initialized by default with all parameters from
      * <code>requiredParameters</code> and <code>optionalParameters</code>

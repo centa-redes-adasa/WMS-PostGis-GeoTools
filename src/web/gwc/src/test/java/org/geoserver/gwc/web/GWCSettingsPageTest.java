@@ -49,8 +49,7 @@ public class GWCSettingsPageTest extends GeoServerWicketTestSupport {
         assertEquals(!enabled, gwc.getConfig().isWMSCEnabled());
     }
 
-    @Test
-    public void testEditEnableWMTS() {
+    @Test public void testEditEnableWMTS() {
         GWC gwc = GWC.get();
         boolean enabled = gwc.getConfig().isWMTSEnabled();
         testEditCheckboxOption("form:gwcServicesPanel:enableWMTS", "gwcServicesPanel:enableWMTS",

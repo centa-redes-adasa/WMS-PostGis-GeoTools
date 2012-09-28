@@ -28,7 +28,7 @@ import org.geoserver.data.test.SystemTestData;
 import org.geoserver.data.test.SystemTestData.LayerProperty;
 import org.geoserver.wms.WMS;
 import org.geoserver.wms.WMSInfo;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.geoserver.wms.featureinfo.GetFeatureInfoKvpReader;
 import org.geoserver.wms.wms_1_1_1.CapabilitiesTest;
 import org.geotools.util.logging.Logging;
@@ -39,7 +39,7 @@ import org.w3c.dom.Document;
  * A GetFeatureInfo 1.3.0 integration test suite covering both spec mandates and geoserver specific
  * features.
  */
-public class GetFeatureInfoIntegrationTest extends WMSTestSupport2 {
+public class GetFeatureInfoIntegrationTest extends WMSTestSupport {
 
     public static String WCS_PREFIX = "wcs";
 
@@ -89,7 +89,7 @@ public class GetFeatureInfoIntegrationTest extends WMSTestSupport2 {
         Map propertyMap = new HashMap();
         propertyMap.put(LayerProperty.STYLE,"raster");
         testData.addRasterLayer(TASMANIA_BM, "tazbm.tiff","tiff",propertyMap,
-                null,catalog);
+                SystemTestData.class,catalog);
     }
     
 //    @Override

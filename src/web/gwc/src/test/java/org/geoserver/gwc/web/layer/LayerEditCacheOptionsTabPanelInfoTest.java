@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import junit.framework.TestCase;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -78,6 +77,7 @@ public class LayerEditCacheOptionsTabPanelInfoTest {
 
     @Test
     public void testCreateOwnModelExisting() {
+
         final boolean isNew = false;
 
         IModel<GeoServerTileLayerInfo> ownModel;
