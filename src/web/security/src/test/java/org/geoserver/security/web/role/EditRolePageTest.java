@@ -1,23 +1,36 @@
 package org.geoserver.security.web.role;
 
+import static org.junit.Assert.*;
+
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.util.tester.FormTester;
 import org.geoserver.security.impl.GeoServerRole;
 import org.geoserver.security.web.AbstractSecurityPage;
 import org.geoserver.security.web.AbstractSecurityWicketTestSupport;
 import org.geoserver.security.web.SecurityNamedServiceEditPage;
+import org.junit.Before;
+import org.junit.Test;
 
 public class EditRolePageTest extends AbstractSecurityWicketTestSupport {
 
     EditRolePage page;
 
-    public void testFill() throws Exception{
+    @Before
+    public void init() throws Exception {
         initializeForXML();
+        clearServices();
+
+        deactivateRORoleService();
+        deactivateROUGService();
+    }
+
+    @Test
+    public void testFill() throws Exception{
         doTestFill();
     }
     
+    @Test
     public void testFill2() throws Exception{
-        initializeForXML();
         doTestFill2();
     }
 
@@ -90,6 +103,7 @@ public class EditRolePageTest extends AbstractSecurityWicketTestSupport {
 
     }
         
+    @Test
     public void testReadOnlyRoleService() throws Exception {
         initializeForXML();
         activateRORoleService();

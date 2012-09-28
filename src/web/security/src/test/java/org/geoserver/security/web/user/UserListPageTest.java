@@ -1,5 +1,6 @@
 package org.geoserver.security.web.user;
 
+import static org.junit.Assert.*;
 
 import java.lang.reflect.Method;
 import java.util.SortedSet;
@@ -11,6 +12,7 @@ import org.geoserver.security.impl.GeoServerUser;
 import org.geoserver.security.web.AbstractSecurityPage;
 import org.geoserver.security.web.AbstractTabbedListPageTest;
 import org.geoserver.web.wicket.GeoServerDataProvider.Property;
+import org.junit.Test;
 
 public class UserListPageTest extends AbstractTabbedListPageTest<GeoServerUser> {
     protected boolean withRoles=false;
@@ -63,6 +65,7 @@ public class UserListPageTest extends AbstractTabbedListPageTest<GeoServerUser> 
                 tester.getComponentFromLastRenderedPage("form:username").getDefaultModelObject());
     }
     
+    @Test
     public void testReadOnlyService() throws Exception {
         initializeForXML();
         tester.startPage(listPage(getUserGroupServiceName()));
@@ -98,10 +101,11 @@ public class UserListPageTest extends AbstractTabbedListPageTest<GeoServerUser> 
             assertTrue(gaService.getRolesForUser("user1").size()==2);
     }
 
+    @Test
     public void testRemoveWithRoles() throws Exception {
         withRoles=true;
-        initializeForXML();
-        insertValues();
+        //initializeForXML();
+        //insertValues();
         addAdditonalData();
         doRemove(getTabbedPanelPath()+":panel:header:removeSelectedWithRoles");
     }

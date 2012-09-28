@@ -85,7 +85,7 @@ public abstract class AbstractSecurityServiceTest extends GeoServerSystemTestSup
                         
         role_auth.getProperties().put("employee","");
         role_auth.getProperties().put("bbox","lookupAtRuntime");
-                        
+
         roleStore.addRole(role_admin);
         roleStore.addRole(role_auth);
         roleStore.addRole(role_wfs);
@@ -513,9 +513,13 @@ public abstract class AbstractSecurityServiceTest extends GeoServerSystemTestSup
     }
     public void removeValues(GeoServerUserGroupStore userGroupStore) throws IOException {
         GeoServerUser user2 = userGroupStore.getUserByUsername("user2");
-        userGroupStore.removeUser(user2);
+        if (user2 != null) {
+            userGroupStore.removeUser(user2);
+        }
         GeoServerUserGroup disabledGroup = userGroupStore.getGroupByGroupname("disabledgroup");
-        userGroupStore.removeGroup(disabledGroup);
+        if (disabledGroup != null) {
+            userGroupStore.removeGroup(disabledGroup);
+        }
     }
 
     public static File unpackTestDataDir() throws Exception {

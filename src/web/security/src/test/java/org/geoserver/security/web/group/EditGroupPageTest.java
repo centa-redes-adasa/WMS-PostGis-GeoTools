@@ -1,5 +1,7 @@
 package org.geoserver.security.web.group;
 
+import static org.junit.Assert.*;
+
 import java.util.SortedSet;
 
 import org.apache.wicket.util.tester.FormTester;
@@ -9,15 +11,24 @@ import org.geoserver.security.web.AbstractSecurityPage;
 import org.geoserver.security.web.AbstractSecurityWicketTestSupport;
 import org.geoserver.security.web.SecurityNamedServiceEditPage;
 import org.geoserver.security.web.role.NewRolePage;
+import org.junit.Before;
+import org.junit.Test;
 
 public class EditGroupPageTest extends AbstractSecurityWicketTestSupport {
 
     EditGroupPage page;
     
-    
-
-    public void testFill() throws Exception{
+    @Before
+    public void init() throws Exception {
         initializeForXML();
+        clearServices();
+
+        deactivateRORoleService();
+        deactivateROUGService();
+    }
+
+    @Test
+    public void testFill() throws Exception{
         doTestFill();
     }
 
@@ -77,8 +88,8 @@ public class EditGroupPageTest extends AbstractSecurityWicketTestSupport {
                 
     }
     
+    @Test
     public void testReadOnlyUserGroupService() throws Exception {
-        initializeForXML();
         doTestReadOnlyUserGroupService();
     }
 
@@ -105,8 +116,8 @@ public class EditGroupPageTest extends AbstractSecurityWicketTestSupport {
 
     }
     
+    @Test
     public void testReadOnlyRoleService() throws Exception {
-        initializeForXML();
         doTestReadOnlyRoleService();
     }
 
@@ -134,8 +145,8 @@ public class EditGroupPageTest extends AbstractSecurityWicketTestSupport {
 
     }
     
+    @Test
     public void testAllServicesReadOnly() throws Exception {
-        initializeForXML();
         activateROUGService();
         activateRORoleService();
         
