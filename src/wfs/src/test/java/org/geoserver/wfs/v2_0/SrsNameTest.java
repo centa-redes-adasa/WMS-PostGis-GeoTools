@@ -8,7 +8,7 @@ import org.geoserver.wfs.WFSInfo;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class SrsNameTest extends WFS20TestSupport2 {
+public class SrsNameTest extends WFS20TestSupport {
 
 	@Test
     public void testSrsNameSyntax() throws Exception {

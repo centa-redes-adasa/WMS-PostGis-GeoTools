@@ -21,7 +21,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-public class DescribeFeatureTest extends WFSTestSupport2 {
+public class DescribeFeatureTest extends WFSTestSupport {
 	
 	@Before
 	public void revertGeometries() throws Exception {

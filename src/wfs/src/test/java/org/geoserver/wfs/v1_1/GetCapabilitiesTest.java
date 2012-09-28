@@ -16,14 +16,14 @@ import org.geoserver.data.test.CiteTestData;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.platform.GeoServerExtensions;
 import org.geoserver.wfs.WFSGetFeatureOutputFormat;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-public class GetCapabilitiesTest extends WFSTestSupport2 {
+public class GetCapabilitiesTest extends WFSTestSupport {
 	
 	@Before
 	public void revertGeometries() throws Exception {

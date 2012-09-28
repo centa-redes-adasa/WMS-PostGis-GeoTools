@@ -16,7 +16,6 @@ import org.custommonkey.xmlunit.XpathEngine;
 import org.geoserver.catalog.FeatureTypeInfo;
 import org.geoserver.platform.GeoServerExtensions;
 import org.geoserver.wfs.WFSGetFeatureOutputFormat;
-import org.geoserver.wfs.WFSTestSupport;
 import org.geotools.wfs.v2_0.WFSConfiguration;
 import org.geotools.xml.Parser;
 import org.junit.Test;
@@ -26,7 +25,7 @@ import org.w3c.dom.NodeList;
 
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
-public class GetCapabilitiesTest extends WFS20TestSupport2 {
+public class GetCapabilitiesTest extends WFS20TestSupport {
        
     @Test
     public void testGet() throws Exception {

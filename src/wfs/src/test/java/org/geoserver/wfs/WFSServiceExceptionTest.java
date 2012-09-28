@@ -16,7 +16,7 @@ import org.junit.Test;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
 
-public class WFSServiceExceptionTest extends WFSTestSupport2 {
+public class WFSServiceExceptionTest extends WFSTestSupport {
 	
 
     @Override

@@ -10,10 +10,10 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.geoserver.data.test.SystemTestData;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.junit.Test;
 
-public class GeoJsonDescribeTest extends WFSTestSupport2 {
+public class GeoJsonDescribeTest extends WFSTestSupport {
 
     @Test
     public void testDescribePrimitiveGeoFeatureJSON() throws Exception {

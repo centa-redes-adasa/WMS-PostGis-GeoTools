@@ -7,11 +7,11 @@ package org.geoserver.wfs.xml.v1_1;
 import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayInputStream;
 import net.opengis.wfs.NativeType;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.geotools.xml.Parser;
 import org.junit.Test;
 
-public class NativeTypeParsingTest extends WFSTestSupport2 {
+public class NativeTypeParsingTest extends WFSTestSupport {
 
 	@Test
     public void testParse() throws Exception {

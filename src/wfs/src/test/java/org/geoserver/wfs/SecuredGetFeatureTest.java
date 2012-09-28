@@ -28,7 +28,7 @@ import org.xml.sax.SAXException;
 import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
-public class SecuredGetFeatureTest extends WFSTestSupport2 {
+public class SecuredGetFeatureTest extends WFSTestSupport {
 	
     public static QName NULL_GEOMETRIES = new QName(SystemTestData.CITE_URI, "NullGeometries", SystemTestData.CITE_PREFIX);
     

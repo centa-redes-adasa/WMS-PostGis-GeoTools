@@ -17,7 +17,7 @@ import net.opengis.wfs.WfsFactory;
 import org.geoserver.data.test.MockData;
 import org.geoserver.platform.Operation;
 import org.geoserver.platform.Service;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.geoserver.wfs.request.FeatureCollectionResponse;
 import org.geoserver.wfs.xml.v1_1_0.WFS;
 import org.geoserver.wfs.xml.v1_1_0.WFSConfiguration;
@@ -28,7 +28,7 @@ import org.opengis.feature.Feature;
 import org.opengis.feature.type.FeatureType;
 import org.w3c.dom.Document;
 
-public class GML3FeatureProducerTest extends WFSTestSupport2 {
+public class GML3FeatureProducerTest extends WFSTestSupport {
     
     GML3OutputFormat producer() {
         FeatureTypeSchemaBuilder sb = new FeatureTypeSchemaBuilder.GML3(getGeoServer()); 

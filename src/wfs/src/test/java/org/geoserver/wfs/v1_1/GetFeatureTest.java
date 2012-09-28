@@ -12,14 +12,14 @@ import org.custommonkey.xmlunit.XMLAssert;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.wfs.GMLInfo;
 import org.geoserver.wfs.WFSInfo;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.geotools.gml3.GML;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-public class GetFeatureTest extends WFSTestSupport2 {
+public class GetFeatureTest extends WFSTestSupport {
 	
     @Override
     protected void setUpInternal(SystemTestData data) throws Exception {

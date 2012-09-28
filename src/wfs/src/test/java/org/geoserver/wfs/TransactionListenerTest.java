@@ -22,7 +22,7 @@ import org.w3c.dom.Document;
  * @author Justin Deoliveira, The Open Planning Project
  * 
  */
-public class TransactionListenerTest extends WFSTestSupport2 {
+public class TransactionListenerTest extends WFSTestSupport {
     
     TransactionListenerTester listener;
 

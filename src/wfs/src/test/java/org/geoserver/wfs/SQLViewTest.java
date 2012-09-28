@@ -24,7 +24,7 @@ import com.vividsolutions.jts.geom.Point;
 
 import static org.custommonkey.xmlunit.XMLAssert.*;
 
-public class SQLViewTest extends WFSTestSupport2 {
+public class SQLViewTest extends WFSTestSupport {
 
     static final String tableTypeName = "gs:pgeo";
     static final String viewTypeName = "gs:pgeo_view";

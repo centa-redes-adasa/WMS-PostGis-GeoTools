@@ -29,7 +29,7 @@ import org.w3c.dom.NodeList;
 
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
-public class DescribeFeatureTypeTest extends WFS20TestSupport2 {
+public class DescribeFeatureTypeTest extends WFS20TestSupport {
 	
 	@Override
     protected void setUpInternal(SystemTestData dataDirectory) throws Exception {

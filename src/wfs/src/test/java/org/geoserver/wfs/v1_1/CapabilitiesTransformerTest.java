@@ -16,12 +16,12 @@ import net.opengis.wfs.WfsFactory;
 import org.geoserver.util.ErrorHandler;
 import org.geoserver.util.ReaderUtils;
 import org.geoserver.wfs.CapabilitiesTransformer;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.geoserver.wfs.xml.v1_1_0.WFS;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class CapabilitiesTransformerTest extends WFSTestSupport2 {
+public class CapabilitiesTransformerTest extends WFSTestSupport {
 
     static Logger logger = org.geotools.util.logging.Logging.getLogger("org.geoserver.wfs.test");
 

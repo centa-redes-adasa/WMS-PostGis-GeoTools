@@ -36,7 +36,7 @@ import org.geoserver.platform.Operation;
 import org.geoserver.test.TestSetup;
 import org.geoserver.test.TestSetupFrequency;
 import org.geoserver.wfs.WFSInfo;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.geoserver.wfs.request.FeatureCollectionResponse;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.shapefile.ShapefileDataStore;
@@ -56,7 +56,7 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @TestSetup(run=TestSetupFrequency.REPEAT)
-public class ShapeZipTest extends WFSTestSupport2 {
+public class ShapeZipTest extends WFSTestSupport {
 
     private static final QName ALL_TYPES = new QName(SystemTestData.CITE_URI, "AllTypes",
             SystemTestData.CITE_PREFIX);

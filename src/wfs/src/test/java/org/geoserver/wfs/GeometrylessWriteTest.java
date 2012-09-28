@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class GeometrylessWriteTest extends WFSTestSupport2 {
+public class GeometrylessWriteTest extends WFSTestSupport {
 	
 	
 	@Before

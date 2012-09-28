@@ -3,14 +3,14 @@ package org.geoserver.wfs.v1_1;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.geoserver.wfs.xml.FeatureTypeSchemaBuilder;
 import org.geoserver.wfs.xml.v1_1_0.WFS;
 import org.geoserver.wfs.xml.v1_1_0.WFSConfiguration;
 import org.geotools.xml.Parser;
 import org.junit.Test;
 
-public class WFSXmlTest extends WFSTestSupport2 {
+public class WFSXmlTest extends WFSTestSupport {
 
     WFSConfiguration configuration() {
         FeatureTypeSchemaBuilder sb = 

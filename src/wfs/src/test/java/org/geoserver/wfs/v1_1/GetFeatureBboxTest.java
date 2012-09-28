@@ -7,11 +7,11 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.custommonkey.xmlunit.XpathEngine;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.wfs.WFSInfo;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class GetFeatureBboxTest extends WFSTestSupport2 {
+public class GetFeatureBboxTest extends WFSTestSupport {
     
     @Test
     public void testFeatureBoudingOn() throws Exception {

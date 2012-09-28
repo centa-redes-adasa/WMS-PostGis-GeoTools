@@ -16,7 +16,7 @@ import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.w3c.dom.Document;
 
-public class GetFeaturePagingTest extends WFSTestSupport2 {
+public class GetFeaturePagingTest extends WFSTestSupport {
 	
     @Override
     protected void setUpInternal(SystemTestData testData) throws Exception {

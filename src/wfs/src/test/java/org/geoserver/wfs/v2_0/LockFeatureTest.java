@@ -12,7 +12,7 @@ import org.w3c.dom.Document;
 
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
-public class LockFeatureTest extends WFS20TestSupport2 {
+public class LockFeatureTest extends WFS20TestSupport {
 
     @Override
     protected void setUpInternal(SystemTestData data) throws Exception {

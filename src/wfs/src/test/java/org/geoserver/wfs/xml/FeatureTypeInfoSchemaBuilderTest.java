@@ -12,12 +12,12 @@ import org.eclipse.xsd.XSDSchema;
 import org.eclipse.xsd.XSDTypeDefinition;
 import org.geoserver.catalog.FeatureTypeInfo;
 import org.geoserver.data.test.SystemTestData;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.geotools.gml2.GML;
 import org.geotools.xml.Schemas;
 import org.junit.Test;
 
-public class FeatureTypeInfoSchemaBuilderTest extends WFSTestSupport2 {
+public class FeatureTypeInfoSchemaBuilderTest extends WFSTestSupport {
 
 	@Test
     public void testBuildGml2() throws Exception {

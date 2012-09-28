@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-public class GeometrylessTest extends WFSTestSupport2 {
+public class GeometrylessTest extends WFSTestSupport {
       
 	@Test
     public void testGetFeature10() throws Exception {

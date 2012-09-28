@@ -8,7 +8,7 @@ import org.geoserver.data.test.SystemTestData;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.geoserver.wfs.WFSInfo;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.junit.Test;
 
 /**
@@ -18,7 +18,7 @@ import org.junit.Test;
  * @author Niels Charlier
  *
  */
-public class BoundingBox3DTest extends WFSTestSupport2 {
+public class BoundingBox3DTest extends WFSTestSupport {
     
     @Override
     protected void setUpInternal(SystemTestData dataDirectory) throws Exception {

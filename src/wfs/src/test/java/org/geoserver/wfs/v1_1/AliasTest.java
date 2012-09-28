@@ -9,13 +9,13 @@ import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.FeatureTypeInfo;
 import org.geoserver.data.test.CiteTestData;
 import org.geoserver.data.test.SystemTestData;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class AliasTest extends WFSTestSupport2 {
+public class AliasTest extends WFSTestSupport {
     
     @Override
     protected void setUpInternal(SystemTestData testData) throws Exception {

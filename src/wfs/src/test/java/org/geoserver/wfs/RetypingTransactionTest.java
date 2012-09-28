@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class RetypingTransactionTest extends WFSTestSupport2 {
+public class RetypingTransactionTest extends WFSTestSupport {
 
     @Override
     protected void setUpInternal(SystemTestData dataDirectory) throws Exception {        

@@ -11,11 +11,11 @@ import org.geoserver.config.GeoServer;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.data.util.IOUtils;
 import org.geoserver.wfs.WFSInfo;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.junit.Test;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
-public class GeoJSONTest extends WFSTestSupport2 {
+public class GeoJSONTest extends WFSTestSupport {
          
     @Override
     protected void setUpInternal(SystemTestData data) throws Exception {

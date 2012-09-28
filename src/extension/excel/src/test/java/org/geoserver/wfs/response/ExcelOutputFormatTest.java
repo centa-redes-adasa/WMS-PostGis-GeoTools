@@ -12,7 +12,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.geoserver.data.test.MockData;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
 import org.geotools.feature.FeatureIterator;
@@ -22,7 +22,7 @@ import org.opengis.feature.simple.SimpleFeatureType;
 
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
-public class ExcelOutputFormatTest extends WFSTestSupport2 {
+public class ExcelOutputFormatTest extends WFSTestSupport {
     @Test
     public void testExcel97OutputFormat() throws Exception {
         // grab the real binary stream, avoiding mangling to due char conversion
