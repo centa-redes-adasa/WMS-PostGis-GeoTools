@@ -296,7 +296,7 @@ public class GeoserverDataDirectory {
 
             dataDir = new File(dataDirStr);
             LOGGER
-                    .severe("\n----------------------------------\n- GEOSERVER_DATA_DIR: "
+                    .info("\n----------------------------------\n- GEOSERVER_DATA_DIR: "
                             + dataDir.getAbsolutePath()
                             + "\n----------------------------------");
 
