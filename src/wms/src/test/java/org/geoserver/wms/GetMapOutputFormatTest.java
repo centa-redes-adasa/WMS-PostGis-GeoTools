@@ -16,7 +16,7 @@ import org.junit.Test;
  * @author Gabriel Roldan (TOPP)
  * @version $Id$
  */
-public class GetMapOutputFormatTest extends WMSTestSupport2 {
+public class GetMapOutputFormatTest extends WMSTestSupport {
 
  
 

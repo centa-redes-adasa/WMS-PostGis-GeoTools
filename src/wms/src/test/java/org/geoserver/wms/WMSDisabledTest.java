@@ -11,7 +11,7 @@ import org.geotools.util.logging.Logging;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class WMSDisabledTest extends WMSTestSupport2 {
+public class WMSDisabledTest extends WMSTestSupport {
     
     @Test 
     public void testDisabledServiceResponse() throws Exception {

@@ -14,14 +14,14 @@ import org.geoserver.catalog.CatalogBuilder;
 import org.geoserver.catalog.LayerGroupInfo;
 import org.geoserver.catalog.LayerInfo;
 import org.geoserver.data.test.MockData;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.opengis.referencing.crs.GeographicCRS;
 import org.w3c.dom.Document;
 
-public class LayerGroupWorkspaceTest extends WMSTestSupport2 {
+public class LayerGroupWorkspaceTest extends WMSTestSupport {
 
     LayerGroupInfo global, sf, cite;
 

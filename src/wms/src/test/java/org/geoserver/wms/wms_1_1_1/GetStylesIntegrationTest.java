@@ -16,7 +16,7 @@ import org.geoserver.catalog.LayerGroupInfo;
 import org.geoserver.catalog.LayerInfo;
 import org.geoserver.data.test.MockData;
 import org.geoserver.data.test.SystemTestData;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.styling.NamedLayer;
 import org.geotools.styling.SLDParser;
@@ -24,7 +24,7 @@ import org.geotools.styling.Style;
 import org.geotools.styling.StyledLayerDescriptor;
 import org.junit.Test;
 
-public class GetStylesIntegrationTest extends WMSTestSupport2 {
+public class GetStylesIntegrationTest extends WMSTestSupport {
 
  
     @Override

@@ -30,7 +30,7 @@ import com.mockrunner.mock.web.MockHttpServletResponse;
  * @author Andrea Aime - OpenGeo
  * 
  */
-public class RenderingBufferTest extends WMSTestSupport2 {
+public class RenderingBufferTest extends WMSTestSupport {
 
     static final QName LINE_WIDTH_LAYER = new QName(MockData.CITE_URI, "LineWidth", MockData.CITE_PREFIX);
 

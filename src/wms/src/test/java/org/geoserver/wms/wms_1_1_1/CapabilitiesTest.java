@@ -30,13 +30,13 @@ import org.geoserver.config.GeoServerInfo;
 import org.geoserver.data.test.MockData;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.wms.WMSInfo;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-public class CapabilitiesTest extends WMSTestSupport2 {
+public class CapabilitiesTest extends WMSTestSupport {
 
     public CapabilitiesTest() {
         super();

@@ -15,7 +15,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.custommonkey.xmlunit.XMLAssert;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.geoserver.wms.WMSMapContent;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.memory.MemoryDataStore;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
@@ -36,7 +36,7 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
-public class SVGMapProducerTest extends WMSTestSupport2{
+public class SVGMapProducerTest extends WMSTestSupport{
 
   
     @Test

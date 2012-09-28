@@ -34,7 +34,7 @@ import org.geoserver.catalog.ResourceInfo;
 import org.geoserver.config.GeoServerInfo;
 import org.geoserver.data.test.MockData;
 import org.geoserver.data.test.SystemTestData;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.w3c.dom.Document;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
@@ -62,7 +62,7 @@ import org.junit.Test;
  * @author Gabriel Roldan
  * 
  */
-public class CapabilitiesSystemTest extends WMSTestSupport2 {
+public class CapabilitiesSystemTest extends WMSTestSupport {
 
   
     @Override

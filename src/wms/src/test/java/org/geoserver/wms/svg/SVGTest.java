@@ -12,11 +12,11 @@ import java.net.URL;
 import org.geoserver.data.test.MockData;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.wms.WMS;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class SVGTest extends WMSTestSupport2 {
+public class SVGTest extends WMSTestSupport {
     
 
     @Override

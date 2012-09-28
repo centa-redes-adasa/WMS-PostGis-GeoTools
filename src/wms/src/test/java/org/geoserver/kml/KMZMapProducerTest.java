@@ -17,11 +17,11 @@ import org.geoserver.data.test.MockData;
 import org.geoserver.kml.KMZMapResponse.KMZMap;
 import org.geoserver.wms.GetMapRequest;
 import org.geoserver.wms.WMSMapContent;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 
-public class KMZMapProducerTest extends WMSTestSupport2 {
+public class KMZMapProducerTest extends WMSTestSupport {
     KMZMapOutputFormat mapProducer;
     KMZMapResponse mapEncoder;
     KMZMap producedMap;

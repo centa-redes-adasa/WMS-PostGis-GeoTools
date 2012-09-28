@@ -21,7 +21,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.geoserver.data.test.MockData;
 import org.geoserver.wms.GetMapRequest;
 import org.geoserver.wms.WMSMapContent;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
@@ -33,7 +33,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 
-public class OpenLayersMapTemplateTest extends WMSTestSupport2 {
+public class OpenLayersMapTemplateTest extends WMSTestSupport {
     
     
     @Test

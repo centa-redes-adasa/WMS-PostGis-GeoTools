@@ -12,11 +12,11 @@ import org.geoserver.catalog.impl.AuthorityURL;
 import org.geoserver.catalog.impl.LayerIdentifier;
 import org.geoserver.data.test.MockData;
 import org.geoserver.wms.WMSInfo;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class CapabilitiesAuthorityURLAndIdentifierTest extends WMSTestSupport2 {
+public class CapabilitiesAuthorityURLAndIdentifierTest extends WMSTestSupport {
 
     private void addAuthUrl(final String name, final String url, List<AuthorityURLInfo> target) {
         AuthorityURLInfo auth = new AuthorityURL();

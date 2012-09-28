@@ -24,7 +24,7 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.custommonkey.xmlunit.XpathEngine;
 import org.geoserver.data.test.MockData;
 import org.geoserver.ows.kvp.FormatOptionsKvpParser;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -37,7 +37,7 @@ import org.w3c.dom.NodeList;
  * @author Gabriel Roldan (OpenGeo)
  * @version $Id$
  */
-public class KMLReflectorTest extends WMSTestSupport2 {
+public class KMLReflectorTest extends WMSTestSupport {
 
   
     /**

@@ -7,12 +7,12 @@ import javax.xml.namespace.QName;
 import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.LayerInfo;
 import org.geoserver.data.test.MockData;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class LayerWorkspaceTest extends WMSTestSupport2{
+public class LayerWorkspaceTest extends WMSTestSupport{
 
     private Catalog catalog;
 

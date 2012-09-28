@@ -5,12 +5,12 @@ import static org.custommonkey.xmlunit.XMLAssert.assertXpathNotExists;
 
 import org.geoserver.data.test.MockData;
 import org.geoserver.wms.WMSInfo;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.junit.After;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class CapabilitiesBBOXForEachCRSTest extends WMSTestSupport2 {
+public class CapabilitiesBBOXForEachCRSTest extends WMSTestSupport {
 
 //    @Override
 //    protected void registerNamespaces(Map<String, String> namespaces) {

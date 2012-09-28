@@ -20,7 +20,7 @@ import org.geoserver.catalog.Catalog;
 import org.geoserver.data.test.MockData;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.wms.WMSMapContent;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.Layer;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class KMLSuperOverlayTransformerTest extends WMSTestSupport2 {
+public class KMLSuperOverlayTransformerTest extends WMSTestSupport {
 
     public static QName DISPERSED_FEATURES = new QName(MockData.SF_URI, "Dispersed",
             MockData.SF_PREFIX);

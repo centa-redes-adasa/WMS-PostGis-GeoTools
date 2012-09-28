@@ -13,7 +13,7 @@ import net.sf.json.JSONObject;
 
 import org.geoserver.data.test.MockData;
 import org.geoserver.wfs.json.JSONType;
-import org.geoserver.wms.WMSTestSupport2;
+import org.geoserver.wms.WMSTestSupport;
 import org.junit.Test;
 
 /**
@@ -22,7 +22,7 @@ import org.junit.Test;
  * @author Carlo Cancellieri
  * @version $Id$
  */
-public class DescribeLayerJsonTest extends WMSTestSupport2 {
+public class DescribeLayerJsonTest extends WMSTestSupport {
 	
  
     

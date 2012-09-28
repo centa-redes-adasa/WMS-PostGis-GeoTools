@@ -18,7 +18,7 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import com.vividsolutions.jts.geom.Envelope;
 
-public class DefaultWebMapServiceTest extends WMSTestSupport2 {
+public class DefaultWebMapServiceTest extends WMSTestSupport {
 
    
     /**
