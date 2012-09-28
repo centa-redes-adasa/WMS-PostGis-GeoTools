@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
 
+import org.custommonkey.xmlunit.XMLUnit;
 import org.geoserver.data.test.SystemTestData;
 import org.geotools.filter.v2_0.FES;
 import org.geotools.wfs.v2_0.WFS;
@@ -18,7 +19,7 @@ public class LockFeatureTest extends WFS20TestSupport {
     protected void setUpInternal(SystemTestData data) throws Exception {
         getServiceDescriptor20().getOperations().add( "ReleaseLock");
     }
-    
+        
 	@Test
     public void testLock() throws Exception {
         String xml = 
@@ -39,7 +40,7 @@ public class LockFeatureTest extends WFS20TestSupport {
         String lockId = dom.getDocumentElement().getAttribute("lockId");        
         get("wfs?request=ReleaseLock&version=2.0&lockId=" + lockId);
     }
-
+	
 	@Test
     public void testSOAP() throws Exception {
         String xml = 
@@ -64,7 +65,8 @@ public class LockFeatureTest extends WFS20TestSupport {
         assertEquals(1, dom.getElementsByTagName("wfs:LockFeatureResponse").getLength());
         
         // release the lock
-        String lockId = dom.getDocumentElement().getAttribute("lockId");
+        String lockId = XMLUnit.newXpathEngine().evaluate("//wfs:LockFeatureResponse/@lockId", dom);
         get("wfs?request=ReleaseLock&version=2.0&lockId=" + lockId);
     }
+
 }
