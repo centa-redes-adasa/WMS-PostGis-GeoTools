@@ -36,7 +36,7 @@ import org.opengis.filter.Id;
 import org.opengis.filter.identity.Identifier;
 import org.w3c.dom.Document;
 
-public class GetFeaturePagingTest extends WFS20TestSupport2 {
+public class GetFeaturePagingTest extends WFS20TestSupport {
 
     @Override
     protected void setUpInternal(SystemTestData data) throws Exception {

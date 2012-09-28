@@ -17,14 +17,14 @@ import org.geoserver.data.test.SystemTestData;
 import org.geoserver.data.util.IOUtils;
 import org.geoserver.wfs.GMLInfo;
 import org.geoserver.wfs.WFSInfo;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class DescribeFeatureTypeTest extends WFSTestSupport2 {
+public class DescribeFeatureTypeTest extends WFSTestSupport {
 
 	@Override
     protected void setUpInternal(SystemTestData dataDirectory) throws Exception {

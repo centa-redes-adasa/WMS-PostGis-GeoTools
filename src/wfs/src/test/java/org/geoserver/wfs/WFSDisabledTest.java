@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class WFSDisabledTest extends WFSTestSupport2 {
+public class WFSDisabledTest extends WFSTestSupport {
     
 	@Test
     public void testDisabledServiceResponse() throws Exception {

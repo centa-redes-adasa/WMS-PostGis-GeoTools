@@ -2,12 +2,12 @@ package org.geoserver.wfs.v1_1;
 
 import static org.junit.Assert.assertEquals;
 
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.geotools.filter.v1_1.OGC;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class LockFeatureTest extends WFSTestSupport2 {
+public class LockFeatureTest extends WFSTestSupport {
 
 	@Test
     public void testLock() throws Exception {

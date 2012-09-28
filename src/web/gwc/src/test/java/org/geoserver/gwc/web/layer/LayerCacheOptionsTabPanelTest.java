@@ -31,7 +31,7 @@ public class LayerCacheOptionsTabPanelTest extends GeoServerWicketTestSupport {
     private GeoServerTileLayerInfoModel tileLayerModel;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUpInternal() throws Exception {
         LayerInfo layerInfo = getCatalog().getLayers().get(0);
         GeoServerTileLayer tileLayer = GWC.get().getTileLayer(layerInfo);
         assertNotNull(tileLayer);

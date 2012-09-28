@@ -16,7 +16,7 @@ import org.geoserver.catalog.DataStoreInfo;
 import org.geoserver.catalog.FeatureTypeInfo;
 import org.geoserver.data.test.CiteTestData;
 import org.geoserver.data.test.SystemTestData;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.geotools.data.DataStore;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureStore;
@@ -31,7 +31,7 @@ import org.w3c.dom.NodeList;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.io.WKTReader;
 
-public class TransactionTest extends WFSTestSupport2 {
+public class TransactionTest extends WFSTestSupport {
 	
 	public static final QName WITH_GML = new QName( SystemTestData.SF_URI, "WithGMLProperties", SystemTestData.SF_PREFIX );
 	

@@ -7,7 +7,7 @@ import org.geoserver.data.test.MockData;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class GetPropertyValueTest extends WFS20TestSupport2 {
+public class GetPropertyValueTest extends WFS20TestSupport {
 
 	@Test
     public void testPOST() throws Exception {

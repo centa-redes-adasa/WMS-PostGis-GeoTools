@@ -16,7 +16,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-public class GetFeatureTest extends WFSTestSupport2 {
+public class GetFeatureTest extends WFSTestSupport {
 	
     public static QName NULL_GEOMETRIES = new QName(SystemTestData.CITE_URI, "NullGeometries", SystemTestData.CITE_PREFIX);
         

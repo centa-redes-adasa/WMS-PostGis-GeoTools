@@ -6,13 +6,13 @@ import static org.junit.Assert.assertNotNull;
 import java.io.File;
 import java.io.FileOutputStream;
 import javax.xml.parsers.DocumentBuilderFactory;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-public class WfsXmlWriterTest extends WFSTestSupport2 {
+public class WfsXmlWriterTest extends WFSTestSupport {
 
 	@Test
     public void test() throws Exception {

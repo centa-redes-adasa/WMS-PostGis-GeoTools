@@ -17,7 +17,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 @TestSetup(run=TestSetupFrequency.REPEAT)
-public class NumDecimalsTest extends WFSTestSupport2 {
+public class NumDecimalsTest extends WFSTestSupport {
 
 	@Test
     public void testDefaults() throws Exception {

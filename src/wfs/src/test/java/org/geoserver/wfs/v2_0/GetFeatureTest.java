@@ -28,7 +28,7 @@ import org.w3c.dom.NodeList;
 
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
-public class GetFeatureTest extends WFS20TestSupport2 {
+public class GetFeatureTest extends WFS20TestSupport {
 	
 	@Before
 	public void revertGeometries() throws Exception {

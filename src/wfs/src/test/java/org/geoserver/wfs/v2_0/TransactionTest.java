@@ -25,7 +25,7 @@ import org.w3c.dom.NodeList;
 
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
-public class TransactionTest extends WFS20TestSupport2 {
+public class TransactionTest extends WFS20TestSupport {
 
 	public static final QName WITH_GML = new QName( SystemTestData.SF_URI, "WithGMLProperties", SystemTestData.SF_PREFIX );
 	

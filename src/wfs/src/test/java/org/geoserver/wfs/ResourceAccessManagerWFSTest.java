@@ -31,7 +31,7 @@ import org.w3c.dom.Document;
  * @author Andrea Aime - GeoSolutions
  * 
  */
-public class ResourceAccessManagerWFSTest extends WFSTestSupport2 {
+public class ResourceAccessManagerWFSTest extends WFSTestSupport {
 
     static final String INSERT_RESTRICTED_STREET = "<wfs:Transaction service=\"WFS\" version=\"1.0.0\"\n"
             + "  xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:cite=\"http://www.opengis.net/cite\"\n"

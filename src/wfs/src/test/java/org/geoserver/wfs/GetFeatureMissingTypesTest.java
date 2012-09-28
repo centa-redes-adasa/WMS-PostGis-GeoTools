@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-public class GetFeatureMissingTypesTest extends WFSTestSupport2 {
+public class GetFeatureMissingTypesTest extends WFSTestSupport {
 	
 	@Before
 	public void revertGeometries() throws Exception {

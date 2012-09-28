@@ -14,7 +14,7 @@ import org.w3c.dom.Document;
  * 
  * @author Ben Caradoc-Davies (CSIRO Earth Science and Resource Engineering)
  */
-public class SrsNameRequestTest extends WFS20TestSupport2 {
+public class SrsNameRequestTest extends WFS20TestSupport {
 
     /**
      * WGS 84 as an EPSG code.

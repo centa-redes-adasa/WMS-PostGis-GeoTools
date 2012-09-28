@@ -5,12 +5,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.geoserver.data.test.MockData;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.geotools.wfs.v2_0.WFS;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class GMLOutputFormatTest extends WFSTestSupport2 {
+public class GMLOutputFormatTest extends WFSTestSupport {
     
 	@Test
     public void testGML2() throws Exception {

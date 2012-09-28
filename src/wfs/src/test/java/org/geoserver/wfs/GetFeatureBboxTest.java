@@ -10,7 +10,7 @@ import org.geoserver.data.test.SystemTestData;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class GetFeatureBboxTest extends WFSTestSupport2 {
+public class GetFeatureBboxTest extends WFSTestSupport {
        
 	@Test
     public void testFeatureBoudingOn() throws Exception {

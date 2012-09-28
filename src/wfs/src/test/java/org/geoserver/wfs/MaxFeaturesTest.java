@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-public class MaxFeaturesTest extends WFSTestSupport2 {
+public class MaxFeaturesTest extends WFSTestSupport {
   
     @Override
     protected void setUpInternal(SystemTestData data) throws Exception {

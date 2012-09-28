@@ -15,7 +15,7 @@ import org.w3c.dom.Document;
 
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
-public class StoredQueryTest extends WFS20TestSupport2 {
+public class StoredQueryTest extends WFS20TestSupport {
 	
 	@Before
 	public void clearQueries() {

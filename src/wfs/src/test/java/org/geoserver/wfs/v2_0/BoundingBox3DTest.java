@@ -18,7 +18,7 @@ import org.junit.Test;
  * @author Niels Charlier
  * 
  */
-public class BoundingBox3DTest extends WFS20TestSupport2 {
+public class BoundingBox3DTest extends WFS20TestSupport {
     
 	@Override
     protected void setUpInternal(SystemTestData dataDirectory) throws Exception {

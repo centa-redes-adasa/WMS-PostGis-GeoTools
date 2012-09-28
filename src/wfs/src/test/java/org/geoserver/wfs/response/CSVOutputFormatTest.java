@@ -11,7 +11,7 @@ import net.opengis.wfs.GetFeatureType;
 import net.opengis.wfs.WfsFactory;
 import org.geoserver.data.test.MockData;
 import org.geoserver.platform.Operation;
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.geoserver.wfs.request.FeatureCollectionResponse;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.Query;
@@ -29,7 +29,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 
 
-public class CSVOutputFormatTest extends WFSTestSupport2 {
+public class CSVOutputFormatTest extends WFSTestSupport {
 
 	@Test
     public void testFullRequest() throws Exception {

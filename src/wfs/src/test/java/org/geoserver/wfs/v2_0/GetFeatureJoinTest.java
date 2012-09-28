@@ -24,7 +24,7 @@ import org.w3c.dom.Document;
 
 import com.vividsolutions.jts.io.WKTReader;
 
-public class GetFeatureJoinTest extends WFS20TestSupport2 {
+public class GetFeatureJoinTest extends WFS20TestSupport {
     
     @Override
     protected void setUpInternal(SystemTestData data) throws Exception {

@@ -4,7 +4,9 @@
  */
 package org.geoserver.gwc.web.gridset;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.PageParameters;

@@ -4,7 +4,7 @@ import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class ExtendedOperatorTest extends WFS20TestSupport2 {
+public class ExtendedOperatorTest extends WFS20TestSupport {
 
     @Test
     public void testInvokeExtendedOperator() throws Exception {

@@ -19,7 +19,7 @@ import org.opengis.referencing.operation.MathTransform;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class ReprojectionWriteTest extends WFSTestSupport2 {
+public class ReprojectionWriteTest extends WFSTestSupport {
     private static final String TARGET_CRS_CODE = "EPSG:900913";
     public static QName NULL_GEOMETRIES = new QName(SystemTestData.CITE_URI, "NullGeometries", SystemTestData.CITE_PREFIX);
     public static QName GOOGLE = new QName(SystemTestData.CITE_URI, "GoogleFeatures", SystemTestData.CITE_PREFIX);

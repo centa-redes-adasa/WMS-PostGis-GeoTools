@@ -16,7 +16,7 @@ import org.w3c.dom.Document;
  * @author Justin Deoliveira, The Open Planning Project
  * 
  */
-public class TransactionTest extends WFSTestSupport2 {
+public class TransactionTest extends WFSTestSupport {
 	
 	@Before
 	public void revertGeometries() throws Exception {
