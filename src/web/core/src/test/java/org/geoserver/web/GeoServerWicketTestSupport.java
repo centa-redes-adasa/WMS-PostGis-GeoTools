@@ -19,7 +19,7 @@ public abstract class GeoServerWicketTestSupport extends GeoServerSecurityTestSu
     public static WicketTester tester;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUpApp() throws Exception {
         // prevent Wicket from bragging about us being in dev mode (and run
         // the tests as if we were in production all the time)
         System.setProperty("wicket.configuration", "deployment");
