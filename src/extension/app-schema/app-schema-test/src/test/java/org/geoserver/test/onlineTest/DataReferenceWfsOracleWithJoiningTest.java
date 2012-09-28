@@ -1,7 +1,8 @@
 package org.geoserver.test.onlineTest;
 
-import junit.framework.Test;
+import org.junit.Test;
 
+import org.geoserver.test.NamespaceTestData;
 import org.geotools.data.complex.AppSchemaDataAccessRegistry;
 
 public class DataReferenceWfsOracleWithJoiningTest extends DataReferenceWfsOracleTest {
@@ -9,27 +10,15 @@ public class DataReferenceWfsOracleWithJoiningTest extends DataReferenceWfsOracl
     public DataReferenceWfsOracleWithJoiningTest() throws Exception {
         super();
     }
-
-    /**
-     * Read-only test so can use one-time setup.
-     *
-     * @return
-     */
-    public static Test suite() {
-        try {
-            return new OneTimeTestSetup(new DataReferenceWfsOracleWithJoiningTest());
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    @Override
-    protected void oneTimeSetUp() throws Exception {
-        AppSchemaDataAccessRegistry.getAppSchemaProperties().setProperty ("app-schema.joining", "true");
-        super.oneTimeSetUp();
-    }
     
     @Override
+    protected void onSetUp(NamespaceTestData testData) throws Exception {
+        AppSchemaDataAccessRegistry.getAppSchemaProperties().setProperty ("app-schema.joining", "true");
+        super.onSetUp(testData);
+    }
+
+    @Override
+    @Test
     public void testFilteringSplit() throws Exception {
         //this is a non joining test
     }

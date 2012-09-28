@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 
 import org.geoserver.data.CatalogWriter;
 import org.geoserver.data.test.MockData;
+import org.geoserver.data.test.SystemTestData;
 import org.geoserver.data.util.IOUtils;
 import org.geoserver.test.onlineTest.setup.AppSchemaTestOracleSetup;
 import org.geoserver.test.onlineTest.setup.AppSchemaTestPostgisSetup;
@@ -288,9 +289,15 @@ public abstract class AbstractAppSchemaMockData implements NamespaceTestData {
      * 
      * @see org.geoserver.data.test.TestData#setUp()
      */
-    public void setUp() {
+    public void setUp() throws IOException {
         setUpCatalog();
+        setupSecurity();
         copy(MockData.class.getResourceAsStream("services.xml"), "services.xml");
+    }
+
+    protected void setupSecurity() throws IOException {
+        File secDir = new File(getDataDirectoryRoot(), "security");
+        IOUtils.decompress(SystemTestData.class.getResourceAsStream("security.zip"), secDir);
     }
 
     /**

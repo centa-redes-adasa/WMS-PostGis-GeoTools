@@ -18,7 +18,6 @@ import org.opengis.referencing.operation.CoordinateOperation;
 import org.opengis.referencing.operation.MathTransform;
 import org.opengis.referencing.operation.TransformException;
 
-@Category(SystemTest.class)
 public class OvverideTransformationsTest extends GeoServerSystemTestSupport {
     
     private static final String SOURCE_CRS = "EPSG:TEST1";
