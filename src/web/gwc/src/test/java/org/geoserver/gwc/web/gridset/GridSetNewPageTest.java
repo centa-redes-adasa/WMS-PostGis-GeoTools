@@ -4,7 +4,9 @@
  */
 package org.geoserver.gwc.web.gridset;
 
-import junit.framework.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.PageParameters;
@@ -26,22 +28,16 @@ import org.geoserver.web.wicket.GeoServerAjaxFormLink;
 import org.geowebcache.grid.BoundingBox;
 import org.geowebcache.grid.GridSet;
 import org.geowebcache.grid.GridSetBroker;
+import org.junit.Test;
 
 import com.google.common.collect.ImmutableMap;
 
 public class GridSetNewPageTest extends GeoServerWicketTestSupport {
 
     /**
-     * This is a NOT a read only test, but we save the per test set up cost anyways
-     */
-    public static Test suite() {
-        return new OneTimeTestSetup(new GridSetNewPageTest());
-    }
-
-    /**
      * Just a smoke test to make sure the page loads as expected
      */
-    public void testPageLoad() {
+    @Test public void testPageLoad() {
         GridSetNewPage page = new GridSetNewPage(new PageParameters());
 
         tester.startPage(page);
@@ -59,7 +55,7 @@ public class GridSetNewPageTest extends GeoServerWicketTestSupport {
         tester.assertComponent("gridSetForm:addZoomLevel", GeoServerAjaxFormLink.class);
     }
 
-    public void testCreateFromTemplate() {
+    @Test public void testCreateFromTemplate() {
 
         PageParameters params = new PageParameters(ImmutableMap.of("template", "EPSG:4326"));
         GridSetNewPage page = new GridSetNewPage(params);
@@ -89,7 +85,7 @@ public class GridSetNewPageTest extends GeoServerWicketTestSupport {
         assertEquals(check.getNumLevels() + 2, created.getNumLevels());
     }
 
-    public void testCreateFromScratch() {
+    @Test public void testCreateFromScratch() {
         GWC mediator = GWC.get();
         GridSetBroker gridSetBroker = mediator.getGridSetBroker();
 

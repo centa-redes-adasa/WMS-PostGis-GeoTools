@@ -4,20 +4,12 @@
  */
 package org.geoserver.gwc.web.gridset;
 
-import junit.framework.Test;
-
 import org.geoserver.web.GeoServerWicketTestSupport;
+import org.junit.Test;
 
 public class GridSetsPageTest extends GeoServerWicketTestSupport {
 
-    /**
-     * This is a read only test, but we save the per test set up cost anyways
-     */
-    public static Test suite() {
-        return new OneTimeTestSetup(new GridSetsPageTest());
-    }
-
-    public void testPageLoad() {
+    @Test public void testPageLoad() {
         GridSetsPage page = new GridSetsPage();
 
         tester.startPage(page);
