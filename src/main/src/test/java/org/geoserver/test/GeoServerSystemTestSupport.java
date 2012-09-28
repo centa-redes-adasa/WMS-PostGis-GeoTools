@@ -158,8 +158,6 @@ public class GeoServerSystemTestSupport extends GeoServerBaseTestSupport<SystemT
     }
 
     protected final void setUp(SystemTestData testData) throws Exception {
-        setUpTestData(testData);
-
         // setup quiet logging (we need to to this here because Data
         // is loaded before GoeServer has a chance to setup logging for good)
         try {
@@ -170,7 +168,9 @@ public class GeoServerSystemTestSupport extends GeoServerBaseTestSupport<SystemT
         System.setProperty(LoggingUtils.RELINQUISH_LOG4J_CONTROL, "true");
         GeoServerResourceLoader loader = new GeoServerResourceLoader(testData.getDataDirectoryRoot());
         LoggingUtils.configureGeoServerLogging(loader, getClass().getResourceAsStream(getLogConfiguration()), false, true, null);
-         
+
+        setUpTestData(testData);
+
         // if we have data, create a mock servlet context and start up the spring configuration
         if (testData.isTestDataAvailable()) {
             MockServletContext servletContext = new MockServletContext();
