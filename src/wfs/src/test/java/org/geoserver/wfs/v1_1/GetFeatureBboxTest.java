@@ -1,15 +1,17 @@
 package org.geoserver.wfs.v1_1;
 
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
+import static org.junit.Assert.assertTrue;
+
 import org.custommonkey.xmlunit.XMLUnit;
 import org.custommonkey.xmlunit.XpathEngine;
-import org.geoserver.data.test.MockData;
+import org.geoserver.data.test.SystemTestData;
 import org.geoserver.wfs.WFSInfo;
-import org.geoserver.wfs.WFSTestSupport;
+import org.geoserver.wfs.WFSTestSupport2;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class GetFeatureBboxTest extends WFSTestSupport {
+public class GetFeatureBboxTest extends WFSTestSupport2 {
     
     @Test
     public void testFeatureBoudingOn() throws Exception {
@@ -17,7 +19,7 @@ public class GetFeatureBboxTest extends WFSTestSupport {
         wfs.setFeatureBounding( true );
         getGeoServer().save( wfs );
 
-        Document doc = getAsDOM("wfs?request=GetFeature&typeName=" + getLayerId(MockData.BUILDINGS) + "&version=1.1.0&service=wfs&propertyName=ADDRESS");
+        Document doc = getAsDOM("wfs?request=GetFeature&typeName=" + getLayerId(SystemTestData.BUILDINGS) + "&version=1.1.0&service=wfs&propertyName=ADDRESS");
         // print(doc);
         
         // check it's a feature collection
@@ -36,7 +38,7 @@ public class GetFeatureBboxTest extends WFSTestSupport {
         wfs.setFeatureBounding( false );
         getGeoServer().save( wfs );
         
-        Document doc = getAsDOM("wfs?request=GetFeature&typeName=" + getLayerId(MockData.BUILDINGS) + "&version=1.1.0&service=wfs&propertyName=ADDRESS");
+        Document doc = getAsDOM("wfs?request=GetFeature&typeName=" + getLayerId(SystemTestData.BUILDINGS) + "&version=1.1.0&service=wfs&propertyName=ADDRESS");
 //        print(doc);
         
         // check it's a feature collection
