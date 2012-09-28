@@ -112,7 +112,8 @@ public abstract class GeoServerBaseTestSupport<T extends TestData> {
      * Checks for existence of a system property named "quietTests". 
      */
     public static boolean isQuietTests() {
-        return !"false".equalsIgnoreCase(System.getProperty("quietTests"));
+        String quietTests = System.getProperty("quietTests");
+        return quietTests != null && !"false".equalsIgnoreCase(quietTests);
     }
 
     @BeforeClass
