@@ -318,11 +318,10 @@ public class WFSReprojectionWriteTest extends WFSTestSupport2 {
         Document dom = postAsDOM( "wfs", xml );
         assertEquals( "wfs:LockFeatureResponse", dom.getDocumentElement().getNodeName() );
         assertEquals(3, dom.getElementsByTagName("ogc:FeatureId").getLength());
-
-        print(dom);
+        
         // release the lock
         String lockId = dom.getElementsByTagName("wfs:LockId").item(0).getTextContent();        
-        print(get("wfs?request=ReleaseLock&version=1.1.0&lockId=" + lockId));
+        get("wfs?request=ReleaseLock&version=1.1.0&lockId=" + lockId);
     }
     
     private double[] posList(String string) {

@@ -80,13 +80,17 @@ public abstract class WFSTestSupport2 extends GeoServerSystemTestSupport {
         
         CiteTestData.registerNamespaces(namespaces);
         
+        setUpNamespaces(namespaces);
         XMLUnit.setXpathNamespaceContext(new SimpleNamespaceContext(namespaces));
         
         setUpInternal(testData);
     }
     
-    protected void setUpInternal(SystemTestData testData) throws Exception {
-    	
+    protected void setUpInternal(SystemTestData testData) throws Exception {    	
+    }
+    
+
+    protected void setUpNamespaces(Map<String,String> namespaces) {
     }
     
     protected List<String> getSupportedSpatialOperatorsList(boolean wfs1_0_0) {

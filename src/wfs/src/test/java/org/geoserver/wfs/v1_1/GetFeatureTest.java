@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Collections;
 import javax.xml.namespace.QName;
@@ -15,7 +14,6 @@ import org.geoserver.wfs.GMLInfo;
 import org.geoserver.wfs.WFSInfo;
 import org.geoserver.wfs.WFSTestSupport2;
 import org.geotools.gml3.GML;
-import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -23,10 +21,6 @@ import org.w3c.dom.NodeList;
 
 public class GetFeatureTest extends WFSTestSupport2 {
 	
-	@Before
-	public void revertGeometries() throws Exception{
-	}
-        
     @Override
     protected void setUpInternal(SystemTestData data) throws Exception {
     	WFSInfo wfs = getWFS();
@@ -392,7 +386,7 @@ public class GetFeatureTest extends WFSTestSupport2 {
         getTestData().addVectorLayer ( new QName( SystemTestData.SF_URI, "new", SystemTestData.SF_PREFIX ), 
     			Collections.EMPTY_MAP, getClass(), getCatalog());
         
-        reloadCatalogAndConfiguration();
+        //reloadCatalogAndConfiguration();
         
         dom = getAsDOM( "wfs?request=getfeature&service=wfs&version=1.1.0&typename=sf:new");
         assertEquals( "FeatureCollection", dom.getDocumentElement().getLocalName() );
@@ -468,6 +462,9 @@ public class GetFeatureTest extends WFSTestSupport2 {
         XMLAssert.assertXpathNotExists("//gml:description", dom);
         XMLAssert.assertXpathExists("//sf:name", dom);
         XMLAssert.assertXpathExists("//sf:description", dom);
+        
+        gml.setOverrideGMLAttributes(false);
+        getGeoServer().save(wfs);
     }
     
     @Test

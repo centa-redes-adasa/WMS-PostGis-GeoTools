@@ -35,17 +35,11 @@ public class TransactionTest extends WFSTestSupport2 {
 	
 	public static final QName WITH_GML = new QName( SystemTestData.SF_URI, "WithGMLProperties", SystemTestData.SF_PREFIX );
 	
-
 	@Before
 	public void revertGeometries() throws Exception {
 		revertLayer(CiteTestData.ROAD_SEGMENTS);
 		getTestData().addVectorLayer ( WITH_GML, Collections.EMPTY_MAP, getClass(), getCatalog());
 	}	
-
-    @Override
-    protected void setUpInternal(SystemTestData dataDirectory) throws Exception {        
-    	
-    }
 
     @Test
     public void testInsert1() throws Exception {
