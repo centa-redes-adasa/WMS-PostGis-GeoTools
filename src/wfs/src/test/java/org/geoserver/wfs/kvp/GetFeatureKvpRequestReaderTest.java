@@ -1,25 +1,27 @@
 package org.geoserver.wfs.kvp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.xml.namespace.QName;
+
 import net.opengis.wfs.GetFeatureType;
 import net.opengis.wfs.QueryType;
 import net.opengis.wfs.WfsFactory;
+
 import org.geoserver.data.test.SystemTestData;
-import org.geoserver.test.ows.KvpRequestReaderTestSupport2;
+import org.geoserver.test.GeoServerSystemTestSupport;
 import org.geoserver.wfs.GetFeature;
 import org.geoserver.wfs.WFSException;
 import org.geotools.factory.CommonFactoryFinder;
 import org.junit.Test;
 
-public class GetFeatureKvpRequestReaderTest extends KvpRequestReaderTestSupport2 {
+public class GetFeatureKvpRequestReaderTest extends GeoServerSystemTestSupport {
 
-    private GetFeatureKvpRequestReader reader;
+    private static GetFeatureKvpRequestReader reader;
 
     @Override
     protected void onSetUp(SystemTestData data) throws Exception {
@@ -60,6 +62,7 @@ public class GetFeatureKvpRequestReaderTest extends KvpRequestReaderTestSupport2
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
+    @Test
     public void testInvalidTypeName() throws Exception {
         Map raw = new HashMap();
         raw.put("service", "WFS");
@@ -84,6 +87,7 @@ public class GetFeatureKvpRequestReaderTest extends KvpRequestReaderTestSupport2
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
+    @Test
     public void testUserProvidedNamespace() throws Exception {
         final String localPart = SystemTestData.MLINES.getLocalPart();
         final String namespace = SystemTestData.MLINES.getNamespaceURI();
@@ -114,6 +118,7 @@ public class GetFeatureKvpRequestReaderTest extends KvpRequestReaderTestSupport2
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
+    @Test
     public void testUserProvidedDefaultNamespace() throws Exception {
         final QName qName = SystemTestData.STREAMS;
         final String typeName = qName.getLocalPart();
@@ -137,6 +142,7 @@ public class GetFeatureKvpRequestReaderTest extends KvpRequestReaderTestSupport2
         assertEquals(qName, typeNames.get(0));
     }
     
+    @Test
     public void testViewParams() throws Exception {
         Map<String, String> raw = new HashMap<String, String>();
         raw.put("service", "WFS");
@@ -158,6 +164,7 @@ public class GetFeatureKvpRequestReaderTest extends KvpRequestReaderTestSupport2
         assertEquals("ABCD", vp1.get("str"));
     }
     
+    @Test
     public void testViewParamsMulti() throws Exception {
         Map<String, String> raw = new HashMap<String, String>();
         raw.put("service", "WFS");
@@ -182,6 +189,7 @@ public class GetFeatureKvpRequestReaderTest extends KvpRequestReaderTestSupport2
         assertEquals("FOO", vp2.get("str"));
     }
     
+    @Test
     public void testViewParamsFanOut() throws Exception {
         Map<String, String> raw = new HashMap<String, String>();
         raw.put("service", "WFS");
