@@ -1,4 +1,5 @@
 build-full.bat
+build-full-ignore.bat
 target
 .settings
 .classpath
