@@ -4,6 +4,9 @@
  */
 package org.geoserver.wms.map;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,12 +18,11 @@ import java.util.HashMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import junit.framework.Test;
-
 import org.geoserver.data.test.MockData;
 import org.geoserver.wms.GetMapRequest;
 import org.geoserver.wms.WMSMapContent;
-import org.geoserver.wms.WMSTestSupport;
+import org.geoserver.wms.WMSTestSupport2;
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -31,15 +33,10 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 
-public class OpenLayersMapTemplateTest extends WMSTestSupport {
+public class OpenLayersMapTemplateTest extends WMSTestSupport2 {
     
-    /**
-     * This is a READ ONLY TEST so we can use one time setup
-     */
-    public static Test suite() {
-        return new OneTimeTestSetup(new OpenLayersMapTemplateTest());
-    }
     
+    @Test
     public void test() throws Exception {
         Configuration cfg = new Configuration();
         cfg.setClassForTemplateLoading(OpenLayersMapOutputFormat.class, "");

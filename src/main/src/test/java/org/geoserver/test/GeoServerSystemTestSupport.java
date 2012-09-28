@@ -10,12 +10,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +48,8 @@ import net.sf.json.JSON;
 import net.sf.json.JSONSerializer;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.XMLSerializer;
 import org.geoserver.catalog.CascadeDeleteVisitor;
 import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.FeatureTypeInfo;
@@ -60,6 +64,7 @@ import org.geoserver.config.GeoServerLoaderProxy;
 import org.geoserver.config.util.XStreamPersister;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.logging.LoggingUtils;
+import org.geoserver.ows.util.CaseInsensitiveMap;
 import org.geoserver.ows.util.KvpUtils;
 import org.geoserver.ows.util.ResponseUtils;
 import org.geoserver.platform.ContextLoadedEvent;
@@ -1473,18 +1478,29 @@ public class GeoServerSystemTestSupport extends GeoServerBaseTestSupport<SystemT
      * Utility method to print out a dom.
      */
     protected void print( Document dom ) throws Exception {
-        TransformerFactory txFactory = TransformerFactory.newInstance();
+        print (dom, System.out);
+    }
+
+    /**
+     * Pretty-print a {@link Document} to an {@link OutputStream}.
+     * 
+     * @param document
+     *            document to be prettified
+     * @param output
+     *            stream to which output is written
+     */
+    protected void print(Document document, OutputStream output) {
+        OutputFormat format = new OutputFormat(document);
+        // setIndenting must be first as it resets indent and line width
+        format.setIndenting(true);
+        format.setIndent(4);
+        format.setLineWidth(200);
+        XMLSerializer serializer = new XMLSerializer(output, format);
         try {
-            txFactory.setAttribute("{http://xml.apache.org/xalan}indent-number", new Integer(2));
-        } catch(Exception e) {
-            // some 
+            serializer.serialize(document);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        
-        Transformer tx = txFactory.newTransformer();
-        tx.setOutputProperty(OutputKeys.METHOD,"xml");
-        tx.setOutputProperty( OutputKeys.INDENT, "yes" );
-          
-        tx.transform( new DOMSource( dom ), new StreamResult(new OutputStreamWriter(System.out, "utf-8") ));
     }
 
     /**
@@ -1533,6 +1549,33 @@ public class GeoServerSystemTestSupport extends GeoServerBaseTestSupport<SystemT
      */
     protected List<Filter> getFilters() {
         return null;
+    }
+    
+    /**
+     * Parses a raw set of kvp's into a parsed set of kvps.
+     *
+     * @param kvp Map of String,String.
+     */
+    protected Map parseKvp(Map /*<String,String>*/ raw)
+        throws Exception {
+        
+        // parse like the dispatcher but make sure we don't change the original map
+        HashMap input = new HashMap(raw);
+        List<Throwable> errors = KvpUtils.parse(input);
+        if(errors != null && errors.size() > 0)
+            throw (Exception) errors.get(0);
+        
+        return caseInsensitiveKvp(input);
+    }
+
+    protected Map caseInsensitiveKvp(HashMap input) {
+        // make it case insensitive like the servlet+dispatcher maps
+        Map result = new HashMap();
+        for (Iterator it = input.keySet().iterator(); it.hasNext();) {
+            String key = (String) it.next();
+            result.put(key.toUpperCase(), input.get(key));
+        }
+        return new CaseInsensitiveMap(result);
     }
 
  

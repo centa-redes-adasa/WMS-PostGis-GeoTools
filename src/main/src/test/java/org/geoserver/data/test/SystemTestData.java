@@ -72,6 +72,7 @@ public class SystemTestData extends CiteTestData {
         public static LayerProperty<String> STYLE = new LayerProperty<String>();
         public static LayerProperty<ReferencedEnvelope> ENVELOPE = new LayerProperty<ReferencedEnvelope>();
         public static LayerProperty<ReferencedEnvelope> LATLON_ENVELOPE = new LayerProperty<ReferencedEnvelope>();
+        public static LayerProperty<Integer> SRS = new LayerProperty<Integer>();
     }
 
     /** data directory root */
@@ -374,7 +375,7 @@ public class SystemTestData extends CiteTestData {
         featureType.setTitle(name);
         featureType.setAbstract("abstract about " + name);
 
-        Integer srs = SRS.get( name );
+        Integer srs = LayerProperty.SRS.get(props, SRS.get(qName));
         if ( srs == null ) {
             srs = 4326;
         }
@@ -402,7 +403,7 @@ public class SystemTestData extends CiteTestData {
         }
 
         LayerInfo layer = catalog.getLayerByName(new NameImpl(prefix, name));
-        if (layer == null) {
+        if (layer == null || !layer.getResource().getNamespace().equals(catalog.getNamespaceByPrefix(prefix))) {
             layer = catalog.getFactory().createLayer();    
         }
 
@@ -536,7 +537,7 @@ public class SystemTestData extends CiteTestData {
         dir.mkdirs();
 
         File file = new File(dir, filename);
-        catalog.getResourceLoader().copyFromClassPath(filename, file, getClass());
+        catalog.getResourceLoader().copyFromClassPath(filename, file, scope);
 
         String ext = FilenameUtils.getExtension(filename);
         if ("zip".equalsIgnoreCase(ext)) {
@@ -577,6 +578,10 @@ public class SystemTestData extends CiteTestData {
             throw new RuntimeException("No reader for " + file.getCanonicalPath() + " with format " + format.getName());
         }
 
+        //configure workspace if it doesn;t already exist
+        if (catalog.getWorkspaceByName(prefix) == null) {
+            addWorkspace(prefix, qName.getNamespaceURI(), catalog);
+        }
         //create the store
         CoverageStoreInfo store = catalog.getCoverageStoreByName(prefix, name);
         if (store == null) {
@@ -669,14 +674,4 @@ public class SystemTestData extends CiteTestData {
         return true;
     }
 
-    /**
-     * Populates a map with prefix to namespace uri mappings for all the 
-     * mock data namespaces. 
-     */
-    public void registerNamespaces(Map<String,String> namespaces) {
-        namespaces.put(MockData.CITE_PREFIX, MockData.CITE_URI); 
-        namespaces.put(MockData.CDF_PREFIX, MockData.CDF_URI);
-        namespaces.put(MockData.CGF_PREFIX, MockData.CGF_URI);
-        namespaces.put(MockData.SF_PREFIX, MockData.SF_URI);
-    }
 }

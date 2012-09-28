@@ -4,6 +4,7 @@
  */
 package org.geoserver.kml;
 
+import static org.junit.Assert.*;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -19,73 +20,88 @@ import java.util.zip.ZipFile;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import junit.framework.Test;
-
 import org.custommonkey.xmlunit.XMLAssert;
+import org.geoserver.catalog.Catalog;
 import org.geoserver.config.GeoServer;
 import org.geoserver.config.GeoServerInfo;
 import org.geoserver.data.test.MockData;
+import org.geoserver.data.test.SystemTestData;
 import org.geoserver.data.util.IOUtils;
 import org.geoserver.kml.KMZMapResponse.KMZMap;
 import org.geoserver.wms.GetMapRequest;
 import org.geoserver.wms.WMSMapContent;
 import org.geoserver.wms.WMSTestSupport;
+import org.geoserver.wms.WMSTestSupport2;
 import org.geotools.data.DataUtilities;
 import org.geotools.data.FeatureSource;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.map.Layer;
 import org.geotools.referencing.crs.DefaultGeographicCRS;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class KMLTransformerTest extends WMSTestSupport {
+public class KMLTransformerTest extends WMSTestSupport2 {
     WMSMapContent mapContent;
 
     Layer layer;
 
-    /**
-     * This is a READ ONLY TEST so we can use one time setup
-     */
-    public static Test suite() {
-        return new OneTimeTestSetup(new KMLTransformerTest());
-    }
-
-    @Override
-    protected void setUpInternal() throws Exception {
-        super.setUpInternal();
-
+  
+    @Before
+    public void setMapContent() throws Exception {
+        
         layer = createMapLayer(MockData.BASIC_POLYGONS);
 
         mapContent = new WMSMapContent(createGetMapRequest(MockData.BASIC_POLYGONS));
         mapContent.addLayer(layer);
     }
 
-    @Override
-    protected void tearDownInternal() {
+    @After
+    public void unsetMapContent() {
         mapContent.dispose();
         // mapContent.clearLayerList();
     }
-
+    
     @Override
-    protected void populateDataDirectory(MockData dataDirectory) throws Exception {
-        super.populateDataDirectory(dataDirectory);
-        dataDirectory.addStyle("allsymbolizers", getClass().getResource("allsymbolizers.sld"));
-        dataDirectory.addStyle("SingleFeature", getClass().getResource("singlefeature.sld"));
-        dataDirectory.addStyle("Bridge", getClass().getResource("bridge.sld"));
-        dataDirectory.addStyle("BridgeSubdir", getClass().getResource("bridgesubdir.sld"));
-        dataDirectory
-                .addStyle("dynamicsymbolizer", getClass().getResource("dynamicsymbolizer.sld"));
-        dataDirectory
-                 .addStyle("relativeds", getClass().getResource("relativeds.sld"));
-        dataDirectory.copyTo(getClass().getResourceAsStream("bridge.png"), "styles/bridge.png");
-        new File(dataDirectory.getDataDirectoryRoot(), "styles/graphics").mkdir();
-        dataDirectory.copyTo(getClass().getResourceAsStream("bridge.png"),
-                "styles/graphics/bridgesubdir.png");
+    protected void onSetUp(SystemTestData testData) throws Exception {
+        super.onSetUp(testData);
+        Catalog catalog =getCatalog();
+        testData.addStyle("allsymbolizers","allsymbolizers.sld",getClass(), catalog);
+        testData.addStyle("SingleFeature","singlefeature.sld",getClass(), catalog);
+        testData.addStyle("Bridge","bridge.sld",getClass(), catalog);
+        testData.addStyle("BridgeSubdir","bridgesubdir.sld",getClass(), catalog);
+        testData.addStyle("dynamicsymbolizer","dynamicsymbolizer.sld",getClass(), catalog);
+        testData.addStyle("relativeds","relativeds.sld",getClass(), catalog);
+        testData.copyTo(getClass().getResourceAsStream("bridge.png"), "styles/bridge.png");
+        File stylesDir = new File(testData.getDataDirectoryRoot(),"styles");
+        new File(stylesDir,"graphics").mkdir();
+        testData.copyTo(getClass().getResourceAsStream("bridge.png"), "styles/graphics/bridgesubdir.png");
     }
 
+//    @Override
+//    protected void populateDataDirectory(MockData dataDirectory) throws Exception {
+//        super.populateDataDirectory(dataDirectory);
+//        dataDirectory.addStyle("allsymbolizers", getClass().getResource("allsymbolizers.sld"));
+//        dataDirectory.addStyle("SingleFeature", getClass().getResource("singlefeature.sld"));
+//        dataDirectory.addStyle("Bridge", getClass().getResource("bridge.sld"));
+//        dataDirectory.addStyle("BridgeSubdir", getClass().getResource("bridgesubdir.sld"));
+//        dataDirectory
+//                .addStyle("dynamicsymbolizer", getClass().getResource("dynamicsymbolizer.sld"));
+//        dataDirectory
+//                 .addStyle("relativeds", getClass().getResource("relativeds.sld"));
+//        
+//        dataDirectory.copyTo(getClass().getResourceAsStream("bridge.png"), "styles/bridge.png");
+//        new File(dataDirectory.getDataDirectoryRoot(), "styles/graphics").mkdir();
+//        dataDirectory.copyTo(getClass().getResourceAsStream("bridge.png"),
+//                "styles/graphics/bridgesubdir.png");
+//    }
+
+    @Test
     public void testVectorTransformer() throws Exception {
         KMLVectorTransformer transformer = new KMLVectorTransformer(getWMS(), mapContent, layer);
         transformer.setIndentation(2);
@@ -107,6 +123,7 @@ public class KMLTransformerTest extends WMSTestSupport {
      * 
      * @throws Exception
      */
+    @Test
     public void testExternalGraphicBackround() throws Exception {
 
         Layer Layer = createMapLayer(MockData.POINTS, "Bridge");
@@ -139,6 +156,7 @@ public class KMLTransformerTest extends WMSTestSupport {
      * 
      * @throws Exception
      */
+    @Test
     public void testExternalGraphicSubdir() throws Exception {
 
         Layer layer = createMapLayer(MockData.POINTS, "BridgeSubdir");
@@ -170,6 +188,7 @@ public class KMLTransformerTest extends WMSTestSupport {
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
+    @Test
     public void testProxyBaseURL() throws Exception {
         GeoServer gs = getGeoServer();
         try {
@@ -207,6 +226,7 @@ public class KMLTransformerTest extends WMSTestSupport {
         }
     }
 
+    @Test
     public void testFilteredData() throws Exception {
         Layer layer = createMapLayer(MockData.BASIC_POLYGONS, "SingleFeature");
 
@@ -231,7 +251,8 @@ public class KMLTransformerTest extends WMSTestSupport {
         assertEquals(1, element.getElementsByTagName("Style").getLength());
     }
 
-    // public void testReprojection() throws Exception {
+    // @Test
+    //public void testReprojection() throws Exception {
     // KMLTransformer transformer = new KMLTransformer();
     // transformer.setIndentation(2);
     //
@@ -274,6 +295,7 @@ public class KMLTransformerTest extends WMSTestSupport {
     //
     // }
 
+    @Test
     public void testRasterTransformerInline() throws Exception {
         KMLRasterTransformer transformer = new KMLRasterTransformer(getWMS(), mapContent);
         transformer.setInline(true);
@@ -293,6 +315,7 @@ public class KMLTransformerTest extends WMSTestSupport {
         assertEquals("images/layer_0.png", href.getFirstChild().getNodeValue());
     }
 
+    @Test
     public void testRasterTransformerNotInline() throws Exception {
         KMLRasterTransformer transformer = new KMLRasterTransformer(getWMS(), mapContent);
         transformer.setInline(false);
@@ -312,10 +335,12 @@ public class KMLTransformerTest extends WMSTestSupport {
         assertTrue(href.getFirstChild().getNodeValue().startsWith("http://localhost"));
     }
 
+    @Test
     public void testRasterPlacemarkTrue() throws Exception {
         doTestRasterPlacemark(true);
     }
 
+    @Test
     public void testRasterPlacemarkFalse() throws Exception {
         doTestRasterPlacemark(false);
     }
@@ -390,6 +415,7 @@ public class KMLTransformerTest extends WMSTestSupport {
         }
     }
 
+    @Test
     public void testSuperOverlayTransformer() throws Exception {
         KMLSuperOverlayTransformer transformer = new KMLSuperOverlayTransformer(getWMS(),
                 mapContent);
@@ -409,6 +435,7 @@ public class KMLTransformerTest extends WMSTestSupport {
         assertEquals(4, document.getElementsByTagName("NetworkLink").getLength());
     }
 
+    @Test
     public void testStyleConverter() throws Exception {
         KMLTransformer transformer = new KMLTransformer(getWMS());
         mapContent.removeLayer(mapContent.layers().get(0));
@@ -434,6 +461,7 @@ public class KMLTransformerTest extends WMSTestSupport {
     /**
      * See http://jira.codehaus.org/browse/GEOS-2670
      */
+    @Test
     public void testDynamicSymbolizer() throws Exception {
         KMLTransformer transformer = new KMLTransformer(getWMS());
         mapContent.removeLayer(mapContent.layers().get(0));
@@ -451,6 +479,7 @@ public class KMLTransformerTest extends WMSTestSupport {
                 "//Style[1]/IconStyle/Icon/href", document);
     }
     
+    @Test
     public void testRelativeDynamicSymbolizer() throws Exception {
         KMLTransformer transformer = new KMLTransformer(getWMS());
         mapContent.removeLayer(mapContent.layers().get(0));
@@ -468,6 +497,7 @@ public class KMLTransformerTest extends WMSTestSupport {
                 "//Style[1]/IconStyle/Icon/href", document);
     }
 
+    @Test
     public void testTransformer() throws Exception {
         KMLTransformer transformer = new KMLTransformer(getWMS());
 

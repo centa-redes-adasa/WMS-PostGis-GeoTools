@@ -12,13 +12,20 @@ import javax.servlet.ServletContextEvent;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Appender;
 import org.apache.log4j.FileAppender;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.mockrunner.mock.web.MockServletContext;
 
 public class LoggingStartupContextListenerTest {
 
+    @Before
+    public void cleanupLoggers() {
+        LogManager.resetConfiguration();
+    }
+    
     @Test
     public void testLogLocationFromServletContext() throws Exception {
         File tmp = File.createTempFile("log", "tmp", new File("target"));
@@ -35,6 +42,7 @@ public class LoggingStartupContextListenerTest {
         context.setInitParameter("GEOSERVER_LOG_LOCATION", new File(tmp, "foo.log").getAbsolutePath());
 
         Logger logger = Logger.getRootLogger();
+        System.out.println(logger);
         assertNull(logger.getAppender("geoserverlogfile"));
 
         String rel = System.getProperty(LoggingUtils.RELINQUISH_LOG4J_CONTROL);
