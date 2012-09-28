@@ -65,6 +65,6 @@ public class LockFeatureTest extends WFS20TestSupport {
         
         // release the lock
         String lockId = dom.getDocumentElement().getAttribute("lockId");
-        print(get("wfs?request=ReleaseLock&version=1.1.0&lockId=" + lockId));
+        get("wfs?request=ReleaseLock&version=2.0&lockId=" + lockId);
     }
 }
