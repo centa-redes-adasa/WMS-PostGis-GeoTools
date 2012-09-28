@@ -19,12 +19,12 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import org.opengis.referencing.crs.ProjectedCRS;
 
 @Category(SystemTest.class)
-public class OvverideCRSTest extends GeoServerSystemTestSupport {
+public class OverrideCRSTest extends GeoServerSystemTestSupport {
 
     @Override
     protected void setUpTestData(SystemTestData testData) throws Exception {
         new File(testData.getDataDirectoryRoot(), "user_projections").mkdir();
-        testData.copyTo(OvverideCRSTest.class.getResourceAsStream("test_override_epsg.properties"), 
+        testData.copyTo(OverrideCRSTest.class.getResourceAsStream("test_override_epsg.properties"), 
             "user_projections/epsg_overrides.properties");
 
         CRS.reset("all");
