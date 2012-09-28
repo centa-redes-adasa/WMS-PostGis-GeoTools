@@ -34,9 +34,7 @@ import org.xml.sax.SAXParseException;
 public class WPSExecuteTransformerTest extends GeoServerWicketTestSupport {
 
     @Before
-    protected void setUpInternal() throws Exception {
-        super.setUp();
-
+    public void setUpInternal() throws Exception {
         // init xmlunit
         Map<String, String> namespaces = new HashMap<String, String>();
         namespaces.put("wps", "http://www.opengis.net/wps/1.0.0");
