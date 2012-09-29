@@ -674,71 +674,78 @@ public class SystemTestData extends CiteTestData {
         if (format == null) {
             throw new RuntimeException("No format for " + file.getCanonicalPath());
         }
-        AbstractGridCoverage2DReader reader = (AbstractGridCoverage2DReader) format.getReader(file);
-        if (reader == null) {
-            throw new RuntimeException("No reader for " + file.getCanonicalPath() + " with format " + format.getName());
-        }
-
-        //configure workspace if it doesn;t already exist
-        if (catalog.getWorkspaceByName(prefix) == null) {
-            addWorkspace(prefix, qName.getNamespaceURI(), catalog);
-        }
-        //create the store
-        CoverageStoreInfo store = catalog.getCoverageStoreByName(prefix, name);
-        if (store == null) {
-            store = catalog.getFactory().createCoverageStore();
-            store.setName(name);
-            store.setWorkspace(catalog.getWorkspaceByName(prefix));
-            store.setEnabled(true);
-            store.setURL(DataUtilities.fileToURL(file).toString());
-            store.setType(format.getName());
-            catalog.add(store);
-        }
-
-        //create the coverage
-        CatalogBuilder builder = new CatalogBuilder(catalog);
-        builder.setStore(store);
-
-        CoverageInfo coverage = null;
-        
+        AbstractGridCoverage2DReader reader = null;
         try {
-            coverage = builder.buildCoverage(reader, null);
-        } catch (Exception e) {
-            throw new IOException(e);
-        }
-
-        coverage.setName(name);
-        coverage.setTitle(name);
-        coverage.setDescription(name);
-        coverage.setEnabled(true);
-
-        CoverageInfo cov = catalog.getCoverageByCoverageStore(store, name);
-        if (cov == null) {
-            catalog.add(coverage);
-        }
-        else {
-            builder.updateCoverage(cov, coverage);
-            catalog.save(cov);
-            coverage = cov;
-        }
-
-        LayerInfo layer = catalog.getLayerByName(new NameImpl(qName));
-        if (layer == null) {
-            layer = catalog.getFactory().createLayer();
-        }
-        layer.setResource(coverage);
-
-        
-        layer.setDefaultStyle(
-            catalog.getStyleByName(LayerProperty.STYLE.get(props, DEFAULT_RASTER_STYLE)));
-        layer.setType(LayerInfo.Type.RASTER);
-        layer.setEnabled(true);
-
-        if (layer.getId() == null) {
-            catalog.add(layer);
-        }
-        else {
-            catalog.save(layer);
+            reader = (AbstractGridCoverage2DReader) format.getReader(file);
+            if (reader == null) {
+                throw new RuntimeException("No reader for " + file.getCanonicalPath() + " with format " + format.getName());
+            }
+    
+            //configure workspace if it doesn;t already exist
+            if (catalog.getWorkspaceByName(prefix) == null) {
+                addWorkspace(prefix, qName.getNamespaceURI(), catalog);
+            }
+            //create the store
+            CoverageStoreInfo store = catalog.getCoverageStoreByName(prefix, name);
+            if (store == null) {
+                store = catalog.getFactory().createCoverageStore();
+                store.setName(name);
+                store.setWorkspace(catalog.getWorkspaceByName(prefix));
+                store.setEnabled(true);
+                store.setURL(DataUtilities.fileToURL(file).toString());
+                store.setType(format.getName());
+                catalog.add(store);
+            }
+    
+            //create the coverage
+            CatalogBuilder builder = new CatalogBuilder(catalog);
+            builder.setStore(store);
+    
+            CoverageInfo coverage = null;
+            
+            try {
+                coverage = builder.buildCoverage(reader, null);
+            } catch (Exception e) {
+                throw new IOException(e);
+            }
+    
+            coverage.setName(name);
+            coverage.setTitle(name);
+            coverage.setDescription(name);
+            coverage.setEnabled(true);
+    
+            CoverageInfo cov = catalog.getCoverageByCoverageStore(store, name);
+            if (cov == null) {
+                catalog.add(coverage);
+            }
+            else {
+                builder.updateCoverage(cov, coverage);
+                catalog.save(cov);
+                coverage = cov;
+            }
+    
+            LayerInfo layer = catalog.getLayerByName(new NameImpl(qName));
+            if (layer == null) {
+                layer = catalog.getFactory().createLayer();
+            }
+            layer.setResource(coverage);
+    
+            
+            layer.setDefaultStyle(
+                catalog.getStyleByName(LayerProperty.STYLE.get(props, DEFAULT_RASTER_STYLE)));
+            layer.setType(LayerInfo.Type.RASTER);
+            layer.setEnabled(true);
+    
+            if (layer.getId() == null) {
+                catalog.add(layer);
+            }
+            else {
+                catalog.save(layer);
+            }
+        } finally {
+            if(reader != null) {
+                reader.dispose();
+            }
         }
     }
 
