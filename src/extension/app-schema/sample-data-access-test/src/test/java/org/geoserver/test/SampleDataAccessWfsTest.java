@@ -6,12 +6,12 @@
 
 package org.geoserver.test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
-
-import junit.framework.Test;
 
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
@@ -19,8 +19,10 @@ import org.custommonkey.xmlunit.SimpleNamespaceContext;
 import org.custommonkey.xmlunit.XMLAssert;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.custommonkey.xmlunit.XpathEngine;
+import org.geoserver.data.test.TestData;
 import org.geotools.data.SampleDataAccess;
 import org.geotools.data.SampleDataAccessData;
+import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -31,19 +33,9 @@ import org.w3c.dom.NodeList;
  */
 public class SampleDataAccessWfsTest extends SampleDataAccessTestSupport {
 
-    /**
-     * Read-only test so can use one-time setup.
-     * 
-     * @return
-     */
-    public static Test suite() {
-        return new OneTimeTestSetup(new SampleDataAccessWfsTest());
-    }
 
     @Override
-    protected void oneTimeSetUp() throws Exception {
-        super.oneTimeSetUp();
-
+    protected void onSetUp(TestData testData) throws Exception {
         // Setup XMLUnit namespaces
         Map<String, String> namespaces = new HashMap<String, String>();
         namespaces.put("wfs", "http://www.opengis.net/wfs");
@@ -55,12 +47,17 @@ public class SampleDataAccessWfsTest extends SampleDataAccessTestSupport {
         namespaces.put(SampleDataAccessData.NAMESPACE_PREFIX, SampleDataAccessData.NAMESPACE_URI);
         XMLUnit.setXpathNamespaceContext(new SimpleNamespaceContext(namespaces));
     }
+    
+    @Override
+    protected void onTearDown(TestData testData) throws Exception {
+    }
 
     /**
      * Test whether GetCapabilities returns wfs:WFS_Capabilities.
      * 
      * @throws Exception
      */
+    @Test
     public void testGetCapabilities() throws Exception {
         Document doc = getAsDOM("wfs?request=GetCapabilities&version=1.1.0");
         LOGGER.info("WFS GetCapabilities response:\n" + prettyString(doc));
@@ -72,6 +69,7 @@ public class SampleDataAccessWfsTest extends SampleDataAccessTestSupport {
      * 
      * @throws Exception
      */
+    @Test
     public void testDescribeFeatureType() throws Exception {
         Document doc = getAsDOM("wfs?request=DescribeFeatureType&version=1.1.0&typename=gsml:MappedFeature");
         LOGGER.info("WFS DescribeFeatureType response:\n" + prettyString(doc));
@@ -83,6 +81,7 @@ public class SampleDataAccessWfsTest extends SampleDataAccessTestSupport {
      * 
      * @throws Exception
      */
+    @Test
     public void testGetFeature() throws Exception {
         Document doc = getAsDOM("wfs?request=GetFeature&version=1.1.0&typename=gsml:MappedFeature");
         LOGGER.info("WFS GetFeature response:\n" + prettyString(doc));
@@ -94,6 +93,7 @@ public class SampleDataAccessWfsTest extends SampleDataAccessTestSupport {
      * 
      * @throws Exception
      */
+    @Test
     public void testGetFeatureContent() throws Exception {
         Document doc = getAsDOM("wfs?request=GetFeature&version=1.1.0&typename=gsml:MappedFeature");
 
@@ -169,6 +169,12 @@ public class SampleDataAccessWfsTest extends SampleDataAccessTestSupport {
         format.setIndent(4);
         XMLSerializer serializer = new XMLSerializer(out, format);
         serializer.serialize(doc);
+    }
+
+    @Override
+    protected void setUpTestData(TestData testData) throws Exception {
+        // TODO Auto-generated method stub
+        
     }
 
 }
