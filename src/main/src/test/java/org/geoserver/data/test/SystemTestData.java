@@ -511,7 +511,7 @@ public class SystemTestData extends CiteTestData {
         layer.setResource(ft);
 
         StyleInfo defaultStyle = null;
-        if (props.containsKey(LayerProperty.STYLE)) {
+        if (LayerProperty.STYLE.get(props, null) != null) {
             defaultStyle = catalog.getStyleByName(LayerProperty.STYLE.get(props, null));
         }
         else {

@@ -85,24 +85,6 @@ public class KMLTransformerTest extends WMSTestSupport {
         testData.copyTo(getClass().getResourceAsStream("bridge.png"), "styles/graphics/bridgesubdir.png");
     }
 
-//    @Override
-//    protected void populateDataDirectory(MockData dataDirectory) throws Exception {
-//        super.populateDataDirectory(dataDirectory);
-//        dataDirectory.addStyle("allsymbolizers", getClass().getResource("allsymbolizers.sld"));
-//        dataDirectory.addStyle("SingleFeature", getClass().getResource("singlefeature.sld"));
-//        dataDirectory.addStyle("Bridge", getClass().getResource("bridge.sld"));
-//        dataDirectory.addStyle("BridgeSubdir", getClass().getResource("bridgesubdir.sld"));
-//        dataDirectory
-//                .addStyle("dynamicsymbolizer", getClass().getResource("dynamicsymbolizer.sld"));
-//        dataDirectory
-//                 .addStyle("relativeds", getClass().getResource("relativeds.sld"));
-//        
-//        dataDirectory.copyTo(getClass().getResourceAsStream("bridge.png"), "styles/bridge.png");
-//        new File(dataDirectory.getDataDirectoryRoot(), "styles/graphics").mkdir();
-//        dataDirectory.copyTo(getClass().getResourceAsStream("bridge.png"),
-//                "styles/graphics/bridgesubdir.png");
-//    }
-
     @Test
     public void testVectorTransformer() throws Exception {
         KMLVectorTransformer transformer = new KMLVectorTransformer(getWMS(), mapContent, layer);

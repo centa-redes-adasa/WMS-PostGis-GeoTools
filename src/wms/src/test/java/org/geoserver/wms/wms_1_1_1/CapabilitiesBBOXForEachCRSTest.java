@@ -12,12 +12,6 @@ import org.w3c.dom.Document;
 
 public class CapabilitiesBBOXForEachCRSTest extends WMSTestSupport {
 
-//    @Override
-//    protected void registerNamespaces(Map<String, String> namespaces) {
-//        namespaces.put("wms", "http://www.opengis.net/wms");
-//        namespaces.put("ows", "http://www.opengis.net/ows");
-//    }
-    
     void addSRSAndSetFlag() {
         WMSInfo wms = getWMS().getServiceInfo();
         wms.getSRS().add("4326");

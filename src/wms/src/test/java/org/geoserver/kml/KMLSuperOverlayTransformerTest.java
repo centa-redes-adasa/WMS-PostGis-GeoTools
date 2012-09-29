@@ -59,19 +59,6 @@ public class KMLSuperOverlayTransformerTest extends WMSTestSupport {
                 getClass(),catalog);
     }
 
-//    @Override
-//    protected void populateDataDirectory(MockData dataDirectory) throws Exception {
-//        super.populateDataDirectory(dataDirectory);
-//        dataDirectory.addStyle("allsymbolizers", getClass().getResource("allsymbolizers.sld"));
-//        dataDirectory.addStyle("SingleFeature", getClass().getResource("singlefeature.sld"));
-//        dataDirectory.addStyle("Bridge", getClass().getResource("bridge.sld"));
-//
-//        dataDirectory.addPropertiesType(DISPERSED_FEATURES,
-//                getClass().getResource(), Collections.EMPTY_MAP);
-//
-//        dataDirectory.copyTo(getClass().getResourceAsStream("bridge.png"), "styles/bridge.png");
-//    }
-
     /**
      * Verify that two overlay tiles are produced for a request that encompasses the world.
      */

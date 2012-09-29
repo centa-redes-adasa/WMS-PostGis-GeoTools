@@ -142,32 +142,6 @@ public class GetMapIntegrationTest extends WMSTestSupport {
                 "mosaic_holes.zip", null, properties,GetMapIntegrationTest.class,catalog);
     }
     
-//    @Override
-//    protected void populateDataDirectory(MockData dataDirectory) throws Exception {
-//        super.populateDataDirectory(dataDirectory);
-//        dataDirectory.addStyle("Population",
-//                GetMapIntegrationTest.class.getResource("Population.sld"));
-//        dataDirectory.addPropertiesType(new QName(MockData.SF_URI, "states", MockData.SF_PREFIX),
-//                getClass().getResource("states.properties"), null);
-//        
-//        // add a parametric style to the mix
-//        dataDirectory.addStyle("parametric", WMSTestSupport.class.getResource("map/parametric.sld"));
-//        
-//        // add a translucent style to the mix
-//        dataDirectory.addStyle("translucent", GetMapIntegrationTest.class.getResource("translucent.sld"));
-//        
-//        // add the mosaic with holes
-//        URL style = MockData.class.getResource("raster.sld");
-//        String styleName = "raster";
-//        dataDirectory.addStyle(styleName, style);
-//        dataDirectory.addCoverageFromZip(new QName(MockData.SF_URI, "mosaic_holes", MockData.SF_PREFIX), 
-//                GetMapIntegrationTest.class.getResource("mosaic_holes.zip"), null, "raster");
-        
-        // add a raster style with translucent color map
-//        dataDirectory.addWcs11Coverages();
- //       dataDirectory.addStyle("demTranslucent", GetMapIntegrationTest.class.getResource("demTranslucent.sld"));
- //   }
-
     // protected String getDefaultLogConfiguration() {
     // return "/DEFAULT_LOGGING.properties";
     // }

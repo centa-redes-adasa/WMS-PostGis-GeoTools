@@ -42,20 +42,6 @@ public class GetLegendGraphicTest extends WMSTestSupport {
 
     }
     
-//    @Override
-//    protected void populateDataDirectory(MockData dataDirectory) throws Exception {
-//        super.populateDataDirectory(dataDirectory);
-//        dataDirectory.addStyle("paramFill", GetLegendGraphicTest.class.getResource("paramFill.sld"));
-//        dataDirectory.addStyle("paramStroke", GetLegendGraphicTest.class.getResource("paramStroke.sld"));
-//        dataDirectory.addStyle("raster", GetLegendGraphicTest.class.getResource("raster.sld"));
-//        dataDirectory.addStyle("rasterScales", GetLegendGraphicTest.class.getResource("rasterScales.sld"));
-//
-//        dataDirectory.addStyle("Population", GetLegendGraphicTest.class.getResource("Population.sld"));
-//        dataDirectory.addStyle("uom", GetLegendGraphicTest.class.getResource("uomStroke.sld"));
-//        dataDirectory.addPropertiesType(new QName(MockData.SF_URI, "states", MockData.SF_PREFIX),
-//                getClass().getResource("states.properties"), null);
-//    }
-//    
     /**
      * Tests GML output does not break when asking for an area that has no data with
      * GML feature bounding enabled

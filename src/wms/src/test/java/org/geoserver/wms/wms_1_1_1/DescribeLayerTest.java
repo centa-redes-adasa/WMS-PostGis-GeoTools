@@ -5,11 +5,9 @@
 package org.geoserver.wms.wms_1_1_1;
 
 import static org.junit.Assert.*;
+
 import java.util.logging.Level;
 
-
-import org.geoserver.catalog.Catalog;
-import org.geoserver.catalog.DataStoreInfo;
 import org.geoserver.config.GeoServerInfo;
 import org.geoserver.data.test.MockData;
 import org.geoserver.data.test.SystemTestData;

@@ -4,15 +4,13 @@
  */
 package org.geoserver.kml;
 
-import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
-import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
+import static junit.framework.Assert.*;
+import static org.custommonkey.xmlunit.XMLAssert.*;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import junit.framework.TestCase;
 
 import org.custommonkey.xmlunit.SimpleNamespaceContext;
 import org.custommonkey.xmlunit.XMLUnit;
@@ -29,6 +27,9 @@ import org.geotools.feature.FeatureCollections;
 import org.geotools.map.FeatureLayer;
 import org.geotools.map.Layer;
 import org.geotools.styling.Style;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeatureType;
 import org.w3c.dom.Document;
 
@@ -37,15 +38,15 @@ import com.vividsolutions.jts.geom.Point;
 /**
  * Unit test suite for {@link KMLVectorTransformer}
  */
-public class KMLVectorTransformerTest extends TestCase {
+public class KMLVectorTransformerTest  {
 
     private WMSMockData mockData;
     
     /**
      * @see junit.framework.TestCase#setUp()
      */
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         mockData = new WMSMockData();
         mockData.setUp();
 
@@ -57,8 +58,8 @@ public class KMLVectorTransformerTest extends TestCase {
     /**
      * @see junit.framework.TestCase#tearDown()
      */
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         new GeoServerExtensions().setApplicationContext(null);
     }
     
@@ -68,6 +69,7 @@ public class KMLVectorTransformerTest extends TestCase {
      * 
      * @throws Exception
      */
+    @Test
     public void testSetStandAlone() throws Exception {
         SimpleFeatureCollection features = FeatureCollections
                 .newCollection();
@@ -99,6 +101,7 @@ public class KMLVectorTransformerTest extends TestCase {
      * @see GetMapRequest#getMaxFeatures()
      * @see GetMapRequest#getStartIndex()
      */
+    @Test
     public void testEncodeWithPaging() throws Exception {
         MapLayerInfo mli = mockData.addFeatureTypeLayer("TestPoints", Point.class);
         FeatureTypeInfo typeInfo = mli.getFeature();
@@ -155,6 +158,7 @@ public class KMLVectorTransformerTest extends TestCase {
         assertXpathEvaluatesTo("next", "//Document/NetworkLink[2]/@id", dom);
     }
     
+    @Test
     public void testKmltitleFormatOption() throws Exception {
         SimpleFeatureCollection features = FeatureCollections
                 .newCollection();

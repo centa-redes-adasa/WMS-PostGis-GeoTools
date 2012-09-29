@@ -24,13 +24,7 @@ public class SVGTest extends WMSTestSupport {
         super.onSetUp(testData);
         testData.addStyle("multifts","./polyMultiFts.sld",getClass(),getCatalog());
     }
-    
-//    @Override
-//    protected void populateDataDirectory(MockData dataDirectory) throws Exception {
-//        super.populateDataDirectory(dataDirectory);
-//        dataDirectory.addStyle("multifts", getClass().getResource("./polyMultiFts.sld"));
-//    }
-    
+        
     @Test
     public void testBasicSvgGenerator() throws Exception {
         getWMS().setSvgRenderer(WMS.SVG_SIMPLE);

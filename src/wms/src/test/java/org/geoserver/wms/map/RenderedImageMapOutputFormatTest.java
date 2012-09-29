@@ -59,7 +59,7 @@ public class RenderedImageMapOutputFormatTest extends WMSTestSupport {
 
     private String mapFormat = "image/gif";
 
-   @Before
+    @Before
     public void setRasterMapProducer() throws Exception {
         Logging.getLogger("org.geotools.rendering").setLevel(Level.OFF);
         this.rasterMapProducer = getProducerInstance();

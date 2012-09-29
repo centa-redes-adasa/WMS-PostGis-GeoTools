@@ -7,8 +7,6 @@ package org.geoserver.wms.featureinfo;
 
 
 import static junit.framework.Assert.*;
-import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 

@@ -4,12 +4,10 @@
  */
 package org.geoserver.kml;
 
-import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
+import static org.custommonkey.xmlunit.XMLAssert.*;
 
 import java.util.Collections;
 import java.util.Map;
-
-import junit.framework.TestCase;
 
 import org.custommonkey.xmlunit.XMLUnit;
 import org.custommonkey.xmlunit.XpathEngine;
@@ -24,6 +22,8 @@ import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.map.FeatureLayer;
 import org.geotools.map.Layer;
+import org.junit.Before;
+import org.junit.Test;
 import org.w3c.dom.Document;
 
 import com.mockrunner.mock.web.MockHttpServletRequest;
@@ -37,7 +37,7 @@ import com.vividsolutions.jts.geom.Point;
  * @author Gabriel Roldan (OpenGeo)
  * @version $Id$
  */
-public class KMLLegendTransformerTest extends TestCase {
+public class KMLLegendTransformerTest {
 
     private WMSMockData mockData;
 
@@ -57,8 +57,8 @@ public class KMLLegendTransformerTest extends TestCase {
     /**
      * @see junit.framework.TestCase#setUp()
      */
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         mockData = new WMSMockData();
         mockData.setUp();
 
@@ -90,18 +90,12 @@ public class KMLLegendTransformerTest extends TestCase {
     }
 
     /**
-     * @see junit.framework.TestCase#tearDown()
-     */
-    @Override
-    protected void tearDown() throws Exception {
-    }
-
-    /**
      * Test method for
      * {@link KMLLegendTransformer#KMLLegendTransformer(org.geoserver.wms.WMSMapContent)}.
      * 
      * @throws Exception
      */
+    @Test
     public void testKMLLegendTransformer() throws Exception {
         SimpleFeatureCollection features = FeatureCollections
                 .newCollection();

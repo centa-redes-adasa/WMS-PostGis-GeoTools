@@ -42,11 +42,6 @@ public class WMSTest extends WMSTestSupport {
         testData.addVectorLayer(TIME_WITH_START_END,Collections.EMPTY_MAP,"TimeElevationWithStartEnd.properties",
                 getClass(),getCatalog());
     }
-//    @Override
-//    protected void populateDataDirectory(MockData dataDirectory) throws Exception {
-//        dataDirectory.addPropertiesType(TIME_WITH_START_END, 
-//                getClass().getResource("TimeElevationWithStartEnd.properties"),Collections.EMPTY_MAP);
-//    }
 
     protected void setupStartEndTimeDimension(String featureTypeName, String dimension, String start, String end) {
         FeatureTypeInfo info = getCatalog().getFeatureTypeByName(featureTypeName);
