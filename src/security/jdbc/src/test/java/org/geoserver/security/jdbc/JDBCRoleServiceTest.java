@@ -5,6 +5,8 @@
 
 package org.geoserver.security.jdbc;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Logger;
@@ -72,13 +74,13 @@ public abstract class JDBCRoleServiceTest extends AbstractRoleServiceTest {
         try {        
             JDBCRoleStore jdbcStore =  
                 (JDBCRoleStore) store;
-            assert(jdbcStore.tablesAlreadyCreated());
+            assertTrue(jdbcStore.tablesAlreadyCreated());
             jdbcStore.checkDDLStatements();
             jdbcStore.checkDMLStatements();
             jdbcStore.clear();
             jdbcStore.dropTables();            
             jdbcStore.store();
-            assert(!jdbcStore.tablesAlreadyCreated());
+            assertFalse(jdbcStore.tablesAlreadyCreated());
             jdbcStore.load();
         } catch (IOException ex) {
             Assert.fail(ex.getMessage());

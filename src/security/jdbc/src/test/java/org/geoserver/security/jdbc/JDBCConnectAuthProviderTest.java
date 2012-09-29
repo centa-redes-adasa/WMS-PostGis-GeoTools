@@ -5,6 +5,8 @@
 
 package org.geoserver.security.jdbc;
 
+import static org.junit.Assert.*;
+
 import org.geoserver.security.GeoServerAuthenticationProvider;
 import org.geoserver.security.GeoServerRoleService;
 import org.geoserver.security.GeoServerRoleStore;
@@ -44,15 +46,16 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
         
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken("sa","");
         token.setDetails("details");
-        assert(provider.supports(token.getClass()));
-        assert(!provider.supports(RememberMeAuthenticationToken.class));
+        assertTrue(provider.supports(token.getClass()));
+        assertTrue(!provider.supports(RememberMeAuthenticationToken.class));
         
         Authentication auth = provider.authenticate(token);
-        assert(null!=auth);
-        assert("sa".equals(auth.getPrincipal()));
-        assert(null==auth.getCredentials());
-        assert("details".equals( auth.getDetails()));
-        assert(1==auth.getAuthorities().size());
+        assertNotNull(auth);
+        assertEquals("sa", auth.getPrincipal());
+        assertNull(auth.getCredentials());
+        
+        assertEquals("details", auth.getDetails());
+        assertEquals(1, auth.getAuthorities().size());
         checkForAuthenticatedRole(auth);
         
         token = new UsernamePasswordAuthenticationToken("abc","def");
@@ -63,7 +66,7 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
         } catch (BadCredentialsException ex) {
             fail=true;
         }        
-        assert(fail);                
+        assertTrue(fail);
     }
     
     @Test
@@ -88,17 +91,17 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
         
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken("sa","");
         token.setDetails("details");
-        assert(provider.supports(token.getClass()));
-        assert(!provider.supports(RememberMeAuthenticationToken.class));
+        assertTrue(provider.supports(token.getClass()));
+        assertFalse(provider.supports(RememberMeAuthenticationToken.class));
         
         Authentication auth = provider.authenticate(token);
-        assert(null!=auth);
-        assert("sa".equals(auth.getPrincipal()));
-        assert(null==auth.getCredentials());
-        assert("details".equals(auth.getDetails()));
-        assert(2==auth.getAuthorities().size());
+        assertNotNull(auth);
+        assertEquals("sa", auth.getPrincipal());
+        assertNull(auth.getCredentials());
+        assertEquals("details", auth.getDetails());
+        assertEquals(2, auth.getAuthorities().size());
         checkForAuthenticatedRole(auth);
-        assert(auth.getAuthorities().contains(GeoServerRole.ADMIN_ROLE));
+        assertTrue(auth.getAuthorities().contains(GeoServerRole.ADMIN_ROLE));
         
         
         // Test disabled user
@@ -107,7 +110,7 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
         ugStore.updateUser(sa);
         ugStore.store();
         
-        assert(null==provider.authenticate(token));
+        assertNull(provider.authenticate(token));
         
         // test invalid user
         token = new UsernamePasswordAuthenticationToken("abc","def");
@@ -121,7 +124,7 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
             fail=true;
         }        
 
-        assert(fail);
+        assertTrue(fail);
                 
     }
     @Test
@@ -141,17 +144,17 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
         
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken("sa","");
         token.setDetails("details");
-        assert(provider.supports(token.getClass()));
-        assert(!!provider.supports(RememberMeAuthenticationToken.class));
+        assertTrue(provider.supports(token.getClass()));
+        assertFalse(provider.supports(RememberMeAuthenticationToken.class));
         
         Authentication auth = provider.authenticate(token);
-        assert(null!=auth);
-        assert("sa".equals(auth.getPrincipal()));
-        assert(null==auth.getCredentials());
-        assert("details".equals(auth.getDetails()));
-        assert(2==auth.getAuthorities().size());
+        assertNotNull(auth);
+        assertEquals("sa", auth.getPrincipal());
+        assertNull(auth.getCredentials());
+        assertEquals("details", auth.getDetails());
+        assertEquals(2, auth.getAuthorities().size());
         checkForAuthenticatedRole(auth);
-        assert(auth.getAuthorities().contains(GeoServerRole.ADMIN_ROLE));
+        assertTrue(auth.getAuthorities().contains(GeoServerRole.ADMIN_ROLE));
                 
         
         // test invalid user
@@ -166,7 +169,7 @@ public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderT
             fail=true;
         }        
 
-        assert(fail);
+        assertTrue(fail);
                 
     }
 

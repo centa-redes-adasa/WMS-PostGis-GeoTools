@@ -5,6 +5,8 @@
 
 package org.geoserver.security.jdbc;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -118,14 +120,14 @@ public abstract class JDBCUserDetailsServiceTest extends AbstractUserDetailsServ
     public void testConfiguration() {
         try {
             setServices("config");
-            assert(roleService.equals(getSecurityManager().getActiveRoleService()));
+            assertEquals(roleService, getSecurityManager().getActiveRoleService());
             //assertEquals(usergroupService,getSecurityManager().getActiveUserGroupService());
-            assert(usergroupService.getName().equals(
-                    getSecurityManager().loadUserGroupService(getFixtureId()).getName()));
-            assert(roleService.canCreateStore());
-            assert(usergroupService.canCreateStore());
+            assertEquals(usergroupService.getName(), 
+                    getSecurityManager().loadUserGroupService(getFixtureId()).getName());
+            assertTrue(roleService.canCreateStore());
+            assertTrue(usergroupService.canCreateStore());
         } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
+            fail(ex.getMessage());
         }
     }
 
