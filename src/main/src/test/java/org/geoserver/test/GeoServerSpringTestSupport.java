@@ -1432,6 +1432,9 @@ public abstract class GeoServerSpringTestSupport<T extends TestData> extends Geo
      * Utility method to print out a dom.
      */
     protected void print( Document dom ) throws Exception {
+        if (isQuietTests()) {
+            return;
+        }
         print (dom, System.out);
     }
 
@@ -1461,6 +1464,9 @@ public abstract class GeoServerSpringTestSupport<T extends TestData> extends Geo
      * Utility method to print out the contents of an input stream.
      */
     protected void print( InputStream in ) throws Exception {
+        if (isQuietTests()) {
+            return;
+        }
         BufferedReader r = new BufferedReader( new InputStreamReader( in ) );
         String line = null;
         while( (line = r.readLine()) != null ) {
@@ -1472,6 +1478,9 @@ public abstract class GeoServerSpringTestSupport<T extends TestData> extends Geo
      * Utility method to print out the contents of a json object.
      */
     protected void print( JSON json ) {
+        if (isQuietTests()) {
+            return;
+        }
         System.out.println(json.toString(2));
     }
     
