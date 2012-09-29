@@ -1,12 +1,12 @@
 package org.geoserver.filter.function;
 
-import static org.custommonkey.xmlunit.XMLAssert.*;
+import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
 
-import org.geoserver.wfs.WFSTestSupport2;
+import org.geoserver.wfs.WFSTestSupport;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-public class WFSFilteringTest extends WFSTestSupport2 {
+public class WFSFilteringTest extends WFSTestSupport {
 
     static final String QUERY_SINGLE = //
     "<wfs:GetFeature xmlns:wfs=\"http://www.opengis.net/wfs\"\n" + //
