@@ -3,16 +3,24 @@ package org.geoserver.wps.gs;
 import static junit.framework.Assert.assertEquals;
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
 
+import java.util.Map;
+
 import org.custommonkey.xmlunit.XMLUnit;
 import org.custommonkey.xmlunit.XpathEngine;
 import org.geoserver.catalog.FeatureTypeInfo;
 import org.geoserver.data.test.MockData;
+import org.geoserver.data.test.SystemTestData;
 import org.geoserver.wps.WPSTestSupport;
 import org.geotools.feature.FeatureCollection;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
 public class QueryProcessTest extends WPSTestSupport {
+    
+    @Override
+    protected void registerNamespaces(Map<String, String> namespaces) {
+        namespaces.put("feature", SystemTestData.BUILDINGS.getNamespaceURI());
+    }
 
     @Test
     public void testNoOp() throws Exception {
@@ -139,7 +147,7 @@ public class QueryProcessTest extends WPSTestSupport {
                 + "  </wps:ResponseForm>\n" + "</wps:Execute>";
 
         Document d = postAsDOM(root(), request);
-        print(d);
+        // print(d);
 
         // the expected number of features
         assertXpathEvaluatesTo("2",

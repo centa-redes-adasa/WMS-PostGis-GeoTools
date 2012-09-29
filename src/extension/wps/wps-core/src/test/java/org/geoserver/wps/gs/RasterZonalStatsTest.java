@@ -7,12 +7,12 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import org.custommonkey.xmlunit.SimpleNamespaceContext;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.geoserver.data.test.MockData;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.data.test.SystemTestData.LayerProperty;
 import org.geoserver.wps.WPSTestSupport;
-import org.geotools.geometry.jts.ReferencedEnvelope;
-import org.geotools.referencing.CRS;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
@@ -32,13 +32,20 @@ public class RasterZonalStatsTest extends WPSTestSupport {
     protected void onSetUp(SystemTestData testData) throws Exception {
         super.onSetUp(testData);
 
+        // add extra data used by this test
         addWcs11Coverages(testData);
         
         Map<LayerProperty, Object> props = new HashMap<SystemTestData.LayerProperty, Object>();
-        props.put(LayerProperty.ENVELOPE, new ReferencedEnvelope(181985.7630, 818014.2370, 1973809.4640, 8894102.4298, CRS.decode("EPSG:26713", true)));
-
-        testData.addVectorLayer(DEM, props, "sfdem.tiff", getClass(), getCatalog());
+        props.put(LayerProperty.SRS, 26713);
+        
+        testData.addRasterLayer(DEM, "sfdem.tiff", ".tiff", props, getClass(), getCatalog());
         testData.addVectorLayer(RESTRICTED, props, "restricted.properties", getClass(), getCatalog());
+        testData.addVectorLayer(TASMANIA_BM_ZONES, props, "tazdem_zones.properties", getClass(), getCatalog());
+    }
+    
+    @Override
+    protected void registerNamespaces(Map<String, String> namespaces) {
+        namespaces.put("feature", "http://cite.opengeospatial.org/gmlsf");
     }
     
     @Test

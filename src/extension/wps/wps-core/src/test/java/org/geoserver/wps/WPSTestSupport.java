@@ -75,8 +75,18 @@ public abstract class WPSTestSupport extends GeoServerSystemTestSupport {
         namespaces.put("feature", "http://geoserver.sf.net"); 
         
         testData.registerNamespaces(namespaces);
+        registerNamespaces(namespaces);
         XMLUnit.setXpathNamespaceContext(new SimpleNamespaceContext(namespaces));
         xp = XMLUnit.newXpathEngine();
+    }
+
+    /**
+     * Subclasses can override to register custom namespace mappings for xml unit
+     * @param namespaces
+     */
+    protected void registerNamespaces(Map<String, String> namespaces) {
+        // TODO Auto-generated method stub
+        
     }
 
     protected final void setUpUsers(Properties props) {

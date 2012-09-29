@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import org.custommonkey.xmlunit.SimpleNamespaceContext;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.geoserver.data.test.MockData;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.data.test.SystemTestData.LayerProperty;
@@ -33,6 +35,11 @@ public class VectorZonalStatsTest extends WPSTestSupport {
 
         testData.addVectorLayer(BUGSITES, props, "bugsites.properties", getClass(), getCatalog());
         testData.addVectorLayer(RESTRICTED, props, "restricted.properties", getClass(), getCatalog());
+    }
+    
+    @Override
+    protected void registerNamespaces(Map<String, String> namespaces) {
+        namespaces.put("feature", "http://cite.opengeospatial.org/gmlsf");
     }
     
     @Test

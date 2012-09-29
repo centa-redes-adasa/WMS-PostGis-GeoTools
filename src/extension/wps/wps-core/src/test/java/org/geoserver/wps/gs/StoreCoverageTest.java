@@ -56,7 +56,7 @@ public class StoreCoverageTest extends WPSTestSupport {
         String url = response.getOutputStreamContent();
 
         // System.out.println(url);
-        assertTrue(url.startsWith("http://localhost:8080/geoserver/temp/wps/DEM"));
+        assertTrue(url.startsWith("http://localhost:8080/geoserver/temp/wps/tazdem"));
         String fileName = url.substring(url.lastIndexOf('/') + 1);
 
         File wpsTemp = new File(getDataDirectory().root(), "temp/wps");
