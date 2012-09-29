@@ -22,8 +22,12 @@ public class NewGroupPageTest extends AbstractSecurityWicketTestSupport {
     
     @Before
     public void init() throws Exception {
-        initializeForXML();
+        doInitialize();
         clearServices();
+    }
+
+    protected void doInitialize() throws Exception {
+        initializeForXML();
     }
 
     @Test

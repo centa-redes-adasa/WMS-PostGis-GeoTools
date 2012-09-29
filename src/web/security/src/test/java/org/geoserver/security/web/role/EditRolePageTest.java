@@ -17,11 +17,15 @@ public class EditRolePageTest extends AbstractSecurityWicketTestSupport {
 
     @Before
     public void init() throws Exception {
-        initializeForXML();
+        doInitialize();
         clearServices();
 
         deactivateRORoleService();
         deactivateROUGService();
+    }
+
+    protected void doInitialize() throws Exception {
+        initializeForXML();
     }
 
     @Test
@@ -105,7 +109,7 @@ public class EditRolePageTest extends AbstractSecurityWicketTestSupport {
         
     @Test
     public void testReadOnlyRoleService() throws Exception {
-        initializeForXML();
+        //doInitialize();
         activateRORoleService();
         
         AbstractSecurityPage returnPage = initializeForRoleServiceNamed(getRORoleServiceName());

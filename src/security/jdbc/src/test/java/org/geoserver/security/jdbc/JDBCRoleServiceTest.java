@@ -16,6 +16,8 @@ import org.geoserver.security.GeoServerRoleService;
 import org.geoserver.security.GeoServerRoleStore;
 import org.geoserver.security.impl.AbstractRoleServiceTest;
 import org.junit.After;
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 
 
@@ -37,16 +39,14 @@ public abstract class JDBCRoleServiceTest extends AbstractRoleServiceTest {
 
     }
 
-    @Override
+    @Before
     public void init() throws IOException {
-        if (getTestData().isTestDataAvailable()) {
-            service = getSecurityManager().loadRoleService(getFixtureId());
-            store = createStore(service);
-        }
+        Assume.assumeTrue(getTestData().isTestDataAvailable());
+        
+        service = getSecurityManager().loadRoleService(getFixtureId());
+        store = createStore(service);
     }
 
-    
-    
     public GeoServerRoleService createRoleService(String serviceName) throws Exception {    
         return JDBCTestSupport.createRoleService(getFixtureId(),
             (LiveDbmsDataSecurity)getTestData(), getSecurityManager());        

@@ -29,9 +29,13 @@ public abstract class AbstractTabbedListPageTest<T> extends AbstractSecurityWick
 
     @Before
     public void initService() throws Exception {
-        initializeForXML();
+        doInitialize();
         clearServices();
         insertValues();
+    }
+
+    protected void doInitialize() throws Exception {
+        initializeForXML();
     }
 
     @Test

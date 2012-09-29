@@ -17,12 +17,19 @@ import org.geoserver.security.GeoServerUserGroupService;
 import org.geoserver.security.GeoServerUserGroupStore;
 import org.geoserver.security.impl.AbstractUserDetailsServiceTest;
 import org.junit.After;
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 
 public abstract class JDBCUserDetailsServiceTest extends AbstractUserDetailsServiceTest {
 
     protected abstract String getFixtureId();
-        
+
+    @Before
+    public void init() {
+        Assume.assumeTrue(getTestData().isTestDataAvailable());
+    }
+
     @Override
     public GeoServerUserGroupService createUserGroupService(String serviceName) throws Exception {
         

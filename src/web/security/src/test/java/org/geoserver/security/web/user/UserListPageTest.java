@@ -67,7 +67,7 @@ public class UserListPageTest extends AbstractTabbedListPageTest<GeoServerUser> 
     
     @Test
     public void testReadOnlyService() throws Exception {
-        initializeForXML();
+        doInitialize();
         tester.startPage(listPage(getUserGroupServiceName()));
         tester.assertVisible(getRemoveLink().getPageRelativePath());
         tester.assertVisible(getRemoveLinkWithRoles().getPageRelativePath());

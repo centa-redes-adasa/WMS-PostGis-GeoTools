@@ -17,6 +17,8 @@ import org.geoserver.security.GeoServerUserGroupStore;
 import org.geoserver.security.config.SecurityUserGroupServiceConfig;
 import org.geoserver.security.impl.AbstractUserGroupServiceTest;
 import org.junit.After;
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 
 
@@ -26,7 +28,11 @@ public abstract class JDBCUserGroupServiceTest extends AbstractUserGroupServiceT
     
     protected abstract String getFixtureId();
 
-    
+    @Before
+    public void init() {
+        Assume.assumeTrue(getTestData().isTestDataAvailable());
+    }
+
     @After
     public void dropExistingTables() throws Exception {
         if (store!=null) {

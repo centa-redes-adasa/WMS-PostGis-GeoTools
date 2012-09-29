@@ -21,7 +21,7 @@ public class EditUserPageTest extends AbstractUserPageTest {
 
     @Before
     public void init() throws Exception {
-        initializeForXML();
+        doInitialize();
         clearServices();
 
         deactivateRORoleService();
@@ -195,7 +195,6 @@ public class EditUserPageTest extends AbstractUserPageTest {
 
     @Test
     public void testPasswordsDontMatch() throws Exception {
-        initializeForXML();
         insertValues();
         current = ugService.getUserByUsername("user1");
         super.doTestPasswordsDontMatch(EditUserPage.class);

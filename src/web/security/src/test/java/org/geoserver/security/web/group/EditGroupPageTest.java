@@ -20,11 +20,15 @@ public class EditGroupPageTest extends AbstractSecurityWicketTestSupport {
     
     @Before
     public void init() throws Exception {
-        initializeForXML();
+        doInitialize();
         clearServices();
 
         deactivateRORoleService();
         deactivateROUGService();
+    }
+
+    protected void doInitialize() throws Exception {
+        initializeForXML();
     }
 
     @Test

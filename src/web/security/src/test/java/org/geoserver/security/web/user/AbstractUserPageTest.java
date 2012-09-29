@@ -18,15 +18,18 @@ public abstract class AbstractUserPageTest extends AbstractSecurityWicketTestSup
         
     @Test
     public void testReadOnlyRoleService() throws Exception{
-        initializeForXML();
+        doInitialize();
         activateRORoleService();
         initializeTester();
         assertTrue(page.userGroupPalette.isEnabled());
     }
 
+    protected void doInitialize() throws Exception {
+        initializeForXML();
+    }
 
     protected void doTestPasswordsDontMatch(Class <? extends Page> pageClass) throws Exception {
-        initializeForXML();
+        doInitialize();
         initializeTester();
         newFormTester();
         form.setValue("username", "user");

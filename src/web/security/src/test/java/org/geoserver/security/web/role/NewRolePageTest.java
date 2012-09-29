@@ -26,7 +26,7 @@ public class NewRolePageTest extends AbstractSecurityWicketTestSupport {
 
     @Before
     public void init() throws Exception {
-        initializeForXML();
+        doInitialize();
         clearServices();
     }
 
@@ -36,6 +36,9 @@ public class NewRolePageTest extends AbstractSecurityWicketTestSupport {
         doTestFill();
     }
     
+    protected void doInitialize() throws Exception {
+        initializeForXML();
+    }
 
     protected void doTestFill() throws Exception {
         

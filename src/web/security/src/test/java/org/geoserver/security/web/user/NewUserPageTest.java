@@ -25,8 +25,12 @@ public class NewUserPageTest extends AbstractUserPageTest {
 
     @Before
     public void init() throws Exception {
-        initializeForXML();
+        doInitialize();
         clearServices();
+    }
+
+    protected void doInitialize() throws Exception {
+        initializeForXML();
     }
 
     @Test
@@ -199,7 +203,6 @@ public class NewUserPageTest extends AbstractUserPageTest {
     
     @Test
     public void testUserNameConflict() throws Exception {        
-        initializeForXML();
         insertValues();        
         
         initializeTester();
@@ -217,7 +220,7 @@ public class NewUserPageTest extends AbstractUserPageTest {
 
     @Test
     public void testInvalidWorkflow() throws Exception{
-        initializeForXML();
+        
         activateROUGService();        
         AbstractSecurityPage returnPage = initializeForUGServiceNamed(getROUserGroupServiceName());
         boolean fail = true;
