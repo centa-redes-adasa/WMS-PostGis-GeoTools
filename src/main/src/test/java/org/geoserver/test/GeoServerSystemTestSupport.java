@@ -13,7 +13,7 @@ import org.geoserver.data.test.SystemTestData;
  * <p>
  * Subclasses extending this base class have the following hooks avaialble:
  * <ul>
- *   <li>{@link #setUp(SystemTestData)} - Perform post configuration of the {@link SystemTestData} 
+ *   <li>{@link #setUpTestData(SystemTestData)} - Perform post configuration of the {@link SystemTestData} 
  *   instance</li>
  *   <li>{@link #onSetUp(SystemTestData)} - Perform setup after the system has been fully initialized
  *   <li>{@link #onTearDown(SystemTestData)} - Perform teardown before the system is to be shutdown 
