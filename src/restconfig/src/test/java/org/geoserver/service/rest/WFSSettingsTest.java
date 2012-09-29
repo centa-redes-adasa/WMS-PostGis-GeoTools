@@ -7,12 +7,19 @@ import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 
 import org.geoserver.catalog.rest.CatalogRESTTestSupport;
+import org.geoserver.wfs.WFSInfo;
+import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
 public class WFSSettingsTest extends CatalogRESTTestSupport {
+    
+    @Before 
+    public void revertChanges() {
+        revertService(null, WFSInfo.class);
+    }
 
     @Test
     public void testGetASJSON() throws Exception {

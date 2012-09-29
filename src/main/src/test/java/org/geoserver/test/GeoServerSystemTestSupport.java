@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.xml.namespace.QName;
 
+import org.geoserver.config.ServiceInfo;
 import org.geoserver.data.test.SystemTestData;
 
 /**
@@ -82,6 +83,10 @@ public class GeoServerSystemTestSupport extends GeoServerSpringTestSupport<Syste
 
     protected void revertLayer(QName qName) throws IOException {
         getTestData().addVectorLayer(qName, getCatalog());
+    }
+    
+    public void revertService(String workspace, Class<? extends ServiceInfo> service) {
+        getTestData().addService(workspace, service, getGeoServer(), getCatalog(), applicationContext);
     }
 
 }

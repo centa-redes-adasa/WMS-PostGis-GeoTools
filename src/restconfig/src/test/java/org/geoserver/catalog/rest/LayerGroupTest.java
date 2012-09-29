@@ -22,10 +22,12 @@ import com.mockrunner.mock.web.MockHttpServletResponse;
 
 public class LayerGroupTest extends CatalogRESTTestSupport {
 
-    @Override
-    protected void onSetUp(SystemTestData testData) throws Exception {
-        super.onSetUp(testData);
-
+    @Before
+    public void revertChanges() throws Exception {
+        removeLayerGroup(null, "sfLayerGroup");
+        removeLayerGroup("sf", "foo");
+        removeLayerGroup(null, "newLayerGroup");
+        
         LayerGroupInfo lg = catalog.getFactory().createLayerGroup();
         lg.setName( "sfLayerGroup" );
         lg.getLayers().add( catalog.getLayerByName( "sf:PrimitiveGeoFeature" ) );
@@ -34,12 +36,6 @@ public class LayerGroupTest extends CatalogRESTTestSupport {
         lg.getStyles().add( catalog.getStyleByName( StyleInfo.DEFAULT_POINT ) );
         lg.setBounds( new ReferencedEnvelope( -180,-90,180,90, CRS.decode( "EPSG:4326") ) );
         catalog.add( lg );
-    }
-
-    @Before
-    public void removeLayerGroups() {
-        removeLayerGroup("sf", "foo");
-        removeLayerGroup(null, "newLayerGroup");
     }
 
     @Test

@@ -4,20 +4,32 @@
  */
 package org.geoserver.catalog.rest;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
-import static org.custommonkey.xmlunit.XMLAssert.assertXpathExists;
+import static junit.framework.Assert.*;
+import static org.custommonkey.xmlunit.XMLAssert.*;
+
+import java.io.IOException;
 
 import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.LayerInfo;
+import org.geoserver.data.test.SystemTestData;
+import org.junit.After;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
 public class LayerTest extends CatalogRESTTestSupport {
+
+    @After
+    public void revertChanges() throws IOException {
+        revertLayer(SystemTestData.BUILDINGS);
+        revertLayer(SystemTestData.BRIDGES);
+    }
+    
+    @Override
+    protected void onTearDown(SystemTestData testData) throws Exception {
+        super.onTearDown(testData);
+    }
 
     @Test
     public void testGetAsXML() throws Exception {

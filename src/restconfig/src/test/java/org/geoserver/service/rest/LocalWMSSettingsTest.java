@@ -1,18 +1,15 @@
 package org.geoserver.service.rest;
 
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import net.sf.json.JSON;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
-import org.geoserver.catalog.Catalog;
-import org.geoserver.catalog.CatalogBuilder;
 import org.geoserver.catalog.WorkspaceInfo;
 import org.geoserver.catalog.rest.CatalogRESTTestSupport;
 import org.geoserver.config.GeoServer;
-import org.geoserver.config.ServiceInfo;
-import org.geoserver.data.test.SystemTestData;
 import org.geoserver.ows.LocalWorkspace;
 import org.geoserver.ows.util.OwsUtils;
 import org.geoserver.wms.WMSInfo;
@@ -28,6 +25,7 @@ public class LocalWMSSettingsTest extends CatalogRESTTestSupport {
     @After
     public void clearLocalWorkspace() throws Exception {
         LocalWorkspace.remove();
+        revertService("sf", WMSInfo.class);
     }
 
     @Before

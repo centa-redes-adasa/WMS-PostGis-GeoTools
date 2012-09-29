@@ -8,13 +8,15 @@ import java.io.IOException;
 import java.util.Collection;
 
 import org.geoserver.security.RESTfulDefinitionSource;
-import org.geoserver.security.impl.GeoServerRole;
 import org.geoserver.security.impl.RESTAccessRuleDAO;
 import org.geoserver.test.GeoServerSystemTestSupport;
+import org.geoserver.test.TestSetup;
+import org.geoserver.test.TestSetupFrequency;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.security.access.ConfigAttribute;
 
+@TestSetup(run=TestSetupFrequency.REPEAT)
 public class RESTSecurityRulesTest extends GeoServerSystemTestSupport {
 
     RESTfulDefinitionSource defSource = null;

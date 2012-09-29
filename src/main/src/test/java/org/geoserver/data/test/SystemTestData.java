@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -26,13 +27,19 @@ import org.geoserver.catalog.ProjectionPolicy;
 import org.geoserver.catalog.StyleInfo;
 import org.geoserver.catalog.WorkspaceInfo;
 import org.geoserver.catalog.impl.CatalogImpl;
+import org.geoserver.config.GeoServer;
 import org.geoserver.config.GeoServerInfo;
 import org.geoserver.config.GeoServerPersister;
 import org.geoserver.config.LoggingInfo;
+import org.geoserver.config.ServiceInfo;
+import org.geoserver.config.ServiceLoader;
 import org.geoserver.config.impl.GeoServerImpl;
+import org.geoserver.config.impl.ServiceInfoImpl;
 import org.geoserver.config.util.XStreamPersister;
 import org.geoserver.config.util.XStreamPersisterFactory;
+import org.geoserver.config.util.XStreamServiceLoader;
 import org.geoserver.data.util.IOUtils;
+import org.geoserver.platform.GeoServerExtensions;
 import org.geoserver.platform.GeoServerResourceLoader;
 import org.geoserver.test.GeoServerSystemTestSupport;
 import org.geotools.coverage.grid.io.AbstractGridCoverage2DReader;
@@ -45,6 +52,7 @@ import org.geotools.feature.NameImpl;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
 import org.geotools.util.logging.Logging;
+import org.springframework.context.ApplicationContext;
 
 /**
  * Test setup uses for GeoServer system tests.
@@ -499,16 +507,22 @@ public class SystemTestData extends CiteTestData {
         featureType.setNativeBoundingBox(LayerProperty.ENVELOPE.get(props, null));
 
         FeatureTypeInfo ft = catalog.getFeatureTypeByDataStore(store, name);
+        LayerInfo layer = catalog.getLayerByName(new NameImpl(prefix, name));
         if (ft == null) {
             ft = featureType;
             catalog.add(featureType);
-        }
-        else {
-            new CatalogBuilder(catalog).updateFeatureType(ft, featureType);
-            catalog.save(ft);
+        } else {
+            if(layer == null) {
+                // handles the case of layer removed, but feature type not
+                catalog.remove(ft);
+                ft = featureType;
+                catalog.add(featureType);
+            } else {
+                new CatalogBuilder(catalog).updateFeatureType(ft, featureType);
+                catalog.save(ft);
+            }
         }
 
-        LayerInfo layer = catalog.getLayerByName(new NameImpl(prefix, name));
         if (layer == null || !layer.getResource().getNamespace().equals(catalog.getNamespaceByPrefix(prefix))) {
             layer = catalog.getFactory().createLayer();    
         }
@@ -785,6 +799,45 @@ public class SystemTestData extends CiteTestData {
     @Override
     public boolean isTestDataAvailable() {
         return true;
+    }
+
+    /**
+     * Adds the default configuration of the provided service
+     * @param workspace
+     * @param service
+     * @param geoServer
+     */
+    public void addService(String workspace, Class<? extends ServiceInfo> service,
+            GeoServer geoServer, Catalog catalog, ApplicationContext ctx) {
+        List<XStreamServiceLoader> loaders = GeoServerExtensions.extensions(
+                XStreamServiceLoader.class, ctx);
+        for (XStreamServiceLoader loader : loaders) {
+            if (service.equals(loader.getServiceClass())) {
+                ServiceInfo created = loader.create(geoServer);
+                ServiceInfo old;
+                WorkspaceInfo ws = null;
+                if (workspace != null) {
+                    ws = catalog.getWorkspaceByName(workspace);
+                    old = geoServer.getService(ws, service);
+                } else {
+                    old = geoServer.getService(service);
+                }
+                if (old != null && (ws == null || old.getWorkspace().equals(ws))) {
+                    geoServer.remove(old);
+                }
+                if (ws != null) {
+                    created.setWorkspace(ws);
+                    // all services get created with the name as the id, we need to amend that
+                    if(created instanceof ServiceInfoImpl) {
+                        ((ServiceInfoImpl) created).setId(ws.getName() + "-" + created.getId());
+                    }
+                }
+                geoServer.add(created);
+                
+                break;
+            }
+        }
+
     }
 
 }

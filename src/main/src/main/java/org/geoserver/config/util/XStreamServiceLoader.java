@@ -141,5 +141,9 @@ public abstract class XStreamServiceLoader<T extends ServiceInfo> implements Ser
         xp.getXStream().alias( filenameBase, getServiceClass() );
     }
     
+    public final T create(GeoServer gs) {
+        return createServiceFromScratch(gs);
+    }
+    
     protected abstract T createServiceFromScratch(GeoServer gs);
 }

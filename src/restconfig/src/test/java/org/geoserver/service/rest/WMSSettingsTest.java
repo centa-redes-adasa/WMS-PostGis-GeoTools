@@ -6,12 +6,22 @@ import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 
 import org.geoserver.catalog.rest.CatalogRESTTestSupport;
+import org.geoserver.test.TestSetup;
+import org.geoserver.test.TestSetupFrequency;
+import org.geoserver.wms.WMSInfo;
+import org.junit.After;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
+@TestSetup(run=TestSetupFrequency.REPEAT)
 public class WMSSettingsTest extends CatalogRESTTestSupport {
+    
+    @After 
+    public void revertChanges() {
+        revertService(null, WMSInfo.class);
+    }
 
     @Test
     public void testGetASJSON() throws Exception {

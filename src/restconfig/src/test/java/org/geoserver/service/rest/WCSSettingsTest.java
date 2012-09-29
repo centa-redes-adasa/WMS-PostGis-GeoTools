@@ -6,13 +6,19 @@ import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 
 import org.geoserver.catalog.rest.CatalogRESTTestSupport;
-import org.geoserver.config.GeoServer;
+import org.geoserver.wcs.WCSInfo;
+import org.junit.After;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
 public class WCSSettingsTest extends CatalogRESTTestSupport {
+    
+    @After 
+    public void revertChanges() {
+        revertService(null, WCSInfo.class);
+    }
 
     public void testGetASJSON() throws Exception {
         JSON json = getAsJSON("/rest/services/wcs/settings.json");

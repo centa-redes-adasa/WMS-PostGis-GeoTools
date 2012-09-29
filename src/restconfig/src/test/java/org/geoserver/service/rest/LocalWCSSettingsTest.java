@@ -1,8 +1,8 @@
 package org.geoserver.service.rest;
 
 import static org.custommonkey.xmlunit.XMLAssert.assertXpathEvaluatesTo;
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import net.sf.json.JSON;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
@@ -12,7 +12,6 @@ import org.geoserver.catalog.rest.CatalogRESTTestSupport;
 import org.geoserver.config.GeoServer;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.ows.LocalWorkspace;
-import org.geoserver.platform.GeoServerExtensions;
 import org.geoserver.wcs.WCSInfo;
 import org.junit.After;
 import org.junit.Test;
@@ -21,6 +20,12 @@ import org.w3c.dom.Document;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
 public class LocalWCSSettingsTest extends CatalogRESTTestSupport {
+    
+    @After 
+    public void revertChanges() {
+        LocalWorkspace.remove();
+        revertService("sf", WCSInfo.class);
+    }
 
     @Override
     protected void onSetUp(SystemTestData testData) throws Exception {
@@ -44,7 +49,6 @@ public class LocalWCSSettingsTest extends CatalogRESTTestSupport {
         JSONObject jsonObject = (JSONObject) json;
         assertNotNull(jsonObject);
         JSONObject wcsinfo = (JSONObject) jsonObject.get("wcs");
-        assertEquals("wcs", wcsinfo.get("id"));
         assertEquals("WCS", wcsinfo.get("name"));
         JSONObject workspace = (JSONObject) wcsinfo.get("workspace");
         assertNotNull(workspace);
@@ -107,7 +111,6 @@ public class LocalWCSSettingsTest extends CatalogRESTTestSupport {
         JSONObject jsonObject = (JSONObject) jsonMod;
         assertNotNull(jsonObject);
         JSONObject wcsinfo = (JSONObject) jsonObject.get("wcs");
-        assertEquals("wcs", wcsinfo.get("id"));
         assertEquals("false", wcsinfo.get("enabled").toString().trim());
     }
 
