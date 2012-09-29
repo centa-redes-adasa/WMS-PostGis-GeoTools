@@ -4,28 +4,22 @@
  */
 package org.geoserver.template;
 
+import static org.easymock.EasyMock.*;
 import static org.easymock.classextension.EasyMock.*;
 import static org.junit.Assert.*;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.Assert.*;
-
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.DataStoreInfo;
 import org.geoserver.catalog.FeatureTypeInfo;
-import org.geoserver.catalog.StoreInfo;
 import org.geoserver.catalog.WorkspaceInfo;
 import org.geoserver.config.GeoServerDataDirectory;
-import org.geoserver.test.GeoServerTestSupport;
 import org.geotools.data.DataUtilities;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.opengis.feature.simple.SimpleFeatureType;
-
-import freemarker.cache.TemplateLoader;
 
 public class GeoServerTemplateLoader2Test {
 

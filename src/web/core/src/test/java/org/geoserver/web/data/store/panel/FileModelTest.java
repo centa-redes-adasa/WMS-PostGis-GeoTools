@@ -7,7 +7,6 @@ import java.io.IOException;
 
 import org.apache.wicket.model.Model;
 import org.geoserver.data.test.MockData;
-import org.geoserver.test.GeoServerTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 

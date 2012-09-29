@@ -1,6 +1,6 @@
 package org.geoserver.ows;
 
-import static org.geoserver.ows.util.ResponseUtils.buildURL;
+import static org.geoserver.ows.util.ResponseUtils.*;
 import static org.junit.Assert.*;
 
 import java.util.Collections;
@@ -8,7 +8,6 @@ import java.util.Collections;
 import org.geoserver.config.GeoServerInfo;
 import org.geoserver.ows.URLMangler.URLType;
 import org.geoserver.test.GeoServerSystemTestSupport;
-import org.geoserver.test.GeoServerTestSupport;
 import org.geoserver.test.SystemTest;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

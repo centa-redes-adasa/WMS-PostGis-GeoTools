@@ -4,19 +4,17 @@
  */
 package org.geoserver.catalog.rest;
 
+import static junit.framework.Assert.*;
+
 import java.io.ByteArrayInputStream;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
-import org.geoserver.data.test.TestData;
-import org.geoserver.test.GeoServerSystemTestSupport;
-import org.geoserver.test.GeoServerTestSupport;
 import org.geotools.data.DataUtilities;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
 import com.mockrunner.mock.web.MockHttpServletResponse;
-import static junit.framework.Assert.assertEquals;
 
 public class CoverageStoreFileUploadTest extends CatalogRESTTestSupport {
 

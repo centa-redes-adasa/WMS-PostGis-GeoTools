@@ -4,11 +4,8 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 
-import org.geoserver.config.GeoServerDataDirectory;
-import org.geoserver.data.test.MockData;
 import org.geoserver.data.test.SystemTestData;
 import org.geoserver.test.GeoServerSystemTestSupport;
-import org.geoserver.test.GeoServerTestSupport;
 import org.geoserver.test.SystemTest;
 import org.geotools.referencing.CRS;
 import org.geotools.referencing.datum.BursaWolfParameters;

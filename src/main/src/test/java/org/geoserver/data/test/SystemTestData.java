@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.xml.namespace.QName;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Level;
 import org.geoserver.catalog.Catalog;
 import org.geoserver.catalog.CatalogBuilder;
 import org.geoserver.catalog.CoverageInfo;
@@ -42,6 +44,7 @@ import org.geotools.data.property.PropertyDataStoreFactory;
 import org.geotools.feature.NameImpl;
 import org.geotools.geometry.jts.ReferencedEnvelope;
 import org.geotools.referencing.CRS;
+import org.geotools.util.logging.Logging;
 
 /**
  * Test setup uses for GeoServer system tests.
@@ -59,6 +62,8 @@ import org.geotools.referencing.CRS;
  *
  */
 public class SystemTestData extends CiteTestData {
+    
+    static final Logger LOGGER = Logging.getLogger(SystemTestData.class);
 
     /**
      * Keys for overriding default layer properties
@@ -484,7 +489,7 @@ public class SystemTestData extends CiteTestData {
         try {
             featureType.setNativeCRS(CRS.decode("EPSG:" + srs));
         } catch (Exception e) {
-            throw new IOException(e);
+            LOGGER.warning("Failed to decode EPSG:" + srs + ", setting the native SRS to null");
         }
         featureType.setNumDecimals(8);
         featureType.getKeywords().add(new Keyword(name));
