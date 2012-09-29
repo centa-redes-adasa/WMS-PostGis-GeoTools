@@ -25,9 +25,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class JDBCConnectAuthProviderTest extends AbstractAuthenticationProviderTest {
 
-    
-
-            
     protected JDBCConnectAuthProviderConfig createAuthConfg(String name, String userGroupServiceName) {
         JDBCConnectAuthProviderConfig config = new JDBCConnectAuthProviderConfig();
         config.setName(name);

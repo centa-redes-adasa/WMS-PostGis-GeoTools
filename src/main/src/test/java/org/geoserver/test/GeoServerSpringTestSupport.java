@@ -1,6 +1,7 @@
 package org.geoserver.test;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -46,16 +47,18 @@ import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.geoserver.catalog.CascadeDeleteVisitor;
 import org.geoserver.catalog.Catalog;
+import org.geoserver.catalog.CoverageInfo;
 import org.geoserver.catalog.FeatureTypeInfo;
 import org.geoserver.catalog.LayerGroupInfo;
+import org.geoserver.catalog.LayerInfo;
 import org.geoserver.catalog.NamespaceInfo;
+import org.geoserver.catalog.ResourceInfo;
 import org.geoserver.catalog.StoreInfo;
 import org.geoserver.catalog.StyleInfo;
 import org.geoserver.catalog.WorkspaceInfo;
 import org.geoserver.config.GeoServer;
 import org.geoserver.config.GeoServerDataDirectory;
 import org.geoserver.config.GeoServerLoaderProxy;
-import org.geoserver.data.test.SystemTestData;
 import org.geoserver.data.test.TestData;
 import org.geoserver.logging.LoggingUtils;
 import org.geoserver.ows.util.CaseInsensitiveMap;
@@ -447,6 +450,21 @@ public abstract class GeoServerSpringTestSupport<T extends TestData> extends Geo
 
         CascadeDeleteVisitor v = new CascadeDeleteVisitor(getCatalog());
         store.accept(v);
+    }
+    
+    protected void removeLayer(String workspaceName, String name) {
+        Catalog cat = getCatalog();
+        ResourceInfo resource = cat.getResourceByName(workspaceName, name, ResourceInfo.class);
+        if (resource == null) {
+            return;
+        }
+        CascadeDeleteVisitor v = new CascadeDeleteVisitor(getCatalog());
+        for (LayerInfo layer : cat.getLayers()) {
+            if(resource.equals(layer.getResource())) {
+                layer.accept(v);
+            }
+        }
+
     }
 
     protected void removeStyle(String workspaceName, String name) throws IOException {
