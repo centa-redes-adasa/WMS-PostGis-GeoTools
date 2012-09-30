@@ -34,7 +34,9 @@ import org.geoserver.catalog.ResourceInfo;
 import org.geoserver.config.GeoServerInfo;
 import org.geoserver.data.test.MockData;
 import org.geoserver.data.test.SystemTestData;
+import org.geoserver.wms.WMSInfo;
 import org.geoserver.wms.WMSTestSupport;
+import org.geotools.xml.XML;
 import org.w3c.dom.Document;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
@@ -103,12 +105,8 @@ public class CapabilitiesSystemTest extends WMSTestSupport {
         DataStoreInfo info =catalog.getDataStoreByName(MockData.SF_PREFIX);
         info.setEnabled(false);
         catalog.save(info);
-        
-        
     }
-    
  
-
     /**
      * As for section 7.2.4.1, ensures the GeCapabilities document validates against its schema
      */
@@ -130,6 +128,17 @@ public class CapabilitiesSystemTest extends WMSTestSupport {
                         return input;
                     } catch(Exception e) {
                         return null;
+
+                    }
+                } else if(XML.NAMESPACE.equals(namespaceURI)) {
+                    try {
+                        URL xml = XML.class.getResource("xml.xsd");
+                        systemId = xml.toURI().toASCIIString();
+                        DOMInputImpl input = new DOMInputImpl(publicId, systemId, null);
+                        return input;
+                    } catch(Exception e) {
+                        return null;
+
                     }
                 } else {
                     return null;
