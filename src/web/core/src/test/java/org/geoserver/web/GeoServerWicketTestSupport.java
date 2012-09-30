@@ -69,6 +69,10 @@ public abstract class GeoServerWicketTestSupport extends GeoServerSecurityTestSu
      * @param dumpValue if enabled, the component values are printed as well
      */
     public void print(Component c, boolean dumpClass, boolean dumpValue) {
+        if (isQuietTests()) {
+            return;
+        }
+
         WicketHierarchyPrinter.print(c, dumpClass, dumpValue);
     }
     
@@ -81,6 +85,10 @@ public abstract class GeoServerWicketTestSupport extends GeoServerSecurityTestSu
     * @param dumpValue if enabled, the component values are printed as well
     */
    public void print(Component c, boolean dumpClass, boolean dumpValue, boolean dumpPath) {
+       if (isQuietTests()) {
+           return;
+       }
+
        WicketHierarchyPrinter.print(c, dumpClass, dumpValue);
    }
     
